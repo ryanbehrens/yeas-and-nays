@@ -1,0 +1,1159 @@
+<title>The American Ledger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#edf0ed; --surface:#fbfcfb; --surface-2:#e3e8e4; --ink:#16201c; --ink-2:#43504a; --muted:#66746d; --line:#d2dad5; --ghost:#dfe4e0;
+  --accent:#16875a;
+  --debt:#16875a; --debt-0:#b5dcc8; --debt-1:#6db692; --debt-2:#16875a; --debt-3:#0b4f33; --debt-4:#062e1d;
+  --def:#c47a1c; --def-0:#f2d3a0; --def-1:#e2a650; --def-2:#c47a1c; --def-3:#7f4c0e; --def-4:#4a2b06;
+  --int:#7457c2; --int-0:#d4c9f2; --int-1:#a590e2; --int-2:#7457c2; --int-3:#472f8f; --int-4:#2a1a5c;
+  --dem:#2e62d9; --rep:#d23c3c; --rep-soft:#e79a8c; --mix:#8a8497; --neutral-state:#b9c2bc;
+  --wage:#16875a;
+  --shadow:0 1px 2px rgba(20,35,28,.06),0 6px 20px rgba(20,35,28,.06);
+  --display:"Libre Caslon Display","Libre Caslon Text",Georgia,"Times New Roman",serif;
+  --serif:"Libre Caslon Text",Georgia,"Times New Roman",serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0d1311; --surface:#141c19; --surface-2:#1c2622; --ink:#e2eae5; --ink-2:#b2bfb8; --muted:#8a988f; --line:#2a3630; --ghost:#1d2723;
+    --accent:#3f9f75;
+    --debt:#3f9f75; --debt-0:#1f4a37; --debt-1:#2d7556; --debt-2:#3f9f75; --debt-3:#7ccaa4; --debt-4:#c2ecd6;
+    --def:#c08229; --def-0:#4f3512; --def-1:#86591c; --def-2:#c08229; --def-3:#e2b066; --def-4:#f5dcb3;
+    --int:#8d74d8; --int-0:#35295e; --int-1:#5b479e; --int-2:#8d74d8; --int-3:#b9a8ee; --int-4:#e1d8fb;
+    --dem:#4f7fe6; --rep:#e05252; --rep-soft:#a8645a; --mix:#8f8a9c; --neutral-state:#56615b;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0d1311; --surface:#141c19; --surface-2:#1c2622; --ink:#e2eae5; --ink-2:#b2bfb8; --muted:#8a988f; --line:#2a3630; --ghost:#1d2723;
+  --accent:#3f9f75;
+  --debt:#3f9f75; --debt-0:#1f4a37; --debt-1:#2d7556; --debt-2:#3f9f75; --debt-3:#7ccaa4; --debt-4:#c2ecd6;
+  --def:#c08229; --def-0:#4f3512; --def-1:#86591c; --def-2:#c08229; --def-3:#e2b066; --def-4:#f5dcb3;
+  --int:#8d74d8; --int-0:#35295e; --int-1:#5b479e; --int-2:#8d74d8; --int-3:#b9a8ee; --int-4:#e1d8fb;
+  --dem:#4f7fe6; --rep:#e05252; --rep-soft:#a8645a; --mix:#8f8a9c; --neutral-state:#56615b;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.5;padding:0 20px 150px;}
+.wrap{max-width:1360px;margin:0 auto}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* Top bar */
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-block:16px 6px}
+.brand{display:flex;align-items:baseline;gap:10px}
+.brand b{font-family:var(--display);font-weight:400;font-size:22px;letter-spacing:.01em}
+.brand span{color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.seg{display:inline-flex;background:var(--surface-2);border-radius:999px;padding:3px;gap:2px}
+.seg button{border:0;background:transparent;padding:5px 12px;border-radius:999px;font-size:12.5px;color:var(--ink-2);white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow);font-weight:500}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:12.5px;color:var(--ink-2)}
+.btn:hover{color:var(--ink);border-color:var(--muted)}
+
+/* Era header */
+.era{display:grid;grid-template-columns:auto 1fr;gap:6px 26px;align-items:end;padding-block:10px 14px;border-bottom:1px solid var(--line);margin-bottom:16px}
+.year{font-family:var(--display);font-size:clamp(64px,10vw,116px);line-height:.86;letter-spacing:-.02em;font-variant-numeric:lining-nums tabular-nums}
+.era-meta{display:grid;gap:4px;padding-bottom:6px;min-width:0}
+.era-pres{font-family:var(--serif);font-size:clamp(17px,2vw,21px)}
+.era-pres i{color:var(--muted);font-size:.8em}
+.era-line{display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--ink-2);font-size:13px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;border-radius:999px;padding:2px 9px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none}
+.hint{color:var(--muted);font-size:12.5px}
+
+/* View note */
+.viewnote{display:flex;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:9px 14px;margin-bottom:10px;font-size:13px;color:var(--ink-2)}
+.viewnote b{color:var(--ink)}
+.viewnote button{margin-left:auto;flex:none}
+/* Counters */
+.counters{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:16px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px;text-align:left;display:grid;gap:3px;align-content:start;min-width:0;transition:border-color .2s}
+.tile:hover{border-color:var(--muted)}
+.tile .lab{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:6px}
+.tile .val{font-family:var(--mono);font-size:clamp(20px,2vw,25px);font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.25}
+.tile .val small{font-family:var(--sans);font-size:13px;font-weight:500;color:var(--ink-2);margin-left:4px}
+.tile .sub{font-size:12px;color:var(--ink-2);min-height:18px}
+.tile .val.na{color:var(--muted);font-size:17px;font-family:var(--sans)}
+.est{font-size:10px;border:1px solid var(--line);border-radius:4px;padding:0 4px;color:var(--muted);letter-spacing:.04em}
+.meter{display:flex;height:8px;border-radius:4px;overflow:hidden;gap:2px;margin-top:6px;background:var(--surface-2)}
+.meter i{display:block;height:100%;transition:flex-grow .3s}
+.lb{cursor:pointer;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:2px}
+.lb:hover{text-decoration-color:currentColor}
+.ltabs{display:flex;flex-wrap:wrap;gap:6px}
+.ltabs .fchip b{font-weight:600;font-variant-numeric:tabular-nums}
+.lsearch{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:7px 10px;font-size:13px}
+.lgroup{display:grid;gap:6px}
+.lgroup h4{margin:6px 0 0;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.back{justify-self:start;border:0;background:transparent;color:var(--ink-2);padding:0;font-size:12.5px}
+.back:hover{color:var(--ink)}
+
+/* Layout */
+.grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:16px;align-items:start}
+.col{display:grid;gap:16px;min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}
+.card-h{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.card-h h2{font-family:var(--serif);font-weight:400;font-size:18px;margin:0;text-wrap:balance}
+.card-h .note{font-size:12px;color:var(--muted)}
+@media (max-width:980px){.grid{grid-template-columns:1fr}}
+
+/* Blocks */
+.brow{display:grid;grid-template-columns:118px 1fr;gap:12px;padding-block:10px;border-top:1px solid var(--line)}
+.brow:first-of-type{border-top:0}
+.brow .rl{display:grid;gap:2px;align-content:start}
+.brow .rl b{font-weight:600;font-size:13px}
+.brow .rl span{font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums}
+.brow .rl em{font-style:normal;font-size:11.5px;color:var(--muted)}
+.blocks{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px;min-height:40px}
+.bgroup{display:flex;flex-wrap:wrap;align-items:flex-end;gap:3px}
+.blk{border-radius:3px;transform:scale(0);transition:transform .28s cubic-bezier(.3,1.4,.5,1),background-color .3s;flex:none}
+.blk.in{transform:scale(1)}
+.blk.out{transform:scale(0);transition:transform .2s ease-in}
+.blk.hollow{background:transparent!important;box-shadow:inset 0 0 0 2px currentColor}
+.blegend{grid-column:2;display:flex;flex-wrap:wrap;gap:4px 12px;font-size:11.5px;color:var(--muted)}
+.blegend span{display:inline-flex;align-items:center;gap:5px}
+.blegend i{display:inline-block;border-radius:2px}
+.empty{color:var(--muted);font-size:12.5px;align-self:center}
+@media (max-width:520px){.brow{grid-template-columns:1fr;gap:8px}.blegend{grid-column:1}.brow .rl{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline}}
+
+/* Chart */
+.chart-wrap{position:relative;touch-action:pan-y}
+#chart{display:block;width:100%;height:auto;user-select:none}
+#chart .axis text{fill:var(--muted);font-size:10.5px;font-family:var(--sans)}
+#chart .grid line{stroke:var(--line);stroke-width:1}
+#chart .ptitle{fill:var(--ink-2);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.tooltip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:8px;padding:8px 10px;font-size:12px;min-width:150px;max-width:260px;z-index:5;opacity:0;transition:opacity .12s}
+.tooltip.on{opacity:1}
+.tooltip b{display:block;margin-bottom:3px}
+.tooltip .r{display:flex;justify-content:space-between;gap:12px;font-variant-numeric:tabular-nums}
+.tooltip .k{display:inline-flex;align-items:center;gap:6px;color:var(--ink-2)}
+
+/* Map */
+#map{display:block;width:100%;height:auto}
+#map path.st{stroke:var(--surface);stroke-width:1;transition:fill .45s,opacity .45s;cursor:pointer}
+#map path.st:hover{stroke:var(--ink);stroke-width:1.5}
+#map path.st.ghost{fill:var(--ghost)!important;stroke:var(--line);stroke-dasharray:3 3;cursor:default}
+#map path.st.sel{stroke:var(--ink);stroke-width:2.2}
+#map path.st.joined{animation:pulse 1.1s ease-out}
+#map .wl{font-family:var(--sans);font-size:15px;font-weight:600;text-anchor:middle;pointer-events:none;paint-order:stroke;stroke-width:3px;stroke-linejoin:round}
+.lg-sw{display:inline-block;width:14px;height:10px;border-radius:2px}
+@keyframes pulse{0%{opacity:.2}40%{opacity:1}}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--ink-2);margin-top:8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.map-foot{font-size:12px;color:var(--muted);margin-top:6px}
+.map-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.ideo[aria-pressed="false"]{background:var(--surface-2);color:var(--ink)}
+.realign-note{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:1px dashed var(--muted);background:var(--surface-2);border-radius:10px;padding:8px 12px;margin-bottom:8px;font-size:12.5px;color:var(--ink-2)}
+.realign-note:hover{border-style:solid;color:var(--ink)}
+.swap-ic{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:600;color:#fff;background:linear-gradient(90deg,var(--rep) 50%,var(--dem) 50%)}
+#track .realign{cursor:pointer}
+
+/* Feed */
+.filters{display:grid;gap:6px;margin-bottom:10px}
+.frow{display:flex;flex-wrap:wrap;gap:6px}
+.fchip{border:1px solid var(--line);background:transparent;border-radius:999px;padding:3px 10px;font-size:12px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+.fchip[aria-pressed="true"]{background:var(--surface-2);color:var(--ink);border-color:transparent}
+.fchip[aria-pressed="false"] .dot{opacity:.35}
+.feed{display:grid;gap:8px}
+.item{display:grid;grid-template-columns:4px 1fr;gap:12px;text-align:left;background:transparent;border:1px solid var(--line);border-radius:10px;padding:10px 12px 10px 10px;transition:border-color .15s,background .15s}
+.item:hover{border-color:var(--muted);background:var(--surface-2)}
+.item .bar{border-radius:2px}
+.item .t{font-family:var(--serif);font-size:15px;line-height:1.3}
+.item .m{font-size:12px;color:var(--muted);display:flex;gap:4px 10px;flex-wrap:wrap;margin-top:3px}
+.item.future{opacity:.55;border-style:dashed}
+.feed-more{margin-top:8px}
+
+/* Scrubber */
+.scrub{position:fixed;left:0;right:0;bottom:0;z-index:20;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:10px 20px calc(10px + env(safe-area-inset-bottom,0px))}
+.scrub-in{max-width:1360px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center}
+.play{width:42px;height:42px;border-radius:50%;border:0;background:var(--ink);color:var(--surface);display:grid;place-items:center}
+.play svg{width:16px;height:16px}
+.track-wrap{position:relative;min-width:0}
+#track{display:block;width:100%;height:66px;cursor:grab;touch-action:none;user-select:none}
+#track:active{cursor:grabbing}
+#track text{fill:var(--muted);font-size:10.5px;font-family:var(--sans)}
+.scrub-meta{display:flex;gap:6px 14px;font-size:11.5px;color:var(--muted);align-items:baseline;white-space:nowrap;overflow:hidden}
+.speed{border:0;background:transparent;color:var(--muted);font-size:11.5px;padding:0;margin-left:auto}
+.scrub-now{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.scrub-now i{font-style:normal;font-weight:400;color:var(--ink-2)}
+
+/* Drawer */
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:var(--surface);border-left:1px solid var(--line);box-shadow:-10px 0 40px rgba(0,0,0,.12);z-index:30;transform:translateX(105%);transition:transform .28s ease;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+.drawer.open{transform:none}
+.drawer-h{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}
+.drawer-b{overflow:auto;padding:16px 18px 40px;display:grid;gap:14px;align-content:start}
+.drawer h3{font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.2;margin:0;text-wrap:balance}
+.drawer p{margin:0;max-width:62ch}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13px}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0}
+.sect{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.bucket-note{font-size:12.5px;color:var(--ink-2);background:var(--surface-2);border-radius:8px;padding:10px 12px}
+.hist{display:flex;flex-wrap:wrap;gap:3px}
+.hist i{width:14px;height:14px;border-radius:3px;display:block}
+.xbtn{border:0;background:var(--surface-2);border-radius:50%;width:30px;height:30px;font-size:16px;line-height:1}
+.panel-menu{position:absolute;right:0;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:10px 12px;display:grid;gap:6px;z-index:25;min-width:210px;font-size:13px}
+.panel-menu label{display:flex;gap:8px;align-items:center}
+.panel-menu .sect{margin-top:4px}
+.rel{position:relative}
+footer{margin-top:24px;padding-block:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;display:grid;gap:8px}
+footer p{margin:0;max-width:110ch}
+footer a{color:var(--ink-2)}
+@media (max-width:640px){
+  body{padding:0 16px 130px}
+  .topbar{padding-block:12px 4px}
+  .brand span{display:none}
+  .era{grid-template-columns:1fr;gap:4px;padding-block:6px 12px}
+  .year{font-size:64px}
+  .counters{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .tile{padding:10px 11px}
+  .tile .lab{font-size:10px;letter-spacing:.06em}
+  .tile .val{font-size:19px}
+  .tile .val small{font-size:11.5px;margin-left:3px}
+  .tile .sub{font-size:11.5px;line-height:1.35}
+  .card{padding:14px 12px}
+  .grid,.col{gap:12px}
+  .viewnote{flex-wrap:wrap;font-size:12.5px}
+  .viewnote button{margin-left:0}
+  .scrub{padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px))}
+  .scrub-in{gap:10px}
+  .play{width:38px;height:38px}
+  #track{height:58px}
+  .scrub-hint{display:none}
+  .scrub-now{font-size:12.5px}
+  .seg button{padding:5px 10px}
+  .drawer-b{padding:14px 16px 40px}
+  .kv{grid-template-columns:1fr;gap:0}
+  .kv dd{margin-bottom:8px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.blk{transform:scale(1)}}
+</style>
+
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand"><b>The American Ledger</b><span>1776 – today</span></div>
+    <div class="controls">
+      <div class="seg" id="viewSeg" role="group" aria-label="Money view">
+        <button id="v-nominal" data-view="nominal" aria-pressed="true">Dollars</button>
+        <button id="v-real" data-view="real" aria-pressed="false">2025 dollars</button>
+        <button id="v-gdp" data-view="gdp" aria-pressed="false">% of GDP</button>
+      </div>
+      <div class="rel">
+        <button class="btn" id="panelsBtn" aria-expanded="false">Show / hide</button>
+        <div class="panel-menu" id="panelMenu" hidden></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="era" aria-live="polite">
+    <div class="year tnum" id="yearBig">1776</div>
+    <div class="era-meta">
+      <div class="era-pres" id="eraPres"></div>
+      <div class="era-line" id="eraLine"></div>
+    </div>
+  </section>
+
+  <div class="viewnote" id="viewNote" role="status" hidden></div>
+  <section class="counters" id="counters"></section>
+
+  <div class="grid">
+    <div class="col">
+      <section class="card" id="blocksCard">
+        <div class="card-h"><h2>What we owe, in blocks</h2><span class="note" id="blocksNote"></span></div>
+        <div id="blockRows"></div>
+      </section>
+      <section class="card" id="chartCard">
+        <div class="card-h">
+          <h2>Debt, deficits and interest over time</h2>
+          <div class="controls">
+            <div class="seg" id="zoomSeg" role="group" aria-label="Chart range">
+              <button id="z-follow" data-zoom="follow" aria-pressed="true">Follow</button>
+              <button id="z-full" data-zoom="full" aria-pressed="false">Full history</button>
+            </div>
+          </div>
+        </div>
+        <div class="frow" id="seriesChips" style="margin-bottom:8px"></div>
+        <div class="chart-wrap" id="chartWrap"><svg id="chart" aria-label="Chart of national debt, annual deficit and interest"></svg><div class="tooltip" id="tip"></div></div>
+        <div class="hint" style="margin-top:6px">Scroll or drag on the chart to move through time. Dots along the top are laws, rulings and events; click one to read what it did.</div>
+      </section>
+    </div>
+    <div class="col">
+      <section class="card" id="mapCard">
+        <div class="card-h">
+          <h2 id="mapTitle">The states</h2>
+          <div class="map-tools">
+            <div class="seg" id="mapSeg" role="group" aria-label="Map coloring">
+              <button id="m-vote" data-map="vote" aria-pressed="true">Presidential vote</button>
+              <button id="m-wage" data-map="wage" aria-pressed="false">Minimum wage</button>
+            </div>
+            <button class="btn ideo" id="ideoBtn" aria-pressed="true">Unadjust ideology</button>
+          </div>
+        </div>
+        <button class="realign-note" id="realignNote" hidden><span class="swap-ic" aria-hidden="true">⇄</span><span id="realignText"></span></button>
+        <svg id="map" viewBox="0 0 975 610" role="img" aria-label="Map of the United States"></svg>
+        <div class="legend" id="mapLegend"></div>
+        <div class="map-foot" id="mapFoot"></div>
+      </section>
+      <section class="card" id="feedCard">
+        <div class="card-h"><h2>How we got here</h2><span class="note" id="feedNote"></span></div>
+        <div class="filters" id="filters"></div>
+        <div class="feed" id="feed"></div>
+        <button class="btn feed-more" id="feedMore">Show more</button>
+      </section>
+    </div>
+  </div>
+
+  <footer>
+    <p><b>Sources.</b> Debt: U.S. Treasury, Historical Debt Outstanding (fiscal years, 1790–2025). Deficit/surplus 1901–2025 and net interest 1940–2025: White House Office of Management and Budget historical tables via FRED. Deficits before 1901 are estimated from the yearly change in debt and marked "est." GDP: MeasuringWorth (1790–1929) and BEA fiscal-year GDP via FRED (1930–2025). Inflation: MeasuringWorth consumer price index (1774–2025). Federal minimum wage: U.S. Department of Labor. State minimum wages: U.S. Department of Labor, as of July 1, 2026. Congress party control: Office of the House Historian and U.S. Senate Historical Office. Presidential votes by state: 270toWin (1900–2012); 1789–1896 and 2016–2024 compiled from official electoral records.</p>
+    <p><b>How the buckets work.</b> Laws and rulings are sorted by what they did, not by which party passed them. <b style="color:var(--dem)">Liberal-leaning</b> means it expanded federal spending, the government's role in the economy, progressive taxation or looser money. <b style="color:var(--rep)">Conservative-leaning</b> means it cut taxes or spending, limited the government's economic role or tightened money. <b style="color:var(--mix)">Mixed</b> covers tariffs, wartime finance and deals that did both. Party and vote splits are shown separately, so a tax cut signed by a Democrat still reads as a tax cut. This is an early classification; a vote-based check using every recorded roll call (Voteview) is planned.</p>
+    <p><b>Party colors.</b> By default, Democrats are shown red and Republicans blue before 1897, because the parties' positions were roughly the reverse of today's; from 1897 on, Republicans are red and Democrats blue. Use "Unadjust ideology" on the map to see true party colors in every era.</p>
+    <p>Map shapes use today's state borders. Before 1789 there was no president and no federal debt figure; the Continental Congress's war debts were taken over by the new government in 1790.</p>
+  </footer>
+</div>
+
+<div class="scrub" id="scrub">
+  <div class="scrub-in">
+    <button class="play" id="play" aria-label="Play through history"><svg viewBox="0 0 16 16" id="playIcon"><path d="M4 2l10 6-10 6z" fill="currentColor"/></svg></button>
+    <div class="track-wrap">
+      <svg id="track" aria-label="Timeline, 1776 to 2025. Use arrow keys to move." tabindex="0" role="slider" aria-valuemin="1776" aria-valuemax="2025"></svg>
+      <div class="scrub-meta"><span id="scrubNow" class="scrub-now"></span><span class="scrub-hint">Drag, scroll or use ← → to move through time</span><button class="speed" id="speedBtn">Speed: 1×</button></div>
+    </div>
+  </div>
+</div>
+
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-h"><span class="sect" id="drawerKind" style="margin:0"></span><button class="xbtn" id="drawerClose" aria-label="Close">×</button></div>
+  <div class="drawer-b" id="drawerBody"></div>
+</aside>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script src="data.js"></script>
+<script>
+(function(){
+const D = window.TIMELINE_DATA, ATLAS = window.US_ATLAS;
+const MIN = 1776, MAX = 2025.999;
+const econ = new Map(D.econ.map(d => [d.y, d]));
+const CPI_BASE = econ.get(2025).cpi;
+let CSS_CACHE = {};
+const css = n => CSS_CACHE[n] || (CSS_CACHE[n] = getComputedStyle(document.documentElement).getPropertyValue(n).trim());
+
+/* ---------- state ---------- */
+const CATS = {tax:"Taxes & tariffs", spend:"Spending & programs", budget:"Budget rules & debt limit", money:"Money & banking", wage:"Wages", war:"War", crisis:"Crises & rescues"};
+const TYPES = {law:"Laws", ruling:"Court rulings", event:"Events"};
+const BUCKETS = {lib:"Liberal-leaning", con:"Conservative-leaning", mix:"Mixed"};
+const BUCKET_VAR = {lib:"--dem", con:"--rep", mix:"--mix"};
+const TILES = {debt:"National debt", deficit:"Deficit / surplus", interest:"Interest on the debt", ratio:"Debt-to-GDP", wage:"Federal minimum wage", laws:"Laws by bucket"};
+const PANELS = {blocksCard:"Debt blocks", chartCard:"Chart", mapCard:"Map", feedCard:"How we got here"};
+const S = {
+  t: 1776.5, view: "nominal", zoom: "follow", mapMode: "vote", playing: false, speed: 1,
+  series: {debt: true, deficit: true, interest: true},
+  types: new Set(Object.keys(TYPES)), buckets: new Set(Object.keys(BUCKETS)), cats: new Set(Object.keys(CATS)),
+  tiles: new Set(Object.keys(TILES)), panels: new Set(Object.keys(PANELS)), feedLimit: 6, selState: null, adjusted: true
+};
+try { const p = JSON.parse(localStorage.getItem("ledger-prefs") || "null");
+  if (p) { if (p.tiles) S.tiles = new Set(p.tiles); if (p.panels) S.panels = new Set(p.panels); if (p.view) S.view = p.view; if (typeof p.adjusted === "boolean") S.adjusted = p.adjusted; }
+} catch(e) {}
+function savePrefs(){ try { localStorage.setItem("ledger-prefs", JSON.stringify({tiles:[...S.tiles], panels:[...S.panels], view:S.view, adjusted:S.adjusted})); } catch(e) {} }
+
+/* ---------- helpers ---------- */
+const yearOf = t => Math.min(2025, Math.floor(t));
+const dateToT = s => { const [y,m,d] = s.split("-").map(Number); return y + ((m-1)*30.4 + d)/365.25; };
+const tToISO = t => { const y = Math.floor(t); const doy = Math.floor((t - y)*365.25); const dt = new Date(Date.UTC(y,0,1)); dt.setUTCDate(dt.getUTCDate()+doy); return dt.toISOString().slice(0,10); };
+const fmtDate = s => { const [y,m,d] = s.split("-").map(Number); return new Date(Date.UTC(y,m-1,d)).toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric",timeZone:"UTC"}); };
+const ord = n => n + (["th","st","nd","rd"][(n%100>10&&n%100<14)?0:(n%10<4?n%10:0)] || "th");
+function money(v, digits){
+  if (v == null || isNaN(v)) return "—";
+  const a = Math.abs(v), s = v < 0 ? "−" : "";
+  const dg = digits == null ? 2 : digits;
+  if (a >= 1e12) return s + "$" + (a/1e12).toFixed(dg) + " trillion";
+  if (a >= 1e9) return s + "$" + (a/1e9).toFixed(dg) + " billion";
+  if (a >= 1e6) return s + "$" + (a/1e6).toFixed(dg) + " million";
+  return s + "$" + Math.round(a).toLocaleString("en-US");
+}
+function moneyShort(v){
+  const a = Math.abs(v), s = v < 0 ? "−" : "";
+  if (a >= 1e12) return s + "$" + d3.format(".3~g")(a/1e12) + "T";
+  if (a >= 1e9) return s + "$" + d3.format(".3~g")(a/1e9) + "B";
+  if (a >= 1e6) return s + "$" + d3.format(".3~g")(a/1e6) + "M";
+  if (a >= 1e3) return s + "$" + d3.format(".3~g")(a/1e3) + "K";
+  return s + "$" + Math.round(a);
+}
+const pct = v => v == null ? "—" : (Math.abs(v) >= 10 ? v.toFixed(1) : v.toFixed(2)) + "%";
+function conv(v, y, view){
+  view = view || S.view;
+  if (v == null) return null;
+  const d = econ.get(y); if (!d) return null;
+  if (view === "real") return v * CPI_BASE / d.cpi;
+  if (view === "gdp") return d.gdp ? v / d.gdp * 100 : null;
+  return v;
+}
+const fmtV = v => S.view === "gdp" ? (v == null ? "—" : pct(v)) : money(v);
+function tileFmt(v){ // number big, unit small
+  if (S.view === "gdp") return pct(v) + "<small>of GDP</small>";
+  const a = Math.abs(v);
+  if (a >= 1e12) return "$" + (a/1e12).toFixed(2) + "<small>trillion</small>";
+  if (a >= 1e9) return "$" + (a/1e9).toFixed(2) + "<small>billion</small>";
+  if (a >= 1e6) return "$" + (a/1e6).toFixed(2) + "<small>million</small>";
+  return "$" + Math.round(a).toLocaleString("en-US");
+}
+const fmtVShort = v => S.view === "gdp" ? d3.format(".3~g")(v) + "%" : moneyShort(v);
+
+function presidentAt(iso){ return D.presidents.find(p => p.start <= iso && (!p.end || iso < p.end)) || null; }
+function congressAt(iso){ return D.congresses.find(c => c.start <= iso && iso < c.end) || null; }
+const FLIP_T = 1897, REALIGN_END = 1928;
+const flipped = t => S.adjusted && t < FLIP_T;
+// Color for a party code (D, R, SD, W...) at time t, following the ideology adjustment
+function partyColor(code, t){
+  if (code === "D") return css(flipped(t) ? "--rep" : "--dem");
+  if (code === "R") return css(flipped(t) ? "--dem" : "--rep");
+  if (code === "SD" && flipped(t)) return css("--rep-soft");
+  return D.parties[code] ? D.parties[code].color : css("--neutral-state");
+}
+function partyVarAt(name, t){ const v = partyVar(name); if (!flipped(t)) return v; return v === "--dem" ? "--rep" : v === "--rep" ? "--dem" : v; }
+function partyVar(name){ if (!name) return "--mix"; if ((/^Democratic/.test(name) && !/^Democratic-Republican/.test(name)) || /^Jacksonian/.test(name)) return "--dem"; if (/^Republican/.test(name)) return "--rep"; return "--mix"; }
+function minWageAt(iso){ let r = null; for (const w of D.fedMinWage) if (w.date <= iso) r = w.rate; return r; }
+function electionFor(t){ // most recent presidential election decided by time t (elections held ~Nov)
+  let best = null; for (const y of Object.keys(D.elections).map(Number)) if (y + 0.85 <= t) best = y; return best; }
+const statesAt = iso => Object.entries(D.statehood).filter(([,d]) => d <= iso).map(([s]) => s);
+
+const items = D.items.map(x => ({...x, tt: dateToT(x.date)}));
+function itemVisible(x){ return S.types.has(x.type === "amendment" ? "law" : x.type) && S.cats.has(x.cat) && (x.type === "event" || S.buckets.has(x.bucket)); }
+function itemColor(x){ return x.type === "event" ? css("--muted") : css(BUCKET_VAR[x.bucket]); }
+
+/* ---------- counters ---------- */
+const disp = {}; // eased display values
+function tileHTML(id){
+  return `<button class="tile" id="tile-${id}" data-tile="${id}"><div class="lab" id="tl-${id}"></div><div class="val tnum" id="tv-${id}">—</div><div class="sub" id="ts-${id}"></div></button>`;
+}
+const countersEl = document.getElementById("counters");
+countersEl.innerHTML = Object.keys(TILES).map(tileHTML).join("");
+countersEl.addEventListener("click", e => { const lb = e.target.closest("[data-lb]"); if (lb){ openLawList(lb.dataset.lb); return; }
+  const b = e.target.closest(".tile"); if (!b) return; if (b.dataset.tile === "laws") openLawList("all"); else openMetric(b.dataset.tile); });
+
+function setTile(id, label, target, formatter, sub, opts){
+  const lab = document.getElementById("tl-"+id), val = document.getElementById("tv-"+id), s = document.getElementById("ts-"+id);
+  lab.innerHTML = label;
+  s.innerHTML = sub || "";
+  if (target == null){ val.textContent = (opts && opts.na) || "Not yet"; val._t = null; val.classList.add("na"); disp[id] = null; return; }
+  val.classList.remove("na");
+  disp[id] = disp[id] || {v: target, f: formatter};
+  disp[id].target = target; disp[id].f = formatter;
+}
+function easeCounters(){
+  for (const [id, o] of Object.entries(disp)){
+    if (!o) continue;
+    const diff = o.target - o.v;
+    o.v = Math.abs(diff) < Math.abs(o.target)*1e-4 + 1e-9 ? o.target : o.v + diff * 0.22;
+    const el = document.getElementById("tv-"+id); const txt = o.f(o.v);
+    if (el._t !== txt){ el._t = txt; el.innerHTML = txt; }
+  }
+}
+
+function updateViewNote(){
+  const el = document.getElementById("viewNote"), y = yearOf(S.t), d = econ.get(y);
+  if (S.view === "nominal"){ el.hidden = true; return; }
+  el.hidden = false;
+  if (S.view === "real"){
+    const f = CPI_BASE / d.cpi;
+    el.innerHTML = `<span><b>Adjusted for inflation.</b> All dollar amounts are shown in 2025 dollars, what they would be worth at today's prices. ` +
+      (y >= 2025 ? `For 2025 the amounts are unchanged.` : `Prices have risen about ${f >= 10 ? Math.round(f) : f.toFixed(1)}× since ${y}, so ${y} amounts are multiplied by ${f >= 10 ? Math.round(f) : f.toFixed(1)}.`) +
+      `</span><button class="btn" data-view="nominal">Show dollars as recorded</button>`;
+  } else {
+    el.innerHTML = `<span><b>Shown as a share of the economy.</b> Debt, deficit and interest are divided by that year's GDP (the total value of everything the country produced), so different eras can be compared fairly.</span><button class="btn" data-view="nominal">Show dollars as recorded</button>`;
+  }
+}
+document.getElementById("viewNote").addEventListener("click", e => { const b = e.target.closest("[data-view]"); if (b) setView(b.dataset.view); });
+function updateCounters(){
+  updateViewNote();
+  const y = yearOf(S.t), d = econ.get(y), iso = tToISO(S.t);
+  const dot = v => `<span class="dot" style="background:var(${v})"></span>`;
+  // Debt
+  const debtV = d && d.debt != null ? conv(d.debt, y) : null;
+  let sub = "";
+  if (d && d.debt != null && econ.get(y-1) && econ.get(y-1).debt != null){
+    const ch = conv(d.debt, y) - conv(econ.get(y-1).debt, y-1);
+    sub = (ch >= 0 ? "+" : "−") + (S.view === "gdp" ? Math.abs(ch).toFixed(1) + " pts" : money(Math.abs(ch), 1)) + " from " + (y-1);
+  } else if (y < 1790) sub = "Federal figures begin in 1790";
+  setTile("debt", dot("--debt") + "National debt", debtV, tileFmt, sub);
+  // Deficit
+  const defRaw = d ? d.deficit : null;
+  const defV = defRaw != null ? conv(-defRaw, y) : null; // positive = deficit
+  const isSur = defRaw != null && defRaw > 0;
+  setTile("deficit", dot("--def") + (isSur ? "Surplus" : "Deficit") + (d && d.deficitEst ? ` <span class="est">est.</span>` : ""),
+    defV == null ? null : Math.abs(defV), tileFmt, defRaw == null ? (y < 1790 ? "Federal figures begin in 1790" : "") : (isSur ? "Government took in more than it spent" : "Borrowed this year to cover spending"));
+  // Interest
+  const intV = d && d.interest != null ? conv(d.interest, y) : null;
+  let isub = "Tracked from 1940";
+  if (intV != null){ isub = ""; if (d.deficit < 0){ const r = d.interest / -d.deficit; isub = r >= 1 ? "More than this year's whole deficit" : `Equal to ${Math.round(r*100)}% of this year's deficit`; } }
+  setTile("interest", dot("--int") + "Net interest", intV, tileFmt, isub, {na:"Before 1940"});
+  // Ratio
+  const ratio = d && d.debt != null && d.gdp ? d.debt/d.gdp*100 : null;
+  setTile("ratio", "Debt-to-GDP", ratio, pct, ratio == null ? "" : ratio >= 100 ? "Debt bigger than a year of the economy" : `Debt equals ${Math.round(ratio*3.65)} days of economic output`);
+  // Wage
+  const w = minWageAt(iso);
+  const wReal = w == null ? null : w*CPI_BASE/d.cpi;
+  if (S.view === "real") setTile("wage", dot("--wage") + "Federal minimum wage", wReal, v => "$" + v.toFixed(2) + "<small>/hr</small>",
+    w == null ? "No federal minimum until 1938" : `Actual rate in ${y}: $${w.toFixed(2)}/hr`, {na:"None"});
+  else setTile("wage", dot("--wage") + "Federal minimum wage", w, v => "$" + v.toFixed(2) + "<small>/hr</small>",
+    w == null ? "No federal minimum until 1938" : `Worth $${wReal.toFixed(2)} in 2025 dollars`, {na:"None"});
+  // Laws by bucket
+  const passed = items.filter(x => (x.type === "law" || x.type === "amendment") && x.tt <= S.t);
+  const cnt = {lib:0, con:0, mix:0}; passed.forEach(x => cnt[x.bucket]++);
+  const rul = items.filter(x => x.type === "ruling" && x.tt <= S.t).length;
+  const lab = document.getElementById("tl-laws"), val = document.getElementById("tv-laws"), s = document.getElementById("ts-laws");
+  lab.textContent = "Landmark laws so far";
+  val.classList.remove("na");
+  val.innerHTML = `${passed.length}<span style="font-size:12px;color:var(--muted);font-family:var(--sans)"> + ${rul} rulings</span>`;
+  const tot = Math.max(1, passed.length);
+  s.innerHTML = `<div class="meter" aria-hidden="true">${["lib","mix","con"].map(k => `<i style="flex-grow:${cnt[k]/tot};background:var(${BUCKET_VAR[k]})"></i>`).join("")}</div>
+    <div style="display:flex;gap:10px;margin-top:4px;font-size:11.5px;flex-wrap:wrap"><span data-lb="lib" class="lb" style="color:var(--dem)">Lib ${cnt.lib}</span><span data-lb="mix" class="lb" style="color:var(--mix)">Mixed ${cnt.mix}</span><span data-lb="con" class="lb" style="color:var(--rep)">Con ${cnt.con}</span><span class="lb" data-lb="all" style="margin-left:auto;color:var(--ink-2)">See list →</span></div>`;
+  for (const id of Object.keys(TILES)) document.getElementById("tile-"+id).hidden = !S.tiles.has(id);
+  countersEl.hidden = S.tiles.size === 0;
+}
+
+/* ---------- era header ---------- */
+function updateEra(){
+  const iso = tToISO(S.t), y = yearOf(S.t);
+  document.getElementById("yearBig").textContent = y;
+  const p = presidentAt(iso), c = congressAt(iso);
+  const pres = document.getElementById("eraPres"), line = document.getElementById("eraLine");
+  const n = statesAt(iso).length;
+  if (!p){
+    pres.innerHTML = y < 1781 ? "The Continental Congress <i>· before the Constitution</i>" : "Articles of Confederation <i>· no president yet</i>";
+    line.innerHTML = `<span class="chip">${y < 1787 ? "13 states declared independence" : n + " states have ratified the Constitution"}</span>`;
+    return;
+  }
+  pres.innerHTML = `${p.name} <i>· ${p.party}</i>`;
+  const ctrl = (lbl, party, seats) => `<span class="chip"><span class="dot" style="background:var(${partyVarAt(party, S.t)})"></span>${lbl}: ${party} ${seats}</span>`;
+  line.innerHTML = `<span class="chip">${ord(c.n)} Congress</span>${ctrl("House", c.house, c.houseSeats.replace("-","–"))}${ctrl("Senate", c.senate, c.senateSeats.replace("-","–"))}<span class="chip">${n} states</span>`;
+}
+
+/* ---------- blocks ---------- */
+const ROWS = [
+  {id:"debt", label:"Debt", v:"--debt", get:(d,y) => d.debt != null ? conv(d.debt,y) : null},
+  {id:"def", label:"Deficit", v:"--def", get:(d,y) => d.deficit != null ? conv(-d.deficit,y) : null},
+  {id:"int", label:"Interest", v:"--int", get:(d,y) => d.interest != null ? conv(d.interest,y) : null},
+];
+const blockRows = document.getElementById("blockRows");
+blockRows.innerHTML = ROWS.map(r => `<div class="brow" id="br-${r.id}"><div class="rl"><b style="color:var(${r.v})">${r.label}</b><span id="bv-${r.id}">—</span><em id="bn-${r.id}"></em></div><div class="blocks" id="bb-${r.id}"></div><div class="blegend" id="bl-${r.id}"></div></div>`).join("");
+const SIZES = [9, 14, 21]; // 1x, 10x, 100x of a family
+function denomLabel(exp, isPct){
+  if (isPct){ const v = Math.pow(10, exp); return (v < 1 ? v.toFixed(1) : v) + "%"; }
+  const fam = Math.floor(exp/3), within = exp % 3, mult = Math.pow(10, within);
+  return "$" + mult + ["", "K", "M", "B", "T"][fam];
+}
+function denomStyle(rowV, exp, isPct, rank){
+  // Color follows the denomination family (thousand/million/billion/trillion); size shows 1/10/100 within the family.
+  let shade, size;
+  if (isPct){ shade = Math.max(0, Math.min(4, exp + 2)); size = [9,12,16,21][Math.max(0,Math.min(3,exp+1))]; }
+  else shade = Math.max(0, Math.min(4, Math.floor(exp/3)));
+  if (rank != null) size = [21, 14, 9][rank];
+  return {color:`var(${rowV}-${shade})`, size};
+}
+function breakdown(v, isPct){
+  if (v == null || v <= 0) return [];
+  const minExp = isPct ? -1 : 3;
+  const top = Math.floor(Math.log10(v));
+  if (top < minExp) return [{exp:minExp, count:1}];
+  const out = [];
+  for (let e = top; e >= Math.max(minExp, top-2); e--){
+    const c = e === top ? Math.floor(v / Math.pow(10, e) + 1e-9) : Math.floor(v / Math.pow(10, e) + 1e-9) % 10;
+    if (c > 0) out.push({exp:e, count:c});
+  }
+  return out;
+}
+function updateBlocks(){
+  const y = yearOf(S.t), d = econ.get(y), isPct = S.view === "gdp";
+  document.getElementById("blocksNote").textContent = isPct
+    ? "Measured against the size of the economy. Ten of one block trade up for the next size."
+    : "Darker blocks are bigger bills: thousands, millions, billions, trillions. Ten of one size trade up for the next.";
+  for (const r of ROWS){
+    const v = d ? r.get(d, y) : null;
+    const row = document.getElementById("br-"+r.id);
+    row.hidden = !(r.id === "debt" ? S.series.debt : r.id === "def" ? S.series.deficit : S.series.interest);
+    const isSur = r.id === "def" && v != null && v < 0;
+    row.querySelector("b").textContent = r.id === "def" ? (isSur ? "Surplus" : "Deficit") : r.label;
+    document.getElementById("bv-"+r.id).textContent = v == null ? "—" : fmtV(Math.abs(v));
+    document.getElementById("bn-"+r.id).textContent = v == null ? (r.id === "int" ? "From 1940" : "From 1790") : r.id === "def" ? (d.deficitEst ? "Estimated" : "This year") : r.id === "int" ? "Paid this year" : "Total owed";
+    const parts = breakdown(v == null ? null : Math.abs(v), isPct);
+    const box = d3.select("#bb-"+r.id);
+    box.selectAll(".empty").remove();
+    if (!parts.length){ box.selectAll(".bgroup").remove(); box.append("span").attr("class","empty").text(v == null ? "No data for this year" : "Zero"); }
+    const groups = box.selectAll(".bgroup:not(.gone)").data(parts, p => p.exp);
+    groups.exit().classed("gone", true).each(function(){ d3.select(this).selectAll(".blk").classed("in", false).classed("out", true); }).transition().delay(220).remove();
+    const gAll = groups.enter().append("div").attr("class","bgroup").merge(groups).order();
+    const topExp = parts.length ? parts[0].exp : 0;
+    gAll.each(function(p){
+      const st = denomStyle(r.v, p.exp, isPct, Math.min(2, topExp - p.exp));
+      const g = d3.select(this).attr("title", `${p.count} × ${denomLabel(p.exp, isPct)}`);
+      const b = g.selectAll(".blk:not(.out)").data(d3.range(p.count), i => i);
+      b.exit().classed("in", false).classed("out", true).transition().delay(220).remove();
+      const en = b.enter().append("i").attr("class","blk");
+      en.merge(b).classed("hollow", isSur).style("width", st.size+"px").style("height", st.size+"px").style("background-color", st.color).style("color", st.color);
+      en.each(function(){ const el = this; requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add("in"))); });
+    });
+    document.getElementById("bl-"+r.id).innerHTML = parts.map(p => { const st = denomStyle(r.v, p.exp, isPct, Math.min(2, topExp - p.exp));
+      return `<span><i style="width:${Math.min(st.size,12)}px;height:${Math.min(st.size,12)}px;${isSur ? `box-shadow:inset 0 0 0 2px ${st.color}` : `background:${st.color}`}"></i>${p.count} × ${denomLabel(p.exp, isPct)}</span>`; }).join("") + (parts.length && Math.abs(v) >= (isPct ? 10 : 1e5) ? `<span>smaller amounts rounded off</span>` : "");
+  }
+}
+
+/* ---------- chart ---------- */
+const svg = d3.select("#chart"), tip = document.getElementById("tip");
+const M = {l: 64, r: 14, t: 12};
+const PAN = [{id:"debt", title:"National debt", h:150, v:"--debt"}, {id:"deficit", title:"Deficit (below line) / surplus (above)", h:110, v:"--def"}, {id:"interest", title:"Net interest paid", h:80, v:"--int"}];
+const GAP = 30;
+let W = 700, yEase = {debt:null, deficit:null, interest:null};
+const gRoot = svg.append("g");
+const lane = gRoot.append("g");
+const panels = {};
+PAN.forEach(p => {
+  const g = gRoot.append("g");
+  panels[p.id] = {g, grid:g.append("g").attr("class","grid"), mark:g.append("g"), axis:g.append("g").attr("class","axis"), title:g.append("text").attr("class","ptitle").attr("x",0).attr("y",-8)};
+  panels[p.id].title.text(p.title);
+});
+function panelTitles(narrow){ PAN.forEach(p => panels[p.id].title.text(narrow ? ({debt:"National debt", deficit:"Deficit / surplus", interest:"Net interest"})[p.id] : p.title)); }
+const xAxisG = gRoot.append("g").attr("class","axis");
+const cursor = gRoot.append("g");
+cursor.append("line").attr("class","cl").attr("stroke", "currentColor").attr("stroke-width", 1.5).style("color","var(--ink)");
+const hoverLine = gRoot.append("line").attr("stroke","var(--muted)").attr("stroke-dasharray","3 3").style("opacity",0);
+const hit = gRoot.append("rect").attr("fill","transparent").style("cursor","crosshair");
+
+function seriesVal(id, y){
+  const d = econ.get(y); if (!d) return null;
+  if (id === "debt") return d.debt != null ? conv(d.debt, y) : null;
+  if (id === "deficit") return d.deficit != null ? conv(d.deficit, y) : null;
+  return d.interest != null ? conv(d.interest, y) : null;
+}
+function xDomain(){
+  if (S.zoom === "full") return [1776, 2026];
+  const span = 60; let a = S.t - span/2, b = S.t + span/2;
+  if (a < 1776){ b += 1776 - a; a = 1776; } if (b > 2026){ a -= b - 2026; b = 2026; }
+  return [a, b];
+}
+let chartAnim = true;
+function drawChart(){
+  chartAnim = false;
+  W = document.getElementById("chartWrap").clientWidth || 700;
+  if (drawChart.narrow !== (W < 560)){ drawChart.narrow = W < 560; panelTitles(drawChart.narrow); }
+  const iw = W - M.l - M.r;
+  const shown = PAN.filter(p => S.series[p.id]);
+  let yOff = M.t + 34;
+  const [a, b] = xDomain();
+  const x = d3.scaleLinear().domain([a, b]).range([0, iw]);
+  const yrs = d3.range(Math.max(1776, Math.floor(a) - 1), Math.min(2025, Math.ceil(b)) + 1);
+  const textC = css("--muted");
+  PAN.forEach(p => panels[p.id].g.style("display", S.series[p.id] ? null : "none"));
+  let lastBottom = yOff;
+  shown.forEach(p => {
+    const P = panels[p.id]; P.g.attr("transform", `translate(${M.l},${yOff})`);
+    const vals = yrs.map(y => ({y, v: seriesVal(p.id, y)})).filter(o => o.v != null);
+    let lo = 0, hi = 0;
+    vals.forEach(o => { hi = Math.max(hi, o.v); lo = Math.min(lo, o.v); });
+    if (hi === 0 && lo === 0) hi = 1;
+    // ease the scale so the chart "collapses" smoothly instead of jumping
+    const tgt = [lo, hi]; const cur = yEase[p.id] || tgt;
+    const e = [cur[0] + (tgt[0]-cur[0])*0.2, cur[1] + (tgt[1]-cur[1])*0.2];
+    const done = Math.abs(e[1]-tgt[1]) <= Math.abs(tgt[1])*0.002 && Math.abs(e[0]-tgt[0]) <= Math.abs(tgt[0])*0.002+1e-9;
+    yEase[p.id] = done ? tgt : e; if (!done) chartAnim = true;
+    const yS = d3.scaleLinear().domain(yEase[p.id]).range([p.h, 0]).nice(3);
+    P.y = yS; P.h = p.h; P.top = yOff;
+    const ticks = yS.ticks(3);
+    const tk = vals.length ? ticks : [];
+    P.grid.selectAll("line").data(vals.length ? ticks : [0]).join("line").attr("x1",0).attr("x2",iw).attr("y1",yS).attr("y2",yS).attr("stroke", t => t === 0 ? css("--muted") : null);
+    P.axis.selectAll("text").data(tk).join("text").attr("x",-8).attr("y", t => yS(t)+3.5).attr("text-anchor","end").text(t => t === 0 ? "0" : (p.id === "deficit" ? (t > 0 ? "+" : "−") : "") + fmtVShort(Math.abs(t)));
+    const col = css(p.v);
+    if (p.id === "debt"){
+      const area = d3.area().x(o => x(o.y)).y0(yS(0)).y1(o => yS(o.v)).curve(d3.curveMonotoneX);
+      const line = d3.line().x(o => x(o.y)).y(o => yS(o.v)).curve(d3.curveMonotoneX);
+      P.mark.selectAll("path.a").data([vals]).join("path").attr("class","a").attr("d", area).attr("fill", col).attr("fill-opacity", .18);
+      P.mark.selectAll("path.l").data([vals]).join("path").attr("class","l").attr("d", line).attr("fill","none").attr("stroke", col).attr("stroke-width", 2);
+    } else if (p.id === "deficit"){
+      const bw = Math.max(1, iw / (b - a) - 1.5);
+      P.mark.selectAll("rect").data(vals, o => o.y).join("rect")
+        .attr("x", o => x(o.y) - bw/2).attr("width", bw)
+        .attr("y", o => Math.min(yS(0), yS(o.v))).attr("height", o => Math.max(0.5, Math.abs(yS(o.v) - yS(0))))
+        .attr("rx", Math.min(2, bw/2)).attr("fill", o => o.v >= 0 ? css("--debt") : col).attr("fill-opacity", o => econ.get(o.y).deficitEst ? .45 : .9);
+    } else {
+      const line = d3.line().x(o => x(o.y)).y(o => yS(o.v)).curve(d3.curveMonotoneX);
+      const area = d3.area().x(o => x(o.y)).y0(yS(0)).y1(o => yS(o.v)).curve(d3.curveMonotoneX);
+      P.mark.selectAll("path.a").data([vals]).join("path").attr("class","a").attr("d", area).attr("fill", col).attr("fill-opacity", .14);
+      P.mark.selectAll("path.l").data([vals]).join("path").attr("class","l").attr("d", line).attr("fill","none").attr("stroke", col).attr("stroke-width", 2);
+      P.mark.selectAll("text.nodata").data(vals.length ? [] : [1]).join("text").attr("class","nodata").attr("x", iw/2).attr("y", p.h/2).attr("text-anchor","middle").attr("fill", textC).style("font-size","12px").text("Interest is tracked from 1940");
+    }
+    // value label at cursor
+    const cy = yearOf(S.t), cv = seriesVal(p.id, cy);
+    P.mark.selectAll("g.cv").data(cv != null && S.t >= a && S.t <= b ? [cv] : []).join(en => { const g = en.append("g").attr("class","cv"); g.append("circle").attr("r",4.5); g.append("text").style("font-size","11.5px").style("font-weight","600"); return g; })
+      .attr("transform", v => `translate(${x(cy)},${yS(v)})`)
+      .call(g => g.select("circle").attr("fill", p.id === "deficit" && cv >= 0 ? css("--debt") : col).attr("stroke", css("--surface")).attr("stroke-width", 2))
+      .call(g => g.select("text").attr("x", x(cy) > iw - 110 ? -8 : 8).attr("text-anchor", x(cy) > iw - 110 ? "end" : "start").attr("y", v => p.id === "deficit" ? (v < 0 ? (yS(0) - yS(v)) - 6 : (yS(0) - yS(v)) + 15) : -7).attr("fill", css("--ink")).text(v => (p.id === "deficit" ? (v >= 0 ? "Surplus " : "Deficit ") : "") + fmtVShort(Math.abs(v))));
+    yOff += p.h + GAP; lastBottom = yOff - GAP;
+  });
+  const H = lastBottom + 26;
+  svg.attr("viewBox", `0 0 ${W} ${H}`).attr("height", H);
+  // x axis
+  const step = (b - a) > 150 ? 25 : (b - a) > 60 ? 10 : 10;
+  const xt = d3.range(Math.ceil(a/step)*step, b + 0.01, step);
+  xAxisG.attr("transform", `translate(${M.l},${lastBottom})`);
+  xAxisG.selectAll("text").data(xt).join("text").attr("x", x).attr("y", 16).attr("text-anchor","middle").text(d => d);
+  // markers lane
+  lane.attr("transform", `translate(${M.l},${M.t})`);
+  const vis = items.filter(it => itemVisible(it) && it.tt >= a && it.tt <= b);
+  lane.selectAll("line.base").data([1]).join("line").attr("class","base").attr("x1",0).attr("x2",iw).attr("y1",0).attr("y2",0).attr("stroke", css("--line"));
+  lane.selectAll("path.mk").data(vis, it => it.id).join("path").attr("class","mk")
+    .attr("d", it => it.type === "event" ? d3.symbol(d3.symbolDiamond, 46)() : it.type === "ruling" ? d3.symbol(d3.symbolSquare, 44)() : d3.symbol(d3.symbolCircle, 56)())
+    .attr("transform", it => `translate(${x(it.tt)},0)`).attr("fill", it => itemColor(it)).attr("stroke", css("--surface")).attr("stroke-width", 1.5)
+    .style("cursor","pointer")
+    .on("mouseenter", (ev, it) => showTip(ev, `<b>${it.title}</b><div class="r"><span class="k">${fmtDate(it.date)}</span></div><div style="color:var(--ink-2);margin-top:3px">${it.type === "event" ? "Event" : BUCKETS[it.bucket]} · click for details</div>`))
+    .on("mouseleave", hideTip)
+    .on("click", (ev, it) => { ev.stopPropagation(); openItem(it); });
+  // cursor
+  const cx = x(S.t);
+  cursor.attr("transform", `translate(${M.l},0)`).style("display", S.t >= a && S.t <= b ? null : "none");
+  cursor.select(".cl").attr("x1", cx).attr("x2", cx).attr("y1", M.t + 8).attr("y2", lastBottom);
+  hit.attr("x", M.l).attr("y", M.t + 12).attr("width", iw).attr("height", Math.max(0, lastBottom - M.t - 12));
+  drawChart.x = x; drawChart.iw = iw; drawChart.bottom = lastBottom;
+}
+function showTip(ev, html){
+  const wrap = document.getElementById("chartWrap").getBoundingClientRect();
+  tip.innerHTML = html; tip.classList.add("on");
+  let lx = ev.clientX - wrap.left + 14, ly = ev.clientY - wrap.top + 12;
+  if (lx + 240 > wrap.width) lx = ev.clientX - wrap.left - 250;
+  tip.style.left = Math.max(0, lx) + "px"; tip.style.top = ly + "px";
+}
+function hideTip(){ tip.classList.remove("on"); hoverLine.style("opacity", 0); }
+hit.on("mousemove", ev => {
+  const x = drawChart.x; if (!x) return;
+  const [mx] = d3.pointer(ev, gRoot.node());
+  const yr = Math.round(x.invert(mx - M.l)); const yy = Math.max(1776, Math.min(2025, yr));
+  hoverLine.attr("x1", M.l + x(yy)).attr("x2", M.l + x(yy)).attr("y1", M.t + 8).attr("y2", drawChart.bottom).style("opacity", 1);
+  const d = econ.get(yy); const rows = [];
+  const row = (v, lab, val) => `<div class="r"><span class="k"><span class="dot" style="background:var(${v})"></span>${lab}</span><span>${val}</span></div>`;
+  if (S.series.debt) rows.push(row("--debt", "Debt", d.debt != null ? fmtVShort(conv(d.debt, yy)) : "—"));
+  if (S.series.deficit) rows.push(row("--def", d.deficit > 0 ? "Surplus" : "Deficit", d.deficit != null ? fmtVShort(Math.abs(conv(d.deficit, yy))) + (d.deficitEst ? " est." : "") : "—"));
+  if (S.series.interest) rows.push(row("--int", "Interest", d.interest != null ? fmtVShort(conv(d.interest, yy)) : "—"));
+  showTip(ev, `<b>${yy}</b>${rows.join("")}<div style="color:var(--muted);margin-top:4px">Click to jump here</div>`);
+}).on("mouseleave", hideTip).on("click", ev => {
+  if (chartDragged) return;
+  const [mx] = d3.pointer(ev, gRoot.node()); setT(drawChart.x.invert(mx - M.l) );
+});
+let chartDragged = false;
+// drag/scroll on chart pans time
+document.getElementById("chartWrap").addEventListener("wheel", ev => {
+  if (Math.abs(ev.deltaX) > Math.abs(ev.deltaY) || ev.shiftKey){ ev.preventDefault(); setT(S.t + (ev.deltaX || ev.deltaY) * 0.04); }
+}, {passive:false});
+(function(){ let sx = null, st = null;
+  const el = document.getElementById("chart");
+  el.addEventListener("pointerdown", e => { if (e.target.classList.contains("mk")) return; sx = e.clientX; st = S.t; chartDragged = false; });
+  window.addEventListener("pointermove", e => { if (sx == null) return; const dx = e.clientX - sx; if (Math.abs(dx) > 4){ chartDragged = true; stop(); const [a,b] = xDomain(); setT(st - dx / drawChart.iw * (b - a) * (S.zoom === "follow" ? 1 : -1)); } });
+  window.addEventListener("pointerup", () => { sx = null; });
+})();
+
+/* series chips */
+const seriesChips = document.getElementById("seriesChips");
+seriesChips.innerHTML = PAN.map(p => `<button class="fchip" id="sc-${p.id}" data-s="${p.id}" aria-pressed="true"><span class="dot" style="background:var(${p.v})"></span>${p.id === "debt" ? "Debt" : p.id === "deficit" ? "Deficit / surplus" : "Interest"}</button>`).join("");
+seriesChips.addEventListener("click", e => { const b = e.target.closest("[data-s]"); if (!b) return; const k = b.dataset.s;
+  if (S.series[k] && Object.values(S.series).filter(Boolean).length === 1) return;
+  S.series[k] = !S.series[k]; b.setAttribute("aria-pressed", S.series[k]); yEase = {}; chartAnim = true; render(true); });
+
+/* ---------- map ---------- */
+const mapSvg = d3.select("#map");
+const features = topojson.feature(ATLAS, ATLAS.objects.states).features;
+const path = d3.geoPath();
+const mapG = mapSvg.append("g");
+const stPaths = mapG.selectAll("path").data(features).join("path").attr("class","st").attr("d", path)
+  .attr("id", f => "st-" + D.fips[f.id]).on("click", (e, f) => { const ab = D.fips[f.id]; if (!ab || isGhost(ab)) return; openState(ab); })
+  .on("mouseenter", function(e, f){ d3.select(this).raise(); });
+stPaths.append("title");
+let prevStates = new Set();
+const labelG = mapSvg.append("g").attr("class","wlabels");
+const SMALL = new Set(["VT","NH","MA","RI","CT","NJ","DE","MD","DC","HI"]);
+const centroids = {}; features.forEach(f => { const ab = D.fips[f.id]; if (ab) centroids[ab] = path.centroid(f); });
+centroids.FL = [centroids.FL[0] + 18, centroids.FL[1]]; centroids.LA = [centroids.LA[0] - 12, centroids.LA[1]]; centroids.MI = [centroids.MI[0] + 14, centroids.MI[1] + 22];
+function drawWageLabels(iso){
+  const on = S.mapMode === "wage";
+  const data = on ? Object.keys(centroids).filter(ab => !SMALL.has(ab) && !isGhost(ab) && effMWAt(ab, iso) != null) : [];
+  const conv$ = v => S.view === "real" ? v * CPI_BASE / econ.get(yearOf(S.t)).cpi : v;
+  labelG.selectAll("text").data(data, d => d).join("text").attr("class","wl")
+    .attr("x", ab => centroids[ab][0]).attr("y", ab => centroids[ab][1] + 5)
+    .attr("fill", ab => mwStep(ab, iso) >= 3 ? "#fff" : css("--ink"))
+    .attr("stroke", ab => mwColor(mwStep(ab, iso)))
+    .text(ab => { const v = conv$(effMWAt(ab, iso)); return "$" + (v >= 10 ? v.toFixed(1).replace(/\.0$/, "") : v.toFixed(2)); });
+}
+function isGhost(ab){ if (ab === "DC") return S.t < 1800.5; const d = D.statehood[ab]; return !d || tToISO(S.t) < d && !(D.original13.includes(ab)); }
+// Minimum wage in effect in a state: the higher of the state's own rate and the federal rate
+function stateMWAt(ab, iso){ const h = D.stateMW[ab]; let r = null; if (h) for (const [d, v] of h) if (d <= iso) r = v; return r; }
+function effMWAt(ab, iso){ const s = stateMWAt(ab, iso), f = minWageAt(iso); if (s == null && f == null) return null; return Math.max(s || 0, f || 0); }
+const MW_STEPS = [{max:1.0001, lab:"Federal minimum only"}, {max:1.25, lab:"Up to 25% higher"}, {max:1.5, lab:"25–50% higher"}, {max:2, lab:"50–100% higher"}, {max:Infinity, lab:"Double or more"}];
+function mwStep(ab, iso){ const e = effMWAt(ab, iso), f = minWageAt(iso); if (e == null) return -1; if (!f) return 4; const r = e / f; return MW_STEPS.findIndex(s => r <= s.max); }
+const mwColor = i => i < 0 ? css("--neutral-state") : css(["--debt-0","--debt-1","--debt-2","--debt-3","--debt-4"][i]);
+function stateColor(ab){
+  const iso = tToISO(S.t);
+  if (S.mapMode === "wage") return mwColor(mwStep(ab, iso));
+  const ey = electionFor(S.t);
+  if (!ey) return css("--neutral-state");
+  const p = D.elections[ey][ab];
+  if (!p) return css("--neutral-state");
+  return partyColor(p, ey);
+}
+function updateMap(){
+  const iso = tToISO(S.t);
+  const now = new Set();
+  stPaths.each(function(f){
+    const ab = D.fips[f.id]; if (!ab) return;
+    const ghost = isGhost(ab);
+    if (!ghost) now.add(ab);
+    const el = d3.select(this);
+    el.classed("ghost", ghost).classed("sel", S.selState === ab).attr("fill", ghost ? null : stateColor(ab));
+    if (!ghost && prevStates.size && !prevStates.has(ab) && S.playing !== "fast"){ this.classList.remove("joined"); void this.getBoundingClientRect(); this.classList.add("joined"); }
+    const mw = S.mapMode === "wage" && !ghost ? effMWAt(ab, iso) : null;
+    el.select("title").text(ghost ? `${D.stateNames[ab]} (joins ${D.statehood[ab] ? D.statehood[ab].slice(0,4) : ""})` : D.stateNames[ab] + (mw != null ? ` · $${mw.toFixed(2)}/hr` : ""));
+  });
+  prevStates = now; updateRealignNote();
+  const legend = document.getElementById("mapLegend"), foot = document.getElementById("mapFoot"), title = document.getElementById("mapTitle");
+  const n = statesAt(iso).length || 13;
+  drawWageLabels(iso);
+  if (S.mapMode === "wage"){
+    const y = yearOf(S.t), f = minWageAt(iso);
+    title.textContent = `Minimum wage by state · ${y}`;
+    const used = new Set(); stPaths.each(f2 => { const ab = D.fips[f2.id]; if (ab && !isGhost(ab)) used.add(mwStep(ab, iso)); });
+    legend.innerHTML = (used.has(-1) ? `<span><i class="lg-sw" style="background:var(--neutral-state)"></i>No minimum wage</span>` : "")
+      + (f ? MW_STEPS.map((s, i) => `<span><i class="lg-sw" style="background:${mwColor(i)}"></i>${s.lab}</span>`).join("") : used.has(4) ? `<span><i class="lg-sw" style="background:${mwColor(4)}"></i>State minimum wage law</span>` : "");
+    foot.innerHTML = (f ? `Federal minimum in ${y}: <b>$${f.toFixed(2)}/hr</b>. Each state shows the minimum in effect there, the higher of its own rate and the federal one. Darker states set their own, higher minimum.`
+        : `There was no federal minimum wage until 1938. Several states had minimum wages for women and children in the 1910s–1930s, which are not shown yet.`)
+      + (S.view === "real" ? " Amounts are in 2025 dollars." : "")
+      + (y >= 2025 ? " 2025 is shown at January 2024 rates, the latest loaded." : "")
+      + ` <span class="hint">Sources: Vaghul & Zipperer historical state minimum wage data (to 2022); U.S. Department of Labor (2023–2024).</span>`;
+    return;
+  }
+  const ey = electionFor(S.t);
+  title.textContent = ey ? `The ${n} states · ${ey} election` : `The ${n} states`;
+  if (!ey){ legend.innerHTML = `<span><span class="dot" style="background:var(--neutral-state)"></span>${S.t < 1787 ? "The 13 original states" : "Ratified the Constitution"}</span><span><span class="dot" style="background:var(--ghost);outline:1px dashed var(--muted)"></span>Future states</span>`;
+    foot.textContent = "The first presidential election was held in early 1789. Press play or drag the timeline to watch the country grow."; return; }
+  const counts = {}; Object.values(D.elections[ey]).forEach(p => counts[p] = (counts[p]||0) + 1);
+  legend.innerHTML = Object.entries(counts).sort((a,b) => b[1]-a[1]).map(([p,c]) => `<span><span class="dot" style="background:${partyColor(p, ey)}"></span>${D.parties[p].name} ${c}</span>`).join("")
+    + (n < 50 ? `<span><span class="dot" style="background:var(--ghost);outline:1px dashed var(--muted)"></span>Not yet a state</span>` : "");
+  foot.innerHTML = `Won by <b>${D.winners[ey]}</b>. ` + (flipped(ey)
+    ? `<b>Colors adjusted for ideology:</b> before 1897, Democrats are shown red and Republicans blue, because the two parties' positions were roughly the reverse of today's. Other parties keep their own colors.`
+    : ey < FLIP_T ? `Showing true party colors: Democrats blue, Republicans red. Before 1897 the parties' positions were roughly the reverse of today's.`
+    : `Red is Republican and blue is Democratic, matching today's colors.`);
+}
+document.getElementById("mapSeg").addEventListener("click", e => { const b = e.target.closest("[data-map]"); if (!b) return; S.mapMode = b.dataset.map; document.querySelectorAll("#mapSeg button").forEach(x => x.setAttribute("aria-pressed", x === b)); updateMap(); });
+
+/* ---------- feed & filters ---------- */
+const filtersEl = document.getElementById("filters");
+function chip(group, key, label, dotVar){ const on = S[group].has(key); return `<button class="fchip" data-g="${group}" data-k="${key}" aria-pressed="${on}">${dotVar ? `<span class="dot" style="background:var(${dotVar})"></span>` : ""}${label}</button>`; }
+function renderFilters(){
+  filtersEl.innerHTML = `<div class="frow">${Object.entries(TYPES).map(([k,l]) => chip("types", k, l)).join("")}</div>
+    <div class="frow">${Object.entries(BUCKETS).map(([k,l]) => chip("buckets", k, l, BUCKET_VAR[k])).join("")}</div>
+    <div class="frow">${Object.entries(CATS).map(([k,l]) => chip("cats", k, l)).join("")}</div>`;
+}
+filtersEl.addEventListener("click", e => { const b = e.target.closest(".fchip"); if (!b) return; const set = S[b.dataset.g];
+  if (set.has(b.dataset.k)) { if (set.size > 1) set.delete(b.dataset.k); } else set.add(b.dataset.k);
+  renderFilters(); render(true); drawTrack(); chartAnim = true; });
+function itemMeta(it){
+  const bits = [fmtDate(it.date)];
+  if (it.type === "law") bits.push(it.president ? "Signed by " + it.president.split(" ").slice(-1)[0] : "");
+  if (it.type === "ruling") bits.push("Supreme Court · " + it.split);
+  if (it.type === "amendment") bits.push("Constitutional amendment");
+  if (it.type !== "event") bits.push(`<span style="color:var(${BUCKET_VAR[it.bucket]})">${BUCKETS[it.bucket]}</span>`);
+  if (it.pattern) bits.push(it.pattern);
+  return bits.filter(Boolean).map(b => `<span>${b}</span>`).join("");
+}
+const feedEl = document.getElementById("feed");
+feedEl.addEventListener("click", e => { const b = e.target.closest("[data-id]"); if (b) openItem(items.find(i => i.id === b.dataset.id)); });
+document.getElementById("feedMore").addEventListener("click", () => { S.feedLimit += 8; updateFeed(); });
+function updateFeed(){
+  const vis = items.filter(itemVisible);
+  const past = vis.filter(it => it.tt <= S.t).reverse();
+  const next = vis.find(it => it.tt > S.t);
+  const shown = past.slice(0, S.feedLimit);
+  const html = [];
+  if (next) html.push(`<button class="item future" data-id="${next.id}"><span class="bar" style="background:${itemColor(next)}"></span><span><div class="m" style="margin:0 0 2px">Coming up</div><div class="t">${next.title}</div><div class="m">${itemMeta(next)}</div></span></button>`);
+  shown.forEach(it => html.push(`<button class="item" data-id="${it.id}"><span class="bar" style="background:${itemColor(it)}"></span><span><div class="t">${it.title}</div><div class="m">${itemMeta(it)}</div></span></button>`));
+  if (!shown.length) html.push(`<div class="hint">Nothing matching your filters has happened yet. Move the timeline forward.</div>`);
+  const key = html.join("");
+  if (feedEl.dataset.key !== key){ feedEl.innerHTML = key; feedEl.dataset.key = key; }
+  document.getElementById("feedNote").textContent = `${past.length} of ${vis.length} so far`;
+  document.getElementById("feedMore").hidden = past.length <= S.feedLimit;
+}
+
+/* ---------- drawer ---------- */
+const drawer = document.getElementById("drawer"), dBody = document.getElementById("drawerBody"), dKind = document.getElementById("drawerKind");
+function openDrawer(kind, html){ dKind.textContent = kind; dBody.innerHTML = html; drawer.classList.add("open"); drawer.setAttribute("aria-hidden","false"); dBody.scrollTop = 0; }
+function closeDrawer(){ drawer.classList.remove("open"); drawer.setAttribute("aria-hidden","true"); if (S.selState){ S.selState = null; updateMap(); } }
+document.getElementById("drawerClose").addEventListener("click", closeDrawer);
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
+dBody.addEventListener("click", e => {
+  const b = e.target.closest("[data-jump]"); if (b){ setT(+b.dataset.jump); }
+  if (e.target.closest("#backToList") && listCtx){ openLawList(listCtx.tab, listCtx.q); return; }
+  const lt = e.target.closest("[data-ltab]"); if (lt){ openLawList(lt.dataset.ltab, listCtx ? listCtx.q : ""); return; }
+  const s = e.target.closest("[data-item]"); if (s) openItem(items.find(i => i.id === s.dataset.item), !!s.closest("#lawList"));
+});
+dBody.addEventListener("input", e => { if (e.target.id === "lawSearch" && listCtx){ listCtx.q = e.target.value; renderLawList(); } });
+const BUCKET_WHY = {
+  lib:"Liberal-leaning: it expanded federal spending, the government's economic role, progressive taxation or looser money.",
+  con:"Conservative-leaning: it cut taxes or spending, limited the government's economic role or tightened money.",
+  mix:"Mixed: tariffs, wartime finance, or deals that raised some taxes or spending while cutting others."};
+function numbersAround(y){
+  const rows = [];
+  const a = econ.get(y), b = econ.get(Math.min(2025, y + 4));
+  if (a && a.debt != null && b && b.debt != null){
+    rows.push(`<dt>Debt in ${y}</dt><dd class="tnum">${money(a.debt)} · ${(a.debt/a.gdp*100).toFixed(1)}% of GDP</dd>`);
+    if (b.y !== a.y) rows.push(`<dt>Debt in ${b.y}</dt><dd class="tnum">${money(b.debt)} · ${(b.debt/b.gdp*100).toFixed(1)}% of GDP</dd>`);
+  }
+  if (a && a.deficit != null) rows.push(`<dt>${a.deficit > 0 ? "Surplus" : "Deficit"} in ${y}</dt><dd class="tnum">${money(Math.abs(a.deficit))}${a.deficitEst ? " (est.)" : ""}</dd>`);
+  if (a && a.interest != null) rows.push(`<dt>Net interest in ${y}</dt><dd class="tnum">${money(a.interest)}</dd>`);
+  return rows.length ? `<div><div class="sect">The numbers around it</div><dl class="kv">${rows.join("")}</dl></div>` : "";
+}
+let listCtx = null; // remembers the laws list so an item can link back to it
+function openItem(it, fromList){
+  if (!fromList) listCtx = null;
+  if (!it) return;
+  const c = it.congress ? D.congresses.find(x => x.n === it.congress) : null;
+  const kind = it.type === "law" ? "Law" : it.type === "ruling" ? "Supreme Court ruling" : it.type === "amendment" ? "Constitutional amendment" : "Event";
+  const kv = [`<dt>Date</dt><dd>${fmtDate(it.date)}</dd>`];
+  if (it.type === "law") kv.push(`<dt>President</dt><dd>${it.president || "—"}</dd><dt>How</dt><dd>${it.how || "Signed"}</dd>`);
+  if (it.type === "amendment") kv.push(`<dt>How</dt><dd>${it.how}</dd>`);
+  if (c && it.type !== "ruling") kv.push(`<dt>Congress</dt><dd>${ord(c.n)} (${c.start.slice(0,4)}–${c.end.slice(0,4)})</dd><dt>House</dt><dd>${c.house} majority, ${c.houseSeats.replace("-","–")}</dd><dt>Senate</dt><dd>${c.senate} majority, ${c.senateSeats.replace("-","–")}</dd>`);
+  if (it.type === "ruling") kv.push(`<dt>Decision</dt><dd>${it.split}</dd><dt>Majority opinion</dt><dd>${it.author}</dd><dt>President at the time</dt><dd>${it.president}</dd>`);
+  if (it.vote) kv.push(`<dt>House vote</dt><dd class="tnum">${it.vote.house}</dd><dt>Senate vote</dt><dd class="tnum">${it.vote.senate}</dd>`);
+  if (it.pattern) kv.push(`<dt>Vote pattern</dt><dd>${it.pattern}</dd>`);
+  if (it.type === "event") kv.push(`<dt>President</dt><dd>${it.president || "—"}</dd>`);
+  kv.push(`<dt>Category</dt><dd>${CATS[it.cat]}</dd>`);
+  const y = Math.floor(it.tt);
+  openDrawer(kind, `${fromList && listCtx ? `<button class="back" id="backToList">← Back to the list</button>` : ""}<h3>${it.title}</h3>
+    ${it.type !== "event" ? `<div><span class="chip"><span class="dot" style="background:var(${BUCKET_VAR[it.bucket]})"></span>${BUCKETS[it.bucket]}</span></div>` : ""}
+    <p>${it.summary}</p>
+    <div><div class="sect">What it did to the numbers</div><p>${it.impact}</p></div>
+    <dl class="kv">${kv.join("")}</dl>
+    ${numbersAround(y)}
+    ${it.type !== "event" ? `<div class="bucket-note">${BUCKET_WHY[it.bucket]} This is an early classification; a check against every recorded vote is planned.</div>` : ""}
+    <div><button class="btn" data-jump="${it.tt}">Jump the timeline to ${y}</button></div>`);
+}
+const METRIC_INFO = {
+  debt:["National debt","Everything the federal government owes: bonds and other securities held by the public plus money it owes its own trust funds, such as Social Security. The figure is for the end of each fiscal year.","U.S. Treasury, Historical Debt Outstanding, 1790–2025."],
+  deficit:["Deficit and surplus","The gap between what the government spent and what it collected in a year. A deficit is added to the debt; a surplus can pay it down. Before 1901 the figure is estimated from the change in debt.","OMB historical tables via FRED (1901–2025); estimated from Treasury debt data before 1901."],
+  interest:["Net interest","Interest the government pays on its debt, minus interest it earns. It grows when the debt grows and when interest rates rise.","OMB historical tables via FRED (1940–2025)."],
+  ratio:["Debt-to-GDP","Debt divided by the size of the whole economy that year. It's the best way to compare debt across eras: $1 billion was enormous in 1865 and small today.","Treasury debt ÷ GDP (MeasuringWorth to 1929, BEA after)."],
+  wage:["Federal minimum wage","The lowest hourly wage most employers may pay, set by Congress under the Fair Labor Standards Act of 1938. It only changes when Congress passes a law, so it loses value to inflation between raises.","U.S. Department of Labor; inflation adjustment uses the MeasuringWorth CPI."],
+  laws:["Landmark laws by bucket","A running count of the landmark economic laws in this timeline, sorted by what each one did. It covers the major laws that moved the numbers on this page, not every law passed.","Curated for this project; see each law for details."]};
+function openMetric(id){
+  const [t, body, src] = METRIC_INFO[id];
+  const recent = items.filter(it => it.tt <= S.t && (it.metrics || []).includes(id === "ratio" ? "debt" : id === "laws" ? "zzz" : id === "wage" ? "minwage" : id)).slice(-5).reverse();
+  openDrawer("Measure", `<h3>${t}</h3><p>${body}</p>
+    ${recent.length ? `<div><div class="sect">Recent things that moved it</div><div class="feed">${recent.map(it => `<button class="item" data-item="${it.id}"><span class="bar" style="background:${itemColor(it)}"></span><span><div class="t">${it.title}</div><div class="m">${itemMeta(it)}</div></span></button>`).join("")}</div></div>` : ""}
+    <div class="hint"><b>Source:</b> ${src}</div>`);
+}
+function mwSpark(ab){
+  const yrs = d3.range(1938, 2026), W2 = 380, H2 = 110, m = {l:34, r:8, t:8, b:18};
+  const pts = yrs.map(y => ({y, s: effMWAt(ab, y + "-07-01"), f: minWageAt(y + "-07-01")}));
+  const x = d3.scaleLinear([1938, 2025], [m.l, W2 - m.r]);
+  const yS = d3.scaleLinear().domain([0, d3.max(pts, p => Math.max(p.s || 0, p.f || 0))]).range([H2 - m.b, m.t]).nice(3);
+  const ln = k => d3.line().defined(p => p[k] != null).x(p => x(p.y)).y(p => yS(p[k])).curve(d3.curveStepAfter)(pts);
+  const cx = x(Math.min(2025, Math.max(1938, yearOf(S.t))));
+  return `<div><div class="sect">Minimum wage history, 1938–2025</div>
+    <svg viewBox="0 0 ${W2} ${H2}" style="width:100%;height:auto;display:block" role="img" aria-label="Minimum wage in ${D.stateNames[ab]} compared with the federal minimum">
+      ${yS.ticks(3).map(tk => `<line x1="${m.l}" x2="${W2 - m.r}" y1="${yS(tk)}" y2="${yS(tk)}" stroke="var(--line)"/><text x="${m.l - 5}" y="${yS(tk) + 3.5}" text-anchor="end" font-size="10" fill="var(--muted)">$${tk}</text>`).join("")}
+      ${[1940, 1960, 1980, 2000, 2020].map(v => `<text x="${x(v)}" y="${H2 - 4}" text-anchor="middle" font-size="10" fill="var(--muted)">${v}</text>`).join("")}
+      <path d="${ln("f")}" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <path d="${ln("s")}" fill="none" stroke="var(--debt)" stroke-width="2"/>
+      <line x1="${cx}" x2="${cx}" y1="${m.t}" y2="${H2 - m.b}" stroke="var(--ink)" stroke-width="1"/>
+    </svg>
+    <div class="legend" style="margin-top:2px"><span><i class="lg-sw" style="background:var(--debt);height:3px"></i>${D.stateNames[ab]} (in effect)</span><span><i class="lg-sw" style="background:var(--muted);height:2px"></i>Federal</span></div></div>`;
+}
+function openState(ab){
+  S.selState = ab; updateMap();
+  const iso = tToISO(S.t);
+  const years = Object.keys(D.elections).map(Number).sort((a,b) => a-b);
+  const hist = years.map(y => { const p = D.elections[y][ab]; const c = !p ? "var(--ghost)" : partyColor(p, y);
+    return `<i title="${y}: ${p ? D.parties[p].name : "did not vote"}" style="background:${c};${y + 0.85 <= S.t ? "" : "opacity:.35"}"></i>`; }).join("");
+  const ey = electionFor(S.t); const p = ey ? D.elections[ey][ab] : null;
+  const rank = Object.entries(D.statehood).sort((a,b) => a[1] < b[1] ? -1 : 1).findIndex(([s]) => s === ab) + 1;
+  const w = D.stateMinWage[ab];
+  const wageTxt = w == null ? "No state minimum wage law; the federal $7.25 applies" : (w <= 7.25 ? `$${w.toFixed(2)} (federal $7.25 applies to most workers)` : `$${w.toFixed(2)} an hour`);
+  const sNow = stateMWAt(ab, iso), fNow = minWageAt(iso), eNow = effMWAt(ab, iso);
+  const mwThen = eNow == null ? "None" : sNow != null && sNow > (fNow || 0) ? `$${sNow.toFixed(2)}/hr, set by state law` : `$${eNow.toFixed(2)}/hr, the federal minimum`;
+  const dem = years.filter(y => D.elections[y][ab] === "D").length, rep = years.filter(y => D.elections[y][ab] === "R").length;
+  openDrawer("State", `<h3>${D.stateNames[ab]}</h3>
+    <dl class="kv">
+      <dt>Became a state</dt><dd>${ab === "DC" ? "Federal district (votes for president since 1964)" : fmtDate(D.statehood[ab]) + ` · ${ord(rank)} state`}</dd>
+      ${ey ? `<dt>${ey} vote</dt><dd>${p ? D.parties[p].name : "Did not vote"}</dd>` : ""}
+      <dt>Minimum wage in ${yearOf(S.t)}</dt><dd>${mwThen}</dd>
+      <dt>Federal minimum in ${yearOf(S.t)}</dt><dd>${minWageAt(iso) ? "$" + minWageAt(iso).toFixed(2) : "None (before 1938)"}</dd>
+      <dt>Minimum wage today (2026)</dt><dd>${wageTxt}${D.stateMinWageNotes[ab] ? `<br><span class="hint">${D.stateMinWageNotes[ab]}</span>` : ""}</dd>
+    </dl>
+    ${mwSpark(ab)}
+    <div><div class="sect">Every presidential vote, 1789–2024</div><div class="hist">${hist}</div><div class="hint" style="margin-top:6px">Democratic ${dem} times · Republican ${rep} times. Faded squares are still in the future on the timeline.</div></div>
+    <div class="bucket-note">State debt is planned for the next phase.</div>`);
+}
+
+/* ---------- laws list ---------- */
+const LTABS = {all:"All laws", lib:"Liberal-leaning", mix:"Mixed", con:"Conservative-leaning", ruling:"Court rulings"};
+function openLawList(tab, q){
+  listCtx = {tab: tab || "all", q: q || ""};
+  const y = yearOf(S.t);
+  openDrawer("Landmark laws", `<h3>Landmark laws through ${y}</h3>
+    <p class="hint">Every landmark law, amendment and Supreme Court ruling in this timeline up to ${y}, newest first. Move the timeline to change the cutoff. Click any one for details.</p>
+    <div class="ltabs" id="lawTabs"></div>
+    <input class="lsearch" id="lawSearch" type="search" placeholder="Search by name, president or topic" value="${listCtx.q.replace(/"/g, "&quot;")}" aria-label="Search laws">
+    <div id="lawList" class="feed"></div>`);
+  renderLawList();
+}
+function renderLawList(){
+  if (!listCtx) return;
+  const past = items.filter(it => it.tt <= S.t && it.type !== "event");
+  const laws = past.filter(it => it.type === "law" || it.type === "amendment");
+  const counts = {all: laws.length, lib: 0, mix: 0, con: 0, ruling: past.filter(it => it.type === "ruling").length};
+  laws.forEach(it => counts[it.bucket]++);
+  const tabs = document.getElementById("lawTabs"); if (!tabs) return;
+  tabs.innerHTML = Object.entries(LTABS).map(([k, l]) => `<button class="fchip" data-ltab="${k}" aria-pressed="${listCtx.tab === k}">${BUCKET_VAR[k] ? `<span class="dot" style="background:var(${BUCKET_VAR[k]})"></span>` : ""}${l} <b>${counts[k]}</b></button>`).join("");
+  let list = listCtx.tab === "ruling" ? past.filter(it => it.type === "ruling") : listCtx.tab === "all" ? laws : laws.filter(it => it.bucket === listCtx.tab);
+  const q = listCtx.q.trim().toLowerCase();
+  if (q) list = list.filter(it => [it.title, it.summary, it.president, CATS[it.cat], it.author].join(" ").toLowerCase().includes(q));
+  list = list.slice().reverse();
+  // group by era (by century half) to make a long list scannable
+  const groups = [];
+  list.forEach(it => { const era = Math.floor(it.tt / 25) * 25; const g = groups[groups.length - 1];
+    if (g && g.era === era) g.items.push(it); else groups.push({era, items: [it]}); });
+  const el = document.getElementById("lawList");
+  el.innerHTML = groups.length ? groups.map(g => `<div class="lgroup"><h4>${g.era >= 2025 ? "2025–today" : g.era + "–" + (g.era + 24)}</h4>${g.items.map(it => `<button class="item" data-item="${it.id}"><span class="bar" style="background:${itemColor(it)}"></span><span><div class="t">${it.title}</div><div class="m">${itemMeta(it)}</div></span></button>`).join("")}</div>`).join("")
+    : `<div class="hint">${q ? "No matches. Try a different word." : "None yet at this point on the timeline."}</div>`;
+}
+
+/* ---------- ideology adjustment ---------- */
+const ideoBtn = document.getElementById("ideoBtn"), rNote = document.getElementById("realignNote");
+function syncIdeo(){
+  ideoBtn.textContent = S.adjusted ? "Unadjust ideology" : "Adjust ideology";
+  ideoBtn.setAttribute("aria-pressed", S.adjusted);
+  ideoBtn.title = S.adjusted ? "Show true party colors (Democrats blue, Republicans red) in every era" : "Swap party colors before 1897 so red and blue match today's meaning";
+}
+function toggleIdeo(){ S.adjusted = !S.adjusted; savePrefs(); syncIdeo(); drawTrack(); render(true); if (drawer.classList.contains("open") && dKind.textContent === "Party colors") openRealign(); }
+ideoBtn.addEventListener("click", toggleIdeo);
+rNote.addEventListener("click", openRealign);
+function updateRealignNote(){
+  const show = S.mapMode === "vote" && electionFor(S.t) != null && S.t < REALIGN_END + 1;
+  rNote.hidden = !show;
+  if (!show) return;
+  document.getElementById("realignText").innerHTML = S.adjusted
+    ? (S.t < FLIP_T ? "<b>Party colors switch in 1897.</b> Until then, Democrats are shown red and Republicans blue. Why?" : "<b>Party colors switched in 1897.</b> The parties traded positions gradually, through about 1928. Why?")
+    : "<b>Showing true party colors.</b> The parties traded positions between about 1897 and 1928. Why?";
+}
+function openRealign(){
+  openDrawer("Party colors", `<h3>Why the party colors switch in 1897</h3>
+    <p>For most of the 1800s the Democratic and Republican parties stood for roughly the opposite of what they stand for today. So that red and blue mean the same thing across the whole timeline, this site shows <b style="color:var(--rep)">Democrats in red</b> and <b style="color:var(--dem)">Republicans in blue</b> before 1897, and switches to today's colors from 1897 on.</p>
+    <div><div class="sect">Before the switch</div><p><b>Democrats</b> generally favored a small federal government, states' rights, low tariffs and hard money, and after Reconstruction they dominated the white South. <b>Republicans</b> favored a strong national government: national banks, high protective tariffs, federal support for railroads and settlement, Reconstruction and the civil-rights amendments.</p></div>
+    <div><div class="sect">The turning point, 1896–1897</div><p>In 1896 William Jennings Bryan took over the Democratic Party with a populist platform: using government to help farmers and workers against banks and railroads. Republicans under William McKinley became the party of business and the gold standard. McKinley took office in March 1897.</p></div>
+    <div><div class="sect">A gradual change, 1897–1928 and beyond</div><p>The switch took decades. The Progressive Era, Woodrow Wilson's income tax and Federal Reserve (1913) and Al Smith's 1928 campaign moved Democrats step by step toward an active federal government, and Franklin Roosevelt's New Deal (1933–1936) completed the economic side. The shift on civil rights, and the South moving to the Republicans, continued into the 1960s–1990s. The single 1897 cutoff is a simplification to keep the colors readable.</p></div>
+    <div class="bucket-note">One more note: red for Republicans and blue for Democrats only became the standard in 2000. Before that, news maps used the colors inconsistently.</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="drawerIdeo">${S.adjusted ? "Unadjust ideology: show true party colors" : "Adjust ideology: swap colors before 1897"}</button><button class="btn" data-jump="1896.9">Jump to the 1896 election</button></div>`);
+  document.getElementById("drawerIdeo").addEventListener("click", toggleIdeo);
+}
+
+/* ---------- scrubber ---------- */
+const track = d3.select("#track");
+let TW = 800;
+const tx = d3.scaleLinear().domain([1776, 2026]);
+function drawTrack(){
+  TW = document.getElementById("track").clientWidth || 800;
+  tx.range([8, TW - 8]);
+  const TH = document.getElementById("track").clientHeight || 66;
+  track.attr("viewBox", `0 0 ${TW} ${TH}`);
+  const bands = D.presidents.map(p => ({a: dateToT(p.start), b: p.end ? dateToT(p.end) : 2026, p}));
+  track.selectAll("rect.band").data(bands).join("rect").attr("class","band").attr("x", d => tx(d.a)).attr("width", d => Math.max(0.5, tx(d.b) - tx(d.a) - 1)).attr("y", 30).attr("height", 10).attr("rx", 2)
+    .attr("fill", d => css(partyVarAt(d.p.party, d.a))).attr("fill-opacity", .55).append("title").text(d => `${d.p.name} (${d.p.party})`);
+  track.selectAll("rect.pre").data([1]).join("rect").attr("class","pre").attr("x", tx(1776)).attr("width", tx(1789.33) - tx(1776) - 1).attr("y", 30).attr("height", 10).attr("rx", 2).attr("fill", css("--line"));
+  const vis = items.filter(itemVisible);
+  track.selectAll("rect.tick").data(vis, d => d.id).join("rect").attr("class","tick").attr("x", d => tx(d.tt) - 1).attr("width", 2).attr("y", d => d.type === "event" ? 18 : 12).attr("height", d => d.type === "event" ? 8 : 14).attr("rx", 1).attr("fill", d => itemColor(d));
+  const rg = track.selectAll("g.realign").data([1]).join(en => { const g = en.append("g").attr("class","realign");
+      g.append("title"); g.append("rect").attr("class","rb"); g.append("circle").attr("class","ric"); g.append("text").attr("class","rit"); return g; });
+  rg.select("title").text("Party realignment, 1897–1928: click to learn why the party colors switch");
+  rg.select(".rb").attr("x", tx(FLIP_T)).attr("width", tx(REALIGN_END) - tx(FLIP_T)).attr("y", 27).attr("height", 2.5).attr("rx", 1.25)
+    .attr("fill", css("--ink-2")).attr("opacity", .55);
+  rg.select(".ric").attr("cx", tx(FLIP_T)).attr("cy", 6).attr("r", 6.5).attr("fill", css("--ink")).attr("stroke", css("--surface")).attr("stroke-width", 1.5);
+  rg.select(".rit").attr("x", tx(FLIP_T)).attr("y", 9.5).attr("text-anchor","middle").style("font-size","9px").style("font-weight","700").attr("fill", css("--surface")).text("⇄");
+  const yt = TW < 500 ? [1800, 1850, 1900, 1950, 2000] : d3.range(1780, 2026, TW < 900 ? 20 : 10);
+  track.selectAll("text.yl").data(yt).join("text").attr("class","yl").attr("x", tx).attr("y", TH - 9).attr("text-anchor","middle").text(d => d % 50 === 0 || TW >= 900 && d % 20 === 0 ? d : "").style("font-weight", d => d % 50 === 0 ? 600 : 400);
+  updateHandle();
+}
+const handle = track.append("g").attr("class","handle");
+handle.append("rect").attr("x", -1.5).attr("width", 3).attr("y", 6).attr("height", 40).attr("rx", 1.5).attr("fill", "var(--ink)");
+handle.append("circle").attr("cy", 35).attr("r", 8).attr("fill","var(--surface)").attr("stroke","var(--ink)").attr("stroke-width", 2.5);
+function updateHandle(){ handle.raise().attr("transform", `translate(${tx(S.t)},0)`);
+  const pr = presidentAt(tToISO(S.t)); const sn = document.getElementById("scrubNow"); const txt = `${yearOf(S.t)}<i> · ${pr ? pr.name : "Continental Congress"}</i>`; if (sn._t !== txt){ sn._t = txt; sn.innerHTML = txt; } const tr = document.getElementById("track"); tr.setAttribute("aria-valuenow", yearOf(S.t)); tr.setAttribute("aria-valuetext", String(yearOf(S.t))); }
+(function(){
+  const el = document.getElementById("track"); let drag = false;
+  const at = e => { const r = el.getBoundingClientRect(); return tx.invert((e.clientX - r.left) * TW / r.width); };
+  el.addEventListener("pointerdown", e => { if (e.target.closest(".realign")){ openRealign(); return; } drag = true; el.setPointerCapture(e.pointerId); stop(); setT(at(e)); });
+  el.addEventListener("pointermove", e => { if (drag) setT(at(e)); });
+  el.addEventListener("pointerup", () => drag = false);
+  el.addEventListener("wheel", e => { e.preventDefault(); setT(S.t + (Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY) * 0.05); }, {passive:false});
+  el.addEventListener("keydown", e => { const k = {ArrowRight:1, ArrowUp:1, ArrowLeft:-1, ArrowDown:-1, PageUp:10, PageDown:-10}[e.key]; if (k){ e.preventDefault(); setT(Math.floor(S.t) + k + 0.5); } if (e.key === "Home") setT(1776.5); if (e.key === "End") setT(MAX); });
+})();
+
+/* ---------- play ---------- */
+const playBtn = document.getElementById("play"), playIcon = document.getElementById("playIcon");
+let lastTs = null;
+function stop(){ S.playing = false; playIcon.innerHTML = `<path d="M4 2l10 6-10 6z" fill="currentColor"/>`; playBtn.setAttribute("aria-label","Play through history"); }
+playBtn.addEventListener("click", () => { if (S.playing) return stop(); if (S.t >= MAX - 0.1) S.t = 1776.5; S.playing = true; lastTs = null;
+  playIcon.innerHTML = `<rect x="3" y="2" width="3.5" height="12" fill="currentColor"/><rect x="9.5" y="2" width="3.5" height="12" fill="currentColor"/>`; playBtn.setAttribute("aria-label","Pause"); });
+const SPEEDS = [1, 2, 4, 0.5];
+document.getElementById("speedBtn").addEventListener("click", e => { S.speed = SPEEDS[(SPEEDS.indexOf(S.speed) + 1) % SPEEDS.length]; e.target.textContent = `Speed: ${S.speed}×`; });
+
+/* ---------- panels menu ---------- */
+const pm = document.getElementById("panelMenu"), pb = document.getElementById("panelsBtn");
+function renderPanelMenu(){
+  pm.innerHTML = `<div class="sect">Sections</div>` + Object.entries(PANELS).map(([k,l]) => `<label><input type="checkbox" id="pp-${k}" data-p="${k}" ${S.panels.has(k) ? "checked" : ""}>${l}</label>`).join("")
+    + `<div class="sect">Counters</div>` + Object.entries(TILES).map(([k,l]) => `<label><input type="checkbox" id="pt-${k}" data-t="${k}" ${S.tiles.has(k) ? "checked" : ""}>${l}</label>`).join("");
+}
+pb.addEventListener("click", e => { e.stopPropagation(); renderPanelMenu(); pm.hidden = !pm.hidden; pb.setAttribute("aria-expanded", !pm.hidden); });
+document.addEventListener("click", e => { if (!pm.hidden && !pm.contains(e.target) && e.target !== pb){ pm.hidden = true; pb.setAttribute("aria-expanded","false"); } });
+pm.addEventListener("change", e => { const i = e.target; if (i.dataset.p){ i.checked ? S.panels.add(i.dataset.p) : S.panels.delete(i.dataset.p); } if (i.dataset.t){ i.checked ? S.tiles.add(i.dataset.t) : S.tiles.delete(i.dataset.t); } savePrefs(); applyPanels(); render(true); });
+function applyPanels(){ for (const k of Object.keys(PANELS)) document.getElementById(k).hidden = !S.panels.has(k);
+  document.querySelectorAll(".col").forEach(c => c.hidden = [...c.children].every(ch => ch.hidden)); }
+
+/* ---------- view & zoom ---------- */
+function setView(v){ S.view = v; document.querySelectorAll("#viewSeg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.view === v)); for (const k in disp) disp[k] = null; yEase = {}; chartAnim = true; savePrefs(); render(true); }
+document.getElementById("viewSeg").addEventListener("click", e => { const b = e.target.closest("[data-view]"); if (b) setView(b.dataset.view); });
+document.getElementById("zoomSeg").addEventListener("click", e => { const b = e.target.closest("[data-zoom]"); if (!b) return; S.zoom = b.dataset.zoom; document.querySelectorAll("#zoomSeg button").forEach(x => x.setAttribute("aria-pressed", x === b)); yEase = {}; chartAnim = true; });
+
+/* ---------- main loop ---------- */
+let dirty = true, lastYear = null, lastISOKey = null;
+function setT(t){ S.t = Math.max(1776, Math.min(MAX, t)); dirty = true; }
+function render(force){
+  const y = yearOf(S.t);
+  const key = y + S.view + [...S.tiles].join() + [...S.types, ...S.buckets, ...S.cats].join() + JSON.stringify(S.series);
+  const iso = tToISO(S.t);
+  if (force || key !== lastYear){ updateCounters(); updateBlocks(); lastYear = key; }
+  const mkey = iso.slice(0,7) + S.mapMode;
+  if (force || mkey !== lastISOKey){ updateEra(); updateMap(); updateFeed(); lastISOKey = mkey;
+    if (listCtx && drawer.classList.contains("open") && document.getElementById("lawList")){ const h = dBody.querySelector("h3"); if (h) h.textContent = "Landmark laws through " + yearOf(S.t); renderLawList(); } }
+  updateHandle();
+}
+function loop(ts){
+  if (S.playing){
+    if (lastTs != null){ const dt = Math.min(0.1, (ts - lastTs)/1000); S.t = Math.min(MAX, S.t + dt * 5 * S.speed); dirty = true; if (S.t >= MAX){ S.t = MAX; stop(); } }
+    lastTs = ts;
+  }
+  if (dirty){ render(); dirty = false; chartAnim = true; }
+  if (chartAnim) drawChart();
+  easeCounters();
+  requestAnimationFrame(loop);
+}
+window.addEventListener("resize", () => { drawTrack(); chartAnim = true; });
+function themeChanged(){ CSS_CACHE = {}; drawTrack(); render(true); chartAnim = true; }
+try { matchMedia("(prefers-color-scheme: dark)").addEventListener("change", themeChanged); } catch(e) {}
+new MutationObserver(themeChanged).observe(document.documentElement, {attributes:true, attributeFilter:["data-theme"]});
+document.querySelectorAll("#viewSeg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.view === S.view));
+syncIdeo(); renderFilters(); applyPanels(); drawTrack(); render(true); requestAnimationFrame(loop);
+})();
+</script>

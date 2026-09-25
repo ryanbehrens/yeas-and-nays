@@ -1,0 +1,46 @@
+Alaska|10.85|11.73
+Arizona|13.85|14.35
+Arkansas|11.00|11.00
+California|15.50|16.00
+Colorado|13.65|14.42
+Connecticut|15.00|15.69
+Delaware|11.75|13.25
+Florida|12.00|12.00
+Georgia|5.15|5.15
+Hawaii|12.00|14.00
+Idaho|7.25|7.25
+Illinois|13.00|14.00
+Indiana|7.25|7.25
+Iowa|7.25|7.25
+Kansas|7.25|7.25
+Kentucky|7.25|7.25
+Maine|13.80|14.15
+Maryland|13.25|15.00
+Massachusetts|15.00|15.00
+Michigan|10.10|10.33
+Minnesota|10.59|10.85
+Missouri|12.00|12.30
+Montana|9.95|10.30
+Nebraska|10.50|12.00
+Nevada|10.25|12.00
+New Hampshire|7.25|7.25
+New Jersey|14.13|15.13
+New Mexico|12.00|12.00
+New York|14.20|15.00
+North Carolina|7.25|7.25
+North Dakota|7.25|7.25
+Ohio|10.10|10.45
+Oklahoma|7.25|7.25
+Oregon|14.20|14.70
+Pennsylvania|7.25|7.25
+Rhode Island|13.00|14.00
+South Dakota|10.80|11.20
+Texas|7.25|7.25
+Utah|7.25|7.25
+Vermont|13.18|13.67
+Virginia|12.00|12.00
+Washington|15.74|16.28
+West Virginia|8.75|8.75
+Wisconsin|7.25|7.25
+Wyoming|5.15|5.15
+District of Columbia|17.00|17.50
