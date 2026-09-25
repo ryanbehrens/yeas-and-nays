@@ -9,7 +9,7 @@
 <title>Yeas &amp; Nays</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Merriweather:ital,wght@0,900;1,700&display=swap">
 <style>
 :root{
   --bg:#edf0ed; --surface:#fbfcfb; --surface-2:#e3e8e4; --ink:#16201c; --ink-2:#43504a; --muted:#66746d; --line:#d2dad5; --ghost:#dfe4e0;
@@ -17,7 +17,7 @@
   --debt:#16875a; --debt-0:#b5dcc8; --debt-1:#6db692; --debt-2:#16875a; --debt-3:#0b4f33; --debt-4:#062e1d;
   --def:#c47a1c; --def-0:#f2d3a0; --def-1:#e2a650; --def-2:#c47a1c; --def-3:#7f4c0e; --def-4:#4a2b06;
   --int:#7457c2; --int-0:#d4c9f2; --int-1:#a590e2; --int-2:#7457c2; --int-3:#472f8f; --int-4:#2a1a5c;
-  --brand:#21285b; --dem:#2e62d9; --rep:#d23c3c; --rep-soft:#e79a8c; --mix:#8a8497; --neutral-state:#b9c2bc;
+  --brand:#21285b; --brand-text:#1d2452; --dem:#2e62d9; --rep:#d23c3c; --rep-soft:#e79a8c; --mix:#8a8497; --neutral-state:#b9c2bc;
   --wage:#16875a;
   --shadow:0 1px 2px rgba(20,35,28,.06),0 6px 20px rgba(20,35,28,.06);
   --display:"Libre Caslon Display","Libre Caslon Text",Georgia,"Times New Roman",serif;
@@ -33,7 +33,7 @@
     --debt:#3f9f75; --debt-0:#1f4a37; --debt-1:#2d7556; --debt-2:#3f9f75; --debt-3:#7ccaa4; --debt-4:#c2ecd6;
     --def:#c08229; --def-0:#4f3512; --def-1:#86591c; --def-2:#c08229; --def-3:#e2b066; --def-4:#f5dcb3;
     --int:#8d74d8; --int-0:#35295e; --int-1:#5b479e; --int-2:#8d74d8; --int-3:#b9a8ee; --int-4:#e1d8fb;
-    --brand:#9aa6ec; --dem:#4f7fe6; --rep:#e05252; --rep-soft:#a8645a; --mix:#8f8a9c; --neutral-state:#56615b;
+    --brand:#9aa6ec; --brand-text:#e8ebfa; --dem:#4f7fe6; --rep:#e05252; --rep-soft:#a8645a; --mix:#8f8a9c; --neutral-state:#56615b;
     --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
   }
 }
@@ -44,7 +44,7 @@
   --debt:#3f9f75; --debt-0:#1f4a37; --debt-1:#2d7556; --debt-2:#3f9f75; --debt-3:#7ccaa4; --debt-4:#c2ecd6;
   --def:#c08229; --def-0:#4f3512; --def-1:#86591c; --def-2:#c08229; --def-3:#e2b066; --def-4:#f5dcb3;
   --int:#8d74d8; --int-0:#35295e; --int-1:#5b479e; --int-2:#8d74d8; --int-3:#b9a8ee; --int-4:#e1d8fb;
-  --brand:#9aa6ec; --dem:#4f7fe6; --rep:#e05252; --rep-soft:#a8645a; --mix:#8f8a9c; --neutral-state:#56615b;
+  --brand:#9aa6ec; --brand-text:#e8ebfa; --dem:#4f7fe6; --rep:#e05252; --rep-soft:#a8645a; --mix:#8f8a9c; --neutral-state:#56615b;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
 }
 *{box-sizing:border-box}
@@ -63,8 +63,8 @@ button{cursor:pointer}
 .masthead::after{content:"";position:absolute;left:0;right:0;bottom:-4px;border-bottom:1px solid var(--line)}
 .logo{display:flex;align-items:center;gap:12px;color:var(--ink);text-decoration:none}
 .logo svg{height:46px;width:auto;flex:none}
-.wm{font-family:var(--display);font-size:clamp(30px,4vw,40px);line-height:1;letter-spacing:-.01em;white-space:nowrap}
-.wm em{font-family:var(--serif);font-style:italic;color:var(--brand);font-size:1.08em;padding:0 .04em}
+.wm{font-family:"Merriweather",Georgia,"Times New Roman",serif;font-weight:900;font-size:clamp(28px,3.6vw,38px);line-height:1;letter-spacing:-.005em;white-space:nowrap;color:var(--brand-text)}
+.wm em{font-style:italic;font-weight:700;font-size:.56em;letter-spacing:0;padding:0 .2em;vertical-align:.08em}
 .sections{display:flex;gap:4px;flex-wrap:wrap}
 .sections a,.sections span{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:6px 12px;border-radius:999px;color:var(--muted);display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 .sections a[aria-current]{background:var(--ink);color:var(--surface)}
@@ -292,7 +292,7 @@ footer a{color:var(--ink-2)}
   <header class="masthead">
     <a class="logo" href="#" aria-label="Yeas and Nays">
       <svg viewBox="0 0 151.35 115.44" aria-hidden="true"><g> <g> <path fill="#0d1235" d="M112.03,112.12c0,1.48-.82,2.53-1.78,2.98-1.33.63-2.61.36-3.76-.51l-23.81-17.99-3.8-2.71-59.08-.19c-10.54-.03-19.66-9.54-19.68-20l-.12-53.17C.23,9.92,8.36.99,18.95,0l112.94.04c4.56,0,8.87,2.14,12.15,4.99,4.74,4.13,7.24,9.88,7.25,16.15l.07,50.91c.02,11.51-8.66,21.35-20.33,21.69l-18.99.07v18.27Z"/> <path fill="#fff" d="M104.89,89.7l-.07,15.45-22.25-16.74c-.9-.68-1.78-1.52-3.03-1.52l-60.38-.03c-7.73-.69-13.53-7.24-13.39-15.03l.03-51.56c0-7.26,5.3-13.27,12.45-14.25h114.73c6.87.77,12.62,6.47,12.62,13.58v53.57c0,7.08-5.95,13.26-12.88,13.57l-24.98.18c-1.36,0-2.82,1.29-2.83,2.77Z"/> <g> <path fill="#21285b" d="M75.31,73.3c0,2.62-1.96,5.18-4.63,5.18l-54.02.03c-2.74,0-4.94-2.42-4.94-5.11V16.94c0-2.71,2.2-5.16,4.93-5.16l53.36-.04c2.83,0,5.26,2.09,5.26,5.01l.03,56.55Z"/> <polygon fill="#fff" points="23.09 46.07 28.62 40.22 38.42 50.07 58.14 27.51 63.88 33 38.82 61.8 23.09 46.07"/> </g> <g> <path fill="#bd2026" d="M141.82,73.51c0,2.76-2.27,5-4.86,5h-52.27c-2.35-.01-4.64-2.26-4.64-4.67V16.53c.01-2.57,2.39-4.75,4.85-4.75l51.6-.03c2.79,0,5.3,2.05,5.3,5v56.76Z"/> <polygon fill="#fff" points="128.22 56.95 122.66 62.57 110.91 50.79 99.2 62.56 93.54 56.93 103.54 46.88 105.17 45.06 97.75 37.53 93.63 33.31 95.65 31.2 99.2 27.62 101.4 29.91 110.92 39.55 117.92 32.44 122.57 27.66 128.21 33.31 119.34 42.25 116.58 45.14 128.22 56.95"/> </g> </g> </g> </svg>
-      <span class="wm">Yeas <em>&amp;</em> Nays</span>
+      <span class="wm">Yeas<em>and</em>Nays</span>
     </a>
     <nav class="sections" aria-label="Sections">
       <a href="#" aria-current="page">The Ledger</a>
