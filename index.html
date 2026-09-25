@@ -211,6 +211,8 @@ button{cursor:pointer}
 .fchip{border:1px solid var(--line);background:transparent;border-radius:999px;padding:3px 10px;font-size:12px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
 .fchip[aria-pressed="true"]{background:var(--surface-2);color:var(--ink);border-color:transparent}
 .fchip[aria-pressed="false"] .dot{opacity:.35}
+.fchip .fc{font-variant-numeric:tabular-nums;font-weight:600;font-size:11px;color:var(--ink-2);background:var(--surface);border-radius:999px;padding:0 6px;min-width:20px;text-align:center}
+.fchip[aria-pressed="false"] .fc{background:transparent;color:var(--muted)}
 .feed{display:grid;gap:8px}
 .filt-btn{display:none;margin-bottom:10px}
 .flab{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:4px}
@@ -1085,9 +1087,18 @@ document.getElementById("mapSeg").addEventListener("click", e => { const b = e.t
 
 /* ---------- feed & filters ---------- */
 const filtersEl = document.getElementById("filters");
-function chip(group, key, label, dotVar){ const on = S[group].has(key); return `<button class="fchip" data-g="${group}" data-k="${key}" aria-pressed="${on}">${dotVar ? `<span class="dot" style="background:var(${dotVar})"></span>` : ""}${label}</button>`; }
+// How many items (up to the current point on the timeline) each filter button covers
+function chipCount(group, key){
+  const past = items.filter(it => it.tt <= S.t);
+  if (group === "types") return past.filter(it => (it.type === "amendment" ? "law" : it.type) === key).length;
+  if (group === "buckets") return past.filter(it => it.type !== "event" && it.bucket === key).length;
+  if (group === "passed") return past.filter(it => passSide(it) === key).length;
+  return past.filter(it => it.cat === key).length;
+}
+function chip(group, key, label, dotVar){ const on = S[group].has(key); return `<button class="fchip" data-g="${group}" data-k="${key}" aria-pressed="${on}">${dotVar ? `<span class="dot" style="background:var(${dotVar})"></span>` : ""}${label}<span class="fc">${chipCount(group, key)}</span></button>`; }
 function renderFilters(){
-  filtersEl.innerHTML = `<div class="frow">${Object.entries(TYPES).map(([k,l]) => chip("types", k, l)).join("")}</div>
+  filtersEl.innerHTML = `<div class="fnote">Numbers show how many so far. Tap a button to hide or show that group. "What it did" counts laws and court rulings; "Who passed it" counts laws only.</div>
+    <div class="frow">${Object.entries(TYPES).map(([k,l]) => chip("types", k, l)).join("")}</div>
     <div class="flab">What it did</div>
     <div class="frow">${Object.entries(BUCKETS).map(([k,l]) => chip("buckets", k, l, BUCKET_VAR[k])).join("")}</div>
     <div class="flab">Who passed it</div>
@@ -1113,6 +1124,7 @@ const feedEl = document.getElementById("feed");
 feedEl.addEventListener("click", e => { const b = e.target.closest("[data-id]"); if (b) openItem(items.find(i => i.id === b.dataset.id)); });
 document.getElementById("feedMore").addEventListener("click", () => { S.feedLimit += 8; updateFeed(); });
 function updateFeed(){
+  const fk = yearOf(S.t) + String(S.adjusted); if (filtersEl.dataset.k !== fk){ filtersEl.dataset.k = fk; renderFilters(); }
   const vis = items.filter(itemVisible);
   const past = vis.filter(it => it.tt <= S.t).reverse();
   const next = vis.find(it => it.tt > S.t);
