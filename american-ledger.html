@@ -205,6 +205,9 @@ button{cursor:pointer}
 .fchip[aria-pressed="false"] .dot{opacity:.35}
 .feed{display:grid;gap:8px}
 .filt-btn{display:none;margin-bottom:10px}
+.flab{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.fnote{font-size:12px;color:var(--muted);max-width:62ch;line-height:1.45}
+.fnote b{color:var(--ink-2);font-weight:500}
 .item{display:grid;grid-template-columns:4px 1fr;gap:12px;text-align:left;background:transparent;border:1px solid var(--line);border-radius:10px;padding:10px 12px 10px 10px;transition:border-color .15s,background .15s}
 .item:hover{border-color:var(--muted);background:var(--surface-2)}
 .item .bar{border-radius:2px}
@@ -406,6 +409,7 @@ footer a{color:var(--ink-2)}
     <div class="about-h">About the data</div>
     <details><summary>Sources</summary><p>Debt: U.S. Treasury, Historical Debt Outstanding (fiscal years, 1790–2025). Deficit/surplus 1901–2025 and net interest 1940–2025: White House Office of Management and Budget historical tables via FRED. Deficits before 1901 are estimated from the yearly change in debt and marked "est." GDP: MeasuringWorth (1790–1929) and BEA fiscal-year GDP via FRED (1930–2025). Inflation: MeasuringWorth consumer price index (1774–2025). Federal minimum wage: U.S. Department of Labor. State minimum wages: U.S. Department of Labor, as of July 1, 2026. Congress party control: Office of the House Historian and U.S. Senate Historical Office. Presidential votes by state: 270toWin (1900–2012); 1789–1896 and 2016–2024 compiled from official electoral records.</p></details>
     <details><summary>How the buckets work</summary><p>Laws and rulings are sorted by what they did, not by which party passed them. <b style="color:var(--dem)">Liberal-leaning</b> means it expanded federal spending, the government's role in the economy, progressive taxation or looser money. <b style="color:var(--rep)">Conservative-leaning</b> means it cut taxes or spending, limited the government's economic role or tightened money. <b style="color:var(--mix)">Mixed</b> covers tariffs, wartime finance and deals that did both. Party and vote splits are shown separately, so a tax cut signed by a Democrat still reads as a tax cut. This is an early classification; a vote-based check using every recorded roll call (Voteview) is planned.</p></details>
+    <details><summary>Who passed it</summary><p>Each law is credited to the party that held both the House and the Senate when it passed. When control was split, it goes to the signing president's party. Laws with bipartisan votes, veto overrides and constitutional amendments count as passed by both sides. Earlier parties are grouped with their successors: Federalists and Whigs with the Republicans, Democratic-Republicans and Jacksonians with the Democrats. With the ideology adjustment on (the default), the Republican side counts as liberal and the Democratic side as conservative before 1897, and the reverse from 1897 on.</p></details>
     <details><summary>Party colors</summary><p>By default, Democrats are shown red and Republicans blue before 1897, because the parties' positions were roughly the reverse of today's; from 1897 on, Republicans are red and Democrats blue. Use "Unadjust ideology" on the map to see true party colors in every era.</p></details>
     <details><summary>Maps and early years</summary><p>Map shapes use today's state borders. Before 1789 there was no president and no federal debt figure; the Continental Congress's war debts were taken over by the new government in 1790.</p></details>
   </footer>
@@ -446,12 +450,14 @@ const CATS = {tax:"Taxes & tariffs", spend:"Spending & programs", budget:"Budget
 const TYPES = {law:"Laws", ruling:"Court rulings", event:"Events"};
 const BUCKETS = {lib:"Liberal-leaning", con:"Conservative-leaning", mix:"Mixed"};
 const BUCKET_VAR = {lib:"--dem", con:"--rep", mix:"--mix"};
+const PASSED = {lib:"Liberals passed", con:"Conservatives passed", both:"Both sides passed"};
+const PASSED_VAR = {lib:"--dem", con:"--rep", both:"--mix"};
 const TILES = {debt:"National debt", deficit:"Deficit / surplus", interest:"Interest on the debt", ratio:"Debt-to-GDP", wage:"Federal minimum wage", laws:"Laws by bucket"};
 const PANELS = {blocksCard:"Debt blocks", chartCard:"Chart", mapCard:"Map", feedCard:"How we got here"};
 const S = {
   t: 1776.5, view: "nominal", zoom: "follow", mapMode: "vote", playing: false, speed: 1,
   series: {debt: true, deficit: true, interest: true},
-  types: new Set(Object.keys(TYPES)), buckets: new Set(Object.keys(BUCKETS)), cats: new Set(Object.keys(CATS)),
+  types: new Set(Object.keys(TYPES)), buckets: new Set(Object.keys(BUCKETS)), passed: new Set(["lib","con","both"]), cats: new Set(Object.keys(CATS)),
   tiles: new Set(Object.keys(TILES)), panels: new Set(Object.keys(PANELS)), feedLimit: 6, selState: null, adjusted: true, style: "blocks"
 };
 try { const p = JSON.parse(localStorage.getItem("ledger-prefs") || "null");
@@ -521,7 +527,39 @@ function electionFor(t){ // most recent presidential election decided by time t 
 const statesAt = iso => Object.entries(D.statehood).filter(([,d]) => d <= iso).map(([s]) => s);
 
 const items = D.items.map(x => ({...x, tt: dateToT(x.date)}));
-function itemVisible(x){ return S.types.has(x.type === "amendment" ? "law" : x.type) && S.cats.has(x.cat) && (x.type === "event" || S.buckets.has(x.bucket)); }
+/* Who passed a law. Party "lineage": D = Democratic-Republicans, Jacksonians and Democrats;
+   R = Federalists / pro-administration, Whigs and Republicans. Worked out from which party held
+   both chambers of Congress (or, if split, the signing president); bipartisan votes, veto overrides
+   and constitutional amendments count as both sides. */
+function lineage(name){
+  if (!name) return null;
+  if (/^(Democratic|Anti-Administration|Jacksonian|Jackson & Crawford)/.test(name)) return "D";
+  if (/^(Republican|Federalist|Pro-Administration|Whig|Adams|Anti-Jackson|Opposition|National Republican|Unaffiliated \(Federalist)/.test(name)) return "R";
+  return null;
+}
+function passInfo(it){
+  if (it.type !== "law" && it.type !== "amendment") return null;
+  if (it._pass) return it._pass;
+  const c = D.congresses.find(x => x.n === it.congress);
+  let lin = null, src = null;
+  if (it.type === "amendment" || /override/i.test(it.how || "") || it.pattern === "Bipartisan") lin = "both";
+  else {
+    const h = lineage(c && c.house), s = lineage(c && c.senate);
+    if (h && h === s){ lin = h; src = c.house; }
+    else { const pr = presidentAt(it.date); const pl = pr && lineage(pr.party); if (pl){ lin = pl; src = pr.party; } else { lin = h || s || "both"; src = h ? c.house : s ? c.senate : null; } }
+  }
+  return (it._pass = {lin, src});
+}
+function partyWord(name, lin){
+  if (!name) return lin === "D" ? "Democrats" : "Republicans";
+  const n = name.split(/[ /(]/)[0];
+  return ({"Democratic":"Democrats","Democratic-Republican":"Democratic-Republicans","Jacksonian":"Jacksonians","Anti-Administration":"the anti-administration faction","Republican":"Republicans","Federalist":"Federalists","Pro-Administration":"the pro-administration (Federalist) side","Whig":"Whigs","Adams":"Adams supporters","Adams-Clay":"Adams–Clay Republicans","Anti-Jackson":"the anti-Jackson coalition","Opposition":"the Opposition (anti-Democrats)","Unaffiliated":"the Federalist-aligned side","Jackson":"Jacksonians"})[n] || name;
+}
+// Liberal / conservative side of whoever passed it, following the ideology adjustment (flip before 1897)
+function passSide(it){ const pi = passInfo(it); if (!pi) return null; if (pi.lin === "both") return "both";
+  const flip = S.adjusted && it.tt < FLIP_T; return (pi.lin === "D") !== flip ? "lib" : "con"; }
+function itemVisible(x){ const ps = passSide(x);
+  return S.types.has(x.type === "amendment" ? "law" : x.type) && S.cats.has(x.cat) && (x.type === "event" || S.buckets.has(x.bucket)) && (!ps || S.passed.has(ps)); }
 function itemColor(x){ return x.type === "event" ? css("--muted") : css(BUCKET_VAR[x.bucket]); }
 
 /* ---------- counters ---------- */
@@ -1039,7 +1077,12 @@ const filtersEl = document.getElementById("filters");
 function chip(group, key, label, dotVar){ const on = S[group].has(key); return `<button class="fchip" data-g="${group}" data-k="${key}" aria-pressed="${on}">${dotVar ? `<span class="dot" style="background:var(${dotVar})"></span>` : ""}${label}</button>`; }
 function renderFilters(){
   filtersEl.innerHTML = `<div class="frow">${Object.entries(TYPES).map(([k,l]) => chip("types", k, l)).join("")}</div>
+    <div class="flab">What it did</div>
     <div class="frow">${Object.entries(BUCKETS).map(([k,l]) => chip("buckets", k, l, BUCKET_VAR[k])).join("")}</div>
+    <div class="flab">Who passed it</div>
+    <div class="frow">${Object.entries(PASSED).map(([k,l]) => chip("passed", k, l, PASSED_VAR[k])).join("")}</div>
+    <div class="fnote">${S.adjusted ? "Before 1897, Republicans (and earlier Federalists and Whigs) count as liberals and Democrats as conservatives, because the parties' positions were reversed. Turn this off with <b>Unadjust ideology</b> on the map." : "Using true party lines: Democrats count as liberals and Republicans as conservatives in every era. Turn on <b>Adjust ideology</b> on the map to flip the parties before 1897."}</div>
+    <div class="flab">Topic</div>
     <div class="frow">${Object.entries(CATS).map(([k,l]) => chip("cats", k, l)).join("")}</div>`;
 }
 filtersEl.addEventListener("click", e => { const b = e.target.closest(".fchip"); if (!b) return; const set = S[b.dataset.g];
@@ -1051,6 +1094,7 @@ function itemMeta(it){
   if (it.type === "ruling") bits.push("Supreme Court · " + it.split);
   if (it.type === "amendment") bits.push("Constitutional amendment");
   if (it.type !== "event") bits.push(`<span style="color:var(${BUCKET_VAR[it.bucket]})">${BUCKETS[it.bucket]}</span>`);
+  const ps = passSide(it); if (ps) bits.push(`<span style="color:var(${PASSED_VAR[ps]})">${PASSED[ps]}</span>`);
   if (it.pattern) bits.push(it.pattern);
   return bits.filter(Boolean).map(b => `<span>${b}</span>`).join("");
 }
@@ -1113,6 +1157,11 @@ function openItem(it, fromList){
   if (it.type === "ruling") kv.push(`<dt>Decision</dt><dd>${it.split}</dd><dt>Majority opinion</dt><dd>${it.author}</dd><dt>President at the time</dt><dd>${it.president}</dd>`);
   if (it.vote) kv.push(`<dt>House vote</dt><dd class="tnum">${it.vote.house}</dd><dt>Senate vote</dt><dd class="tnum">${it.vote.senate}</dd>`);
   if (it.pattern) kv.push(`<dt>Vote pattern</dt><dd>${it.pattern}</dd>`);
+  const pi = passInfo(it);
+  if (pi){ const ps = passSide(it);
+    const who = pi.lin === "both" ? (it.type === "amendment" ? "Proposed by Congress, ratified by the states" : /override/i.test(it.how || "") ? "Two-thirds of both chambers (veto override)" : "Both parties") : partyWord(pi.src, pi.lin);
+    const why = ps === "both" ? "" : ` · counted as <span style="color:var(${PASSED_VAR[ps]})">${ps === "lib" ? "liberal" : "conservative"}</span>` + (S.adjusted && it.tt < FLIP_T ? " (party positions were reversed before 1897)" : "");
+    kv.push(`<dt>Passed by</dt><dd>${who}${why}</dd>`); }
   if (it.type === "event") kv.push(`<dt>President</dt><dd>${it.president || "—"}</dd>`);
   kv.push(`<dt>Category</dt><dd>${CATS[it.cat]}</dd>`);
   const y = Math.floor(it.tt);
@@ -1222,7 +1271,7 @@ function syncIdeo(){
   ideoBtn.setAttribute("aria-pressed", S.adjusted);
   ideoBtn.title = S.adjusted ? "Show true party colors (Democrats blue, Republicans red) in every era" : "Swap party colors before 1897 so red and blue match today's meaning";
 }
-function toggleIdeo(){ S.adjusted = !S.adjusted; savePrefs(); syncIdeo(); drawTrack(); render(true); if (drawer.classList.contains("open") && dKind.textContent === "Party colors") openRealign(); }
+function toggleIdeo(){ S.adjusted = !S.adjusted; savePrefs(); syncIdeo(); renderFilters(); drawTrack(); render(true); if (drawer.classList.contains("open") && dKind.textContent === "Party colors") openRealign(); }
 ideoBtn.addEventListener("click", toggleIdeo);
 rNote.addEventListener("click", openRealign);
 function updateRealignNote(){
@@ -1313,7 +1362,7 @@ document.getElementById("zoomSeg").addEventListener("click", e => { const b = e.
 
 /* ---------- mobile helpers ---------- */
 const filtBtn = document.getElementById("filtBtn");
-function syncFiltBtn(){ const off = (Object.keys(TYPES).length - S.types.size) + (Object.keys(BUCKETS).length - S.buckets.size) + (Object.keys(CATS).length - S.cats.size);
+function syncFiltBtn(){ const off = (Object.keys(TYPES).length - S.types.size) + (Object.keys(BUCKETS).length - S.buckets.size) + (3 - S.passed.size) + (Object.keys(CATS).length - S.cats.size);
   filtBtn.textContent = off ? `Filters · ${off} hidden` : "Filters"; }
 filtBtn.addEventListener("click", () => { const f = document.getElementById("filters"); const open = !f.classList.contains("open"); f.classList.toggle("open", open); filtBtn.setAttribute("aria-expanded", open); });
 filtersEl.addEventListener("click", () => setTimeout(syncFiltBtn));
@@ -1337,7 +1386,7 @@ let dirty = true, lastYear = null, lastISOKey = null;
 function setT(t){ S.t = Math.max(1776, Math.min(MAX, t)); dirty = true; }
 function render(force){
   const y = yearOf(S.t);
-  const key = y + S.view + [...S.tiles].join() + [...S.types, ...S.buckets, ...S.cats].join() + JSON.stringify(S.series);
+  const key = y + S.view + [...S.tiles].join() + [...S.types, ...S.buckets, ...S.cats, ...S.passed].join() + S.adjusted + JSON.stringify(S.series);
   const iso = tToISO(S.t);
   if (force || key !== lastYear){ updateCounters(); updateBlocks(); lastYear = key; }
   const mkey = iso.slice(0,7) + S.mapMode;
