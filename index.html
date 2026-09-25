@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Scrub from 1776 to today and watch the national debt, deficits, interest, minimum wage and the states change, with the laws and court rulings that moved them.">
 <style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>The American Ledger</title>
+<title>Yeas &amp; Nays</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -57,14 +57,23 @@ button{cursor:pointer}
 
 /* Top bar */
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-block:16px 6px}
-.brand{display:flex;align-items:baseline;gap:10px}
-.brand b{font-family:var(--display);font-weight:400;font-size:22px;letter-spacing:.01em}
-.brand span{color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+/* Masthead */
+.masthead{display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;padding-block:18px 12px;border-bottom:1px solid var(--ink);position:relative}
+.masthead::after{content:"";position:absolute;left:0;right:0;bottom:-4px;border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:12px;color:var(--ink);text-decoration:none}
+.logo svg{width:38px;height:38px;flex:none}
+.wm{font-family:var(--display);font-size:clamp(30px,4vw,40px);line-height:1;letter-spacing:-.01em;white-space:nowrap}
+.wm em{font-family:var(--serif);font-style:italic;color:var(--accent);font-size:1.08em;padding:0 .04em}
+.sections{display:flex;gap:4px;flex-wrap:wrap}
+.sections a,.sections span{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:6px 12px;border-radius:999px;color:var(--muted);display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.sections a[aria-current]{background:var(--ink);color:var(--surface)}
+.sections i{font-style:normal;font-size:9.5px;letter-spacing:.06em;border:1px solid var(--line);border-radius:4px;padding:0 4px;color:var(--muted)}
+.tagline{font-family:var(--serif);font-style:italic;color:var(--ink-2);font-size:15px}
 .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .seg{display:inline-flex;background:var(--surface-2);border-radius:999px;padding:3px;gap:2px}
 .seg button{border:0;background:transparent;padding:5px 12px;border-radius:999px;font-size:12.5px;color:var(--ink-2);white-space:nowrap}
 .seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow);font-weight:500}
-.btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:12.5px;color:var(--ink-2)}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:12.5px;color:var(--ink-2);white-space:nowrap}
 .btn:hover{color:var(--ink);border-color:var(--muted)}
 
 /* Era header */
@@ -218,7 +227,16 @@ footer a{color:var(--ink-2)}
 @media (max-width:640px){
   body{padding:0 16px 130px}
   .topbar{padding-block:12px 4px}
-  .brand span{display:none}
+  .logo svg{width:32px;height:32px}
+  .tagline{font-size:13.5px}
+  .sections{width:100%;flex-wrap:nowrap;overflow-x:auto;gap:2px;scrollbar-width:none}
+  .sections a,.sections span{padding:5px 9px;font-size:10.5px;letter-spacing:.06em}
+  .sections i{display:none}
+  .sections span{opacity:.6}
+  .topbar .controls{flex-wrap:nowrap}
+  .seg button{padding:5px 7px;font-size:12px}
+  .btn{padding:5px 10px}
+  .masthead{padding-block:14px 10px}
   .era{grid-template-columns:1fr;gap:4px;padding-block:6px 12px}
   .year{font-size:64px}
   .counters{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
@@ -249,8 +267,23 @@ footer a{color:var(--ink-2)}
 
 
 <div class="wrap">
+  <header class="masthead">
+    <a class="logo" href="#" aria-label="Yeas and Nays">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <rect x="1" y="1" width="38" height="38" rx="9" fill="var(--ink)"/>
+        <path d="M8 21l4.5 4.5L20 15" fill="none" stroke="var(--accent)" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M24 15l8 10M32 15l-8 10" fill="none" stroke="var(--surface)" stroke-width="3.2" stroke-linecap="round"/>
+      </svg>
+      <span class="wm">Yeas <em>&amp;</em> Nays</span>
+    </a>
+    <nav class="sections" aria-label="Sections">
+      <a href="#" aria-current="page">The Ledger</a>
+      <span title="Coming soon: the Supreme Court, its justices and rulings">The Bench <i>Soon</i></span>
+      <span title="Coming soon: discussion and posts">The Floor <i>Soon</i></span>
+    </nav>
+  </header>
   <div class="topbar">
-    <div class="brand"><b>The American Ledger</b><span>1776 – today</span></div>
+    <div class="tagline">How America got here, one vote at a time.</div>
     <div class="controls">
       <div class="seg" id="viewSeg" role="group" aria-label="Money view">
         <button id="v-nominal" data-view="nominal" aria-pressed="true">Dollars</button>

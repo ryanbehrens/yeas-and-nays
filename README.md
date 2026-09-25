@@ -1,6 +1,8 @@
-# The American Ledger
+# Yeas & Nays
 
-An interactive timeline of U.S. history from 1776 to today: national debt, deficits, interest,
+*How America got here, one vote at a time.*
+
+**The Ledger**, the first section, is an interactive timeline of U.S. history from 1776 to today: national debt, deficits, interest,
 debt-to-GDP, the minimum wage, presidential elections by state, and the landmark laws and
 Supreme Court rulings that moved the numbers.
 
