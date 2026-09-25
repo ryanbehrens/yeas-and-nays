@@ -15,11 +15,13 @@ deficit = csv("deficit_millions.csv", 1e6)
 interest = csv("interest_millions.csv", 1e6)
 gdp = csv("gdp_dollars.csv")
 cpi = csv("cpi.csv")
+pop = csv("population.csv")
 
 years = list(range(1776, 2026))
 econ = []
 for y in years:
     d = dict(y=y, cpi=cpi.get(y))
+    if y in pop: d["pop"] = int(pop[y])
     if y in debt: d["debt"] = round(debt[y])
     if y in gdp: d["gdp"] = round(gdp[y])
     if y in deficit:

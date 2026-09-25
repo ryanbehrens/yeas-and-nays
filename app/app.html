@@ -134,6 +134,27 @@ button{cursor:pointer}
 .empty{color:var(--muted);font-size:12.5px;align-self:center}
 @media (max-width:520px){.brow{grid-template-columns:1fr;gap:8px}.blegend{grid-column:1}.brow .rl{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline}}
 
+/* Alternate "what we owe" styles */
+.owed-note{margin:-2px 0 8px;font-size:12.5px;color:var(--muted);max-width:70ch}
+#altView svg{display:block;width:100%;height:auto;overflow:visible}
+#altView .bl{font-size:12.5px;fill:var(--ink-2);font-family:var(--sans)}
+#altView .bv{font-size:12.5px;font-weight:600;fill:var(--ink);font-family:var(--mono);font-variant-numeric:tabular-nums}
+.ring-wrap{display:grid;grid-template-columns:minmax(180px,240px) 1fr;gap:18px;align-items:center}
+.ring-wrap .rc1{font-family:var(--display);font-size:40px;fill:var(--ink)}
+.ring-wrap .rc2{font-size:11.5px;fill:var(--muted);font-family:var(--sans)}
+.ring-facts{display:grid;gap:10px;font-size:13px;color:var(--ink-2)}
+.ring-facts b{color:var(--ink);font-family:var(--mono);font-weight:500}
+.ring-facts strong{color:var(--ink);font-weight:600}
+.pp{display:grid;gap:12px}
+.pp-row{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:center;padding-block:4px}
+.pp-ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center}
+.pp-ic svg{width:24px;height:24px}
+.pp-v{font-family:var(--mono);font-size:clamp(20px,2.4vw,26px);font-weight:500;font-variant-numeric:tabular-nums;line-height:1.2}
+.pp-v small{font-family:var(--sans);font-size:12.5px;color:var(--ink-2);font-weight:400;margin-left:4px}
+.pp-l{font-size:12.5px;color:var(--muted)}
+.pp-fam{background:var(--surface-2);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--ink-2)}
+.pp-fam b{color:var(--ink)}
+@media (max-width:520px){.ring-wrap{grid-template-columns:1fr;justify-items:center}.ring-wrap svg{max-width:240px}}
 /* Chart */
 .chart-wrap{position:relative;touch-action:pan-y}
 #chart{display:block;width:100%;height:auto;user-select:none}
@@ -301,8 +322,17 @@ footer a{color:var(--ink-2)}
   <div class="grid">
     <div class="col">
       <section class="card" id="blocksCard">
-        <div class="card-h"><h2>What we owe, in blocks</h2><span class="note" id="blocksNote"></span></div>
+        <div class="card-h"><h2 id="owedTitle">What we owe, in blocks</h2>
+          <div class="seg" id="styleSeg" role="group" aria-label="Chart style">
+            <button id="st-blocks" data-style="blocks" aria-pressed="true">Blocks</button>
+            <button id="st-bars" data-style="bars" aria-pressed="false">Bars</button>
+            <button id="st-ring" data-style="ring" aria-pressed="false">Ring</button>
+            <button id="st-person" data-style="person" aria-pressed="false">Per person</button>
+          </div>
+        </div>
+        <p class="note owed-note" id="blocksNote"></p>
         <div id="blockRows"></div>
+        <div id="altView" hidden></div>
       </section>
       <section class="card" id="chartCard">
         <div class="card-h">
@@ -391,12 +421,12 @@ const S = {
   t: 1776.5, view: "nominal", zoom: "follow", mapMode: "vote", playing: false, speed: 1,
   series: {debt: true, deficit: true, interest: true},
   types: new Set(Object.keys(TYPES)), buckets: new Set(Object.keys(BUCKETS)), cats: new Set(Object.keys(CATS)),
-  tiles: new Set(Object.keys(TILES)), panels: new Set(Object.keys(PANELS)), feedLimit: 6, selState: null, adjusted: true
+  tiles: new Set(Object.keys(TILES)), panels: new Set(Object.keys(PANELS)), feedLimit: 6, selState: null, adjusted: true, style: "blocks"
 };
 try { const p = JSON.parse(localStorage.getItem("ledger-prefs") || "null");
-  if (p) { if (p.tiles) S.tiles = new Set(p.tiles); if (p.panels) S.panels = new Set(p.panels); if (p.view) S.view = p.view; if (typeof p.adjusted === "boolean") S.adjusted = p.adjusted; }
+  if (p) { if (p.tiles) S.tiles = new Set(p.tiles); if (p.panels) S.panels = new Set(p.panels); if (p.view) S.view = p.view; if (typeof p.adjusted === "boolean") S.adjusted = p.adjusted; if (p.style) S.style = p.style; }
 } catch(e) {}
-function savePrefs(){ try { localStorage.setItem("ledger-prefs", JSON.stringify({tiles:[...S.tiles], panels:[...S.panels], view:S.view, adjusted:S.adjusted})); } catch(e) {} }
+function savePrefs(){ try { localStorage.setItem("ledger-prefs", JSON.stringify({tiles:[...S.tiles], panels:[...S.panels], view:S.view, adjusted:S.adjusted, style:S.style})); } catch(e) {} }
 
 /* ---------- helpers ---------- */
 const yearOf = t => Math.min(2025, Math.floor(t));
@@ -605,8 +635,16 @@ function breakdown(v, isPct){
   }
   return out;
 }
+const STYLE_TITLES = {blocks:"What we owe, in blocks", bars:"What we owe, side by side", ring:"What we owe, against the economy", person:"What we owe, per person"};
+document.getElementById("styleSeg").addEventListener("click", e => { const b = e.target.closest("[data-style]"); if (!b) return;
+  S.style = b.dataset.style; savePrefs(); document.getElementById("altView").innerHTML = ""; render(true); });
 function updateBlocks(){
   const y = yearOf(S.t), d = econ.get(y), isPct = S.view === "gdp";
+  document.querySelectorAll("#styleSeg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.style === S.style));
+  document.getElementById("owedTitle").textContent = STYLE_TITLES[S.style];
+  const alt = document.getElementById("altView");
+  document.getElementById("blockRows").hidden = S.style !== "blocks"; alt.hidden = S.style === "blocks";
+  if (S.style !== "blocks"){ ({bars: drawBars, ring: drawRing, person: drawPerson})[S.style](y, d); return; }
   document.getElementById("blocksNote").textContent = isPct
     ? "Measured against the size of the economy. Ten of one block trade up for the next size."
     : "Darker blocks are bigger bills: thousands, millions, billions, trillions. Ten of one size trade up for the next.";
@@ -639,6 +677,84 @@ function updateBlocks(){
       return `<span><i style="width:${Math.min(st.size,12)}px;height:${Math.min(st.size,12)}px;${isSur ? `box-shadow:inset 0 0 0 2px ${st.color}` : `background:${st.color}`}"></i>${p.count} × ${denomLabel(p.exp, isPct)}</span>`; }).join("") + (parts.length && Math.abs(v) >= (isPct ? 10 : 1e5) ? `<span>smaller amounts rounded off</span>` : "");
   }
 }
+
+/* ---------- alternate styles ---------- */
+const altEl = document.getElementById("altView");
+const noteEl = () => document.getElementById("blocksNote");
+function drawBars(y, d){
+  noteEl().textContent = "Every bar uses the same scale, so you can compare them directly. The gray bar is the size of the whole U.S. economy that year.";
+  const rows = [
+    {k:"gdp", lab:(altEl.clientWidth || 600) < 480 ? "Economy" : "Whole economy (GDP)", c:"--muted", v: d && d.gdp ? conv(d.gdp, y) : null},
+    {k:"debt", lab:"Debt", c:"--debt", v: d && d.debt != null ? conv(d.debt, y) : null},
+    {k:"def", lab: d && d.deficit > 0 ? "Surplus" : "Deficit", c:"--def", v: d && d.deficit != null ? Math.abs(conv(d.deficit, y)) : null},
+    {k:"int", lab:"Interest", c:"--int", v: d && d.interest != null ? conv(d.interest, y) : null},
+  ];
+  const W = Math.max(280, altEl.clientWidth || 600), narrow = W < 480, LW = narrow ? 92 : 150, VW = narrow ? 64 : 84, RH = 30, GAP = 14;
+  const H = rows.length * (RH + GAP);
+  let svg = d3.select(altEl).select("svg.bars");
+  if (svg.empty()){ altEl.innerHTML = ""; svg = d3.select(altEl).append("svg").attr("class","bars").attr("role","img").attr("aria-label","Bar chart of the economy, debt, deficit and interest"); }
+  svg.attr("viewBox", `0 0 ${W} ${H}`);
+  const x = d3.scaleLinear().domain([0, d3.max(rows, r => r.v || 0) || 1]).range([0, W - LW - VW]);
+  const g = svg.selectAll("g.br").data(rows, r => r.k).join(en => { const g = en.append("g").attr("class","br");
+      g.append("text").attr("class","bl"); g.append("rect").attr("class","track"); g.append("rect").attr("class","bar").attr("width", 0); g.append("text").attr("class","bv").attr("x", LW + 8).attr("y", RH/2 + 4.5); return g; })
+    .attr("transform", (r, i) => `translate(0,${i * (RH + GAP)})`);
+  g.select(".bl").attr("x", 0).attr("y", RH/2 + 4).text(r => r.lab);
+  g.select(".track").attr("x", LW).attr("y", 0).attr("width", W - LW - VW).attr("height", RH).attr("rx", 4).attr("fill", css("--surface-2"));
+  g.select(".bar").attr("x", LW).attr("y", 0).attr("height", RH).attr("rx", 4).attr("fill", r => css(r.c)).attr("fill-opacity", r => r.k === "gdp" ? .45 : .95)
+    .transition().duration(280).attr("width", r => r.v ? Math.max(2, x(r.v)) : 0);
+  g.select(".bv").transition().duration(280).attr("x", r => LW + (r.v ? Math.max(2, x(r.v)) : 0) + 8).attr("y", RH/2 + 4.5)
+    .text(r => r.v == null ? (r.k === "int" ? "from 1940" : "no data") : fmtVShort(r.v));
+}
+function drawRing(y, d){
+  const ratio = d && d.debt != null && d.gdp ? d.debt / d.gdp * 100 : null;
+  noteEl().textContent = "One full circle is everything the country produces in a year (GDP). Past 100%, a second inner circle starts.";
+  if (!altEl.querySelector(".ring-wrap")){
+    altEl.innerHTML = `<div class="ring-wrap"><svg viewBox="0 0 240 240" role="img" aria-label="Debt compared with one year of the economy">
+      <g transform="translate(120,120)"><path class="t1"/><path class="t2"/><path class="a1"/><path class="a2"/>
+      <text class="rc1" text-anchor="middle" y="6"></text><text class="rc2" text-anchor="middle" y="28">of one year's economy</text></g></svg>
+      <div class="ring-facts" id="ringFacts"></div></div>`;
+    const s = d3.select(altEl);
+    s.select(".t1").attr("d", d3.arc()({innerRadius:92, outerRadius:112, startAngle:0, endAngle:2*Math.PI})).attr("fill", css("--surface-2"));
+    s.select(".t2").attr("d", d3.arc()({innerRadius:66, outerRadius:84, startAngle:0, endAngle:2*Math.PI})).attr("fill", css("--surface-2")).attr("opacity", .6);
+    altEl._r = 0;
+  }
+  const s = d3.select(altEl), from = altEl._r || 0, to = ratio || 0; altEl._r = to;
+  const arc1 = d3.arc().innerRadius(92).outerRadius(112).cornerRadius(4).startAngle(0), arc2 = d3.arc().innerRadius(66).outerRadius(84).cornerRadius(4).startAngle(0);
+  const ang = v => Math.min(100, Math.max(0, v)) / 100 * 2 * Math.PI;
+  s.select(".a1").attr("fill", css("--debt")).transition().duration(300).attrTween("d", () => { const i = d3.interpolate(from, to); return t => arc1({endAngle: ang(i(t))}); });
+  s.select(".a2").attr("fill", css("--debt-3")).transition().duration(300).attrTween("d", () => { const i = d3.interpolate(from, to); return t => arc2({endAngle: ang(i(t) - 100)}); });
+  s.select(".rc1").text(ratio == null ? "—" : Math.round(ratio) + "%");
+  const f = [];
+  if (ratio == null) f.push(`<div>Federal debt figures begin in 1790.</div>`);
+  else {
+    f.push(`<div>Debt: <b>${fmtVShort(conv(d.debt, y))}</b><br>Economy that year: <b>${fmtVShort(conv(d.gdp, y))}</b></div>`);
+    f.push(`<div>${ratio >= 100 ? `The debt is <strong>bigger than a full year</strong> of everything the country produces.` : `The debt equals <strong>${Math.round(ratio / 100 * 365)} days</strong> of everything the country produces.`}</div>`);
+    if (d.deficit != null) f.push(`<div>${d.deficit > 0 ? "Surplus" : "Deficit"} this year: <b>${(Math.abs(d.deficit) / d.gdp * 100).toFixed(1)}%</b> of the economy</div>`);
+    if (d.interest != null) f.push(`<div>Interest this year: <b>${(d.interest / d.gdp * 100).toFixed(1)}%</b> of the economy</div>`);
+  }
+  document.getElementById("ringFacts").innerHTML = f.join("");
+}
+const PERSON = `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="4" fill="currentColor"/><path d="M4 21c0-4.4 3.6-7.5 8-7.5s8 3.1 8 7.5z" fill="currentColor"/></svg>`;
+function drawPerson(y, d){
+  const pop = d && d.pop, gdpPP = d && d.gdp && pop ? d.gdp / pop : null;
+  const isPct = S.view === "gdp";
+  noteEl().textContent = isPct
+    ? "Each person's share, measured in months of the average American's share of the economy (GDP per person)."
+    : "Each American's share, if the total were split evenly across everyone in the country that year" + (S.view === "real" ? ", in 2025 dollars." : ".");
+  const fmtPP = v => { if (v == null) return "—";
+    if (isPct){ const m = v / gdpPP * 12; return m >= 1 ? `${m.toFixed(1)}<small>months</small>` : `${Math.max(1, Math.round(m * 30.4))}<small>days</small>`; }
+    const c = S.view === "real" ? v * CPI_BASE / d.cpi : v; return "$" + (c >= 100 ? Math.round(c).toLocaleString("en-US") : c.toFixed(2)); };
+  const rows = [
+    {c:"--debt", v: d && d.debt != null && pop ? d.debt / pop : null, l: "Share of the national debt, per person"},
+    {c:"--def", v: d && d.deficit != null && pop ? Math.abs(d.deficit) / pop : null, l: d && d.deficit > 0 ? "Share of this year's surplus, per person" : "Borrowed this year, per person"},
+    {c:"--int", v: d && d.interest != null && pop ? d.interest / pop : null, l: "Interest paid this year, per person"},
+  ];
+  const fam = rows[0].v != null ? (isPct ? null : fmtPP(rows[0].v * 4).replace(/<small>.*<\/small>/, "")) : null;
+  altEl.innerHTML = `<div class="pp">${rows.map(r => `<div class="pp-row"><div class="pp-ic" style="background:color-mix(in srgb,var(${r.c}) 16%,transparent);color:var(${r.c})">${PERSON}</div>
+      <div><div class="pp-v">${r.v == null ? `<span class="pp-l">${r.c === "--int" ? "Tracked from 1940" : "Federal figures begin in 1790"}</span>` : fmtPP(r.v)}</div><div class="pp-l">${r.l}</div></div></div>`).join("")}
+    ${pop ? `<div class="pp-fam">U.S. population in ${y}: <b>${(pop / 1e6).toFixed(pop < 1e7 ? 2 : 1)} million</b>${fam ? `. For a family of four, the debt share comes to <b>${fam}</b>.` : "."}</div>` : ""}</div>`;
+}
+window.addEventListener("resize", () => { if (S.style === "bars") { altEl.innerHTML = ""; updateBlocks(); } });
 
 /* ---------- chart ---------- */
 const svg = d3.select("#chart"), tip = document.getElementById("tip");
