@@ -84,6 +84,16 @@ button{cursor:pointer}
 .viewnote{display:flex;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:9px 14px;margin-bottom:10px;font-size:13px;color:var(--ink-2)}
 .viewnote b{color:var(--ink)}
 .viewnote button{margin-left:auto;flex:none}
+/* Section shortcuts (tablets & phones) */
+.jump{display:none}
+@media (max-width:980px){
+  .jump{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;position:sticky;top:env(safe-area-inset-top,0px);z-index:15;margin-inline:-16px;padding:8px 16px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .2s}
+  .jump.stuck{border-bottom-color:var(--line)}
+  .jump::-webkit-scrollbar{display:none}
+  .jump a{flex:none;font-size:12.5px;text-decoration:none;color:var(--ink-2);border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;white-space:nowrap}
+  .jump a.on{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+  .counters,.card{scroll-margin-top:60px}
+}
 /* Counters */
 .counters{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:16px}
 .tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px;text-align:left;display:grid;gap:3px;align-content:start;min-width:0;transition:border-color .2s}
@@ -194,6 +204,7 @@ button{cursor:pointer}
 .fchip[aria-pressed="true"]{background:var(--surface-2);color:var(--ink);border-color:transparent}
 .fchip[aria-pressed="false"] .dot{opacity:.35}
 .feed{display:grid;gap:8px}
+.filt-btn{display:none;margin-bottom:10px}
 .item{display:grid;grid-template-columns:4px 1fr;gap:12px;text-align:left;background:transparent;border:1px solid var(--line);border-radius:10px;padding:10px 12px 10px 10px;transition:border-color .15s,background .15s}
 .item:hover{border-color:var(--muted);background:var(--surface-2)}
 .item .bar{border-radius:2px}
@@ -236,7 +247,13 @@ button{cursor:pointer}
 .panel-menu .sect{margin-top:4px}
 .rel{position:relative}
 footer{margin-top:24px;padding-block:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;display:grid;gap:8px}
-footer p{margin:0;max-width:110ch}
+footer p{margin:6px 0 0;max-width:110ch}
+.about-h{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+footer details{border-top:1px solid var(--line);padding-block:10px}
+footer summary{cursor:pointer;color:var(--ink);font-weight:500;font-size:13.5px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+footer summary::-webkit-details-marker{display:none}
+footer summary::after{content:"+";font-size:18px;line-height:1;color:var(--muted)}
+footer details[open] summary::after{content:"−"}
 footer a{color:var(--ink-2)}
 @media (max-width:640px){
   body{padding:0 16px 130px}
@@ -273,6 +290,16 @@ footer a{color:var(--ink-2)}
   .drawer-b{padding:14px 16px 40px}
   .kv{grid-template-columns:1fr;gap:0}
   .kv dd{margin-bottom:8px}
+  .filt-btn{display:inline-flex}
+  .filters{display:none}
+  .filters.open{display:grid}
+  .fchip{padding:6px 12px;font-size:12.5px}
+  .seg button{min-height:34px}
+  .blocks{min-height:0}
+  .brow{padding-block:12px}
+  .card-h h2{font-size:17px}
+  .item .t{font-size:14.5px}
+  footer{padding-bottom:8px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.blk{transform:scale(1)}}
 </style>
@@ -304,6 +331,9 @@ footer a{color:var(--ink-2)}
     </div>
   </div>
 
+  <nav class="jump" id="jumpNav" aria-label="Jump to section">
+    <a href="#counters" data-j="counters">Numbers</a><a href="#blocksCard" data-j="blocksCard">What we owe</a><a href="#chartCard" data-j="chartCard">Over time</a><a href="#mapCard" data-j="mapCard">Map</a><a href="#feedCard" data-j="feedCard">Laws &amp; events</a>
+  </nav>
   <section class="era" aria-live="polite">
     <div class="year tnum" id="yearBig">1776</div>
     <div class="era-meta">
@@ -364,6 +394,7 @@ footer a{color:var(--ink-2)}
       </section>
       <section class="card" id="feedCard">
         <div class="card-h"><h2>How we got here</h2><span class="note" id="feedNote"></span></div>
+        <button class="btn filt-btn" id="filtBtn" aria-expanded="false" aria-controls="filters">Filters</button>
         <div class="filters" id="filters"></div>
         <div class="feed" id="feed"></div>
         <button class="btn feed-more" id="feedMore">Show more</button>
@@ -372,10 +403,11 @@ footer a{color:var(--ink-2)}
   </div>
 
   <footer>
-    <p><b>Sources.</b> Debt: U.S. Treasury, Historical Debt Outstanding (fiscal years, 1790–2025). Deficit/surplus 1901–2025 and net interest 1940–2025: White House Office of Management and Budget historical tables via FRED. Deficits before 1901 are estimated from the yearly change in debt and marked "est." GDP: MeasuringWorth (1790–1929) and BEA fiscal-year GDP via FRED (1930–2025). Inflation: MeasuringWorth consumer price index (1774–2025). Federal minimum wage: U.S. Department of Labor. State minimum wages: U.S. Department of Labor, as of July 1, 2026. Congress party control: Office of the House Historian and U.S. Senate Historical Office. Presidential votes by state: 270toWin (1900–2012); 1789–1896 and 2016–2024 compiled from official electoral records.</p>
-    <p><b>How the buckets work.</b> Laws and rulings are sorted by what they did, not by which party passed them. <b style="color:var(--dem)">Liberal-leaning</b> means it expanded federal spending, the government's role in the economy, progressive taxation or looser money. <b style="color:var(--rep)">Conservative-leaning</b> means it cut taxes or spending, limited the government's economic role or tightened money. <b style="color:var(--mix)">Mixed</b> covers tariffs, wartime finance and deals that did both. Party and vote splits are shown separately, so a tax cut signed by a Democrat still reads as a tax cut. This is an early classification; a vote-based check using every recorded roll call (Voteview) is planned.</p>
-    <p><b>Party colors.</b> By default, Democrats are shown red and Republicans blue before 1897, because the parties' positions were roughly the reverse of today's; from 1897 on, Republicans are red and Democrats blue. Use "Unadjust ideology" on the map to see true party colors in every era.</p>
-    <p>Map shapes use today's state borders. Before 1789 there was no president and no federal debt figure; the Continental Congress's war debts were taken over by the new government in 1790.</p>
+    <div class="about-h">About the data</div>
+    <details><summary>Sources</summary><p>Debt: U.S. Treasury, Historical Debt Outstanding (fiscal years, 1790–2025). Deficit/surplus 1901–2025 and net interest 1940–2025: White House Office of Management and Budget historical tables via FRED. Deficits before 1901 are estimated from the yearly change in debt and marked "est." GDP: MeasuringWorth (1790–1929) and BEA fiscal-year GDP via FRED (1930–2025). Inflation: MeasuringWorth consumer price index (1774–2025). Federal minimum wage: U.S. Department of Labor. State minimum wages: U.S. Department of Labor, as of July 1, 2026. Congress party control: Office of the House Historian and U.S. Senate Historical Office. Presidential votes by state: 270toWin (1900–2012); 1789–1896 and 2016–2024 compiled from official electoral records.</p></details>
+    <details><summary>How the buckets work</summary><p>Laws and rulings are sorted by what they did, not by which party passed them. <b style="color:var(--dem)">Liberal-leaning</b> means it expanded federal spending, the government's role in the economy, progressive taxation or looser money. <b style="color:var(--rep)">Conservative-leaning</b> means it cut taxes or spending, limited the government's economic role or tightened money. <b style="color:var(--mix)">Mixed</b> covers tariffs, wartime finance and deals that did both. Party and vote splits are shown separately, so a tax cut signed by a Democrat still reads as a tax cut. This is an early classification; a vote-based check using every recorded roll call (Voteview) is planned.</p></details>
+    <details><summary>Party colors</summary><p>By default, Democrats are shown red and Republicans blue before 1897, because the parties' positions were roughly the reverse of today's; from 1897 on, Republicans are red and Democrats blue. Use "Unadjust ideology" on the map to see true party colors in every era.</p></details>
+    <details><summary>Maps and early years</summary><p>Map shapes use today's state borders. Before 1789 there was no president and no federal debt figure; the Continental Congress's war debts were taken over by the new government in 1790.</p></details>
   </footer>
 </div>
 
@@ -857,7 +889,12 @@ function drawChart(){
   lane.attr("transform", `translate(${M.l},${M.t})`);
   const vis = items.filter(it => itemVisible(it) && it.tt >= a && it.tt <= b);
   lane.selectAll("line.base").data([1]).join("line").attr("class","base").attr("x1",0).attr("x2",iw).attr("y1",0).attr("y2",0).attr("stroke", css("--line"));
-  lane.selectAll("path.mk").data(vis, it => it.id).join("path").attr("class","mk")
+  lane.selectAll("circle.mkhit").data(vis, it => it.id).join("circle").attr("class","mkhit").attr("r", 11).attr("fill","transparent")
+    .attr("cx", it => x(it.tt)).attr("cy", 0).style("cursor","pointer")
+    .on("mouseenter", (ev, it) => showTip(ev, `<b>${it.title}</b><div class="r"><span class="k">${fmtDate(it.date)}</span></div><div style="color:var(--ink-2);margin-top:3px">${it.type === "event" ? "Event" : BUCKETS[it.bucket]} · click for details</div>`))
+    .on("mouseleave", hideTip)
+    .on("click", (ev, it) => { ev.stopPropagation(); hideTip(); openItem(it); });
+  lane.selectAll("path.mk").data(vis, it => it.id).join("path").attr("class","mk").style("pointer-events","none")
     .attr("d", it => it.type === "event" ? d3.symbol(d3.symbolDiamond, 46)() : it.type === "ruling" ? d3.symbol(d3.symbolSquare, 44)() : d3.symbol(d3.symbolCircle, 56)())
     .attr("transform", it => `translate(${x(it.tt)},0)`).attr("fill", it => itemColor(it)).attr("stroke", css("--surface")).attr("stroke-width", 1.5)
     .style("cursor","pointer")
@@ -901,7 +938,7 @@ document.getElementById("chartWrap").addEventListener("wheel", ev => {
 }, {passive:false});
 (function(){ let sx = null, st = null;
   const el = document.getElementById("chart");
-  el.addEventListener("pointerdown", e => { if (e.target.classList.contains("mk")) return; sx = e.clientX; st = S.t; chartDragged = false; });
+  el.addEventListener("pointerdown", e => { if (e.target.classList.contains("mk") || e.target.classList.contains("mkhit")) return; sx = e.clientX; st = S.t; chartDragged = false; });
   window.addEventListener("pointermove", e => { if (sx == null) return; const dx = e.clientX - sx; if (Math.abs(dx) > 4){ chartDragged = true; stop(); const [a,b] = xDomain(); setT(st - dx / drawChart.iw * (b - a) * (S.zoom === "follow" ? 1 : -1)); } });
   window.addEventListener("pointerup", () => { sx = null; });
 })();
@@ -1266,13 +1303,34 @@ function renderPanelMenu(){
 pb.addEventListener("click", e => { e.stopPropagation(); renderPanelMenu(); pm.hidden = !pm.hidden; pb.setAttribute("aria-expanded", !pm.hidden); });
 document.addEventListener("click", e => { if (!pm.hidden && !pm.contains(e.target) && e.target !== pb){ pm.hidden = true; pb.setAttribute("aria-expanded","false"); } });
 pm.addEventListener("change", e => { const i = e.target; if (i.dataset.p){ i.checked ? S.panels.add(i.dataset.p) : S.panels.delete(i.dataset.p); } if (i.dataset.t){ i.checked ? S.tiles.add(i.dataset.t) : S.tiles.delete(i.dataset.t); } savePrefs(); applyPanels(); render(true); });
-function applyPanels(){ for (const k of Object.keys(PANELS)) document.getElementById(k).hidden = !S.panels.has(k);
+function applyPanels(){ setTimeout(() => typeof syncJump === "function" && syncJump()); for (const k of Object.keys(PANELS)) document.getElementById(k).hidden = !S.panels.has(k);
   document.querySelectorAll(".col").forEach(c => c.hidden = [...c.children].every(ch => ch.hidden)); }
 
 /* ---------- view & zoom ---------- */
 function setView(v){ S.view = v; document.querySelectorAll("#viewSeg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.view === v)); for (const k in disp) disp[k] = null; yEase = {}; chartAnim = true; savePrefs(); render(true); }
 document.getElementById("viewSeg").addEventListener("click", e => { const b = e.target.closest("[data-view]"); if (b) setView(b.dataset.view); });
 document.getElementById("zoomSeg").addEventListener("click", e => { const b = e.target.closest("[data-zoom]"); if (!b) return; S.zoom = b.dataset.zoom; document.querySelectorAll("#zoomSeg button").forEach(x => x.setAttribute("aria-pressed", x === b)); yEase = {}; chartAnim = true; });
+
+/* ---------- mobile helpers ---------- */
+const filtBtn = document.getElementById("filtBtn");
+function syncFiltBtn(){ const off = (Object.keys(TYPES).length - S.types.size) + (Object.keys(BUCKETS).length - S.buckets.size) + (Object.keys(CATS).length - S.cats.size);
+  filtBtn.textContent = off ? `Filters · ${off} hidden` : "Filters"; }
+filtBtn.addEventListener("click", () => { const f = document.getElementById("filters"); const open = !f.classList.contains("open"); f.classList.toggle("open", open); filtBtn.setAttribute("aria-expanded", open); });
+filtersEl.addEventListener("click", () => setTimeout(syncFiltBtn));
+const jump = document.getElementById("jumpNav");
+jump.addEventListener("click", e => { const a = e.target.closest("a[data-j]"); if (!a) return; e.preventDefault();
+  const el = document.getElementById(a.dataset.j); if (el) el.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start"}); });
+function syncJump(){ jump.querySelectorAll("a").forEach(a => { const el = document.getElementById(a.dataset.j); a.hidden = !el || el.hidden; }); }
+if ("IntersectionObserver" in window){
+  const seen = new Map();
+  const io = new IntersectionObserver(ents => { ents.forEach(en => seen.set(en.target.id, en.isIntersecting ? en.intersectionRect.height : 0));
+    let best = null, bh = 0; seen.forEach((h, id) => { if (h > bh){ bh = h; best = id; } });
+    jump.querySelectorAll("a").forEach(a => { const on = a.dataset.j === best; a.classList.toggle("on", on); if (on && a.scrollIntoView && jump.scrollWidth > jump.clientWidth) jump.scrollTo({left: a.offsetLeft - 16, behavior: "smooth"}); }); },
+    {threshold: [0, .25, .5, .75, 1], rootMargin: "-60px 0px -140px 0px"});
+  ["counters","blocksCard","chartCard","mapCard","feedCard"].forEach(id => io.observe(document.getElementById(id)));
+  const sentinel = document.querySelector(".era");
+  new IntersectionObserver(([e]) => jump.classList.toggle("stuck", !e.isIntersecting && e.boundingClientRect.top < 0)).observe(sentinel);
+}
 
 /* ---------- main loop ---------- */
 let dirty = true, lastYear = null, lastISOKey = null;
@@ -1302,6 +1360,6 @@ function themeChanged(){ CSS_CACHE = {}; drawTrack(); render(true); chartAnim = 
 try { matchMedia("(prefers-color-scheme: dark)").addEventListener("change", themeChanged); } catch(e) {}
 new MutationObserver(themeChanged).observe(document.documentElement, {attributes:true, attributeFilter:["data-theme"]});
 document.querySelectorAll("#viewSeg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.view === S.view));
-syncIdeo(); renderFilters(); applyPanels(); drawTrack(); render(true); requestAnimationFrame(loop);
+syncIdeo(); renderFilters(); syncFiltBtn(); syncJump(); applyPanels(); drawTrack(); render(true); requestAnimationFrame(loop);
 })();
 </script>
