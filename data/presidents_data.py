@@ -1067,8 +1067,8 @@ PRESIDENTS = {
   eo_by_year={}, eo_total=1081, eo_range=None, eo_source=('American Presidency Project: executive orders', 'https://www.presidency.ucsb.edu/statistics/data/executive-orders'),
   eo_note="Count from the American Presidency Project. Many of his orders withdrew public land for forests, parks and wildlife refuges.",
   eo_notable=[
-    dict(n="unnumbered", date="1902-01-31", t="The 'gag order'", d="Barred federal employees from lobbying Congress for raises or laws except through their department heads."),
-    dict(n="unnumbered", date="1903-03-14", t="Pelican Island", d="Made Florida's Pelican Island the first federal bird reservation, the start of the National Wildlife Refuge System."),
+    dict(n="", date="1902-01-31", t="The 'gag order'", d="Barred federal employees from lobbying Congress for raises or laws except through their department heads."),
+    dict(n="", date="1903-03-14", t="Pelican Island", d="Made Florida's Pelican Island the first federal bird reservation, the start of the National Wildlife Refuge System."),
   ],
   clem_by_year={1902:(92,36), 1903:(70,57), 1904:(87,62), 1905:(109,52), 1906:(96,52), 1907:(71,30), 1908:(53,22), 1909:(90,52)},
   clem_total=(668, 363), clem_source=("U.S. Dept. of Justice, clemency statistics", "https://www.justice.gov/pardon/clemency-statistics"),
@@ -1096,6 +1096,172 @@ PRESIDENTS = {
     dict(q="Speak softly and carry a big stick; you will go far.", when="September 2, 1901", ctx="Quoting a proverb as vice president at the Minnesota State Fair, 12 days before he became president.", src=W+"Big_stick_ideology"),
     dict(q="The men with the muck-rakes are often indispensable to the well-being of society; but only if they know when to stop raking the muck.", when="April 14, 1906", ctx="Speech that gave investigative reporters the name 'muckrakers'.", src=W+"Muckraker"),
     dict(q="I took the Isthmus, started the canal and then left Congress not to debate the canal, but to debate me.", when="March 23, 1911", ctx="Speech at the University of California, after leaving office.", src=W+"Separation_of_Panama_from_Colombia"),
+  ],
+),
+
+# ------------------------------------------------------------------------------------------ TAFT
+"taft": dict(
+  impeached_short="No",
+  name="William Howard Taft", number="27th", party="Republican", home="Ohio",
+  terms=[("1909-03-04", "1913-03-04")], vp="James S. Sherman (died October 1912)",
+  left="Lost re-election in 1912, finishing third",
+  summary="Theodore Roosevelt's hand-picked successor. He brought about 80 antitrust suits, more than Roosevelt, including the case that broke up Standard Oil, and backed the 16th Amendment (income tax) and the 17th (direct election of senators). A tariff fight and the Ballinger–Pinchot affair split his party, and Roosevelt ran against him in 1912. He later became chief justice, the only person to hold both jobs.",
+  debt=dict(start=2_626_806_272, start_label="June 30, 1908 (end of fiscal 1908)", end=2_868_373_874, end_label="June 30, 1912 (end of fiscal 1912)",
+            note="Daily debt figures don't exist before 1993, so Taft's numbers use the fiscal years closest to his term, the same rule as every other page."),
+  unemployment=dict(start=5.2, start_label="1909", end=5.2, end_label="1912", cap='Yearly averages; monthly figures begin in 1948. Estimates by economist Stanley Lebergott.'),
+  eo_by_year={}, eo_total=724, eo_range=None, eo_source=('American Presidency Project: executive orders', 'https://www.presidency.ucsb.edu/statistics/data/executive-orders'),
+  eo_note="Count from the American Presidency Project. Many withdrew public land from sale.",
+  eo_notable=[
+    dict(n="", date="1909-09-27", t="Withdrawing oil lands", d="Pulled about 3 million acres of oil land in California and Wyoming from private claims, without specific authority from Congress. The Supreme Court upheld it in 1915."),
+    dict(n="", date="1912-10-15", t="Civil service for postmasters", d="Put about 36,000 fourth-class postmasters under civil service protection, ending them as patronage jobs."),
+  ],
+  clem_by_year={1910:(111,119), 1911:(82,64), 1912:(108,78), 1913:(82,100)},
+  clem_total=(383, 361), clem_source=('U.S. Dept. of Justice, clemency statistics', 'https://www.justice.gov/pardon/clemency-statistics'),
+  clem_note="Counts are by federal fiscal year (July to June). The Justice Department counts fiscal 1909, including Taft's first four months, under Roosevelt, and all of fiscal 1913, including Wilson's first four months, under Taft.",
+  pardons=[
+    dict(name="Charles W. Morse", kind="Commutation", date="1912-01", crime="Misusing funds of the Bank of North America (convicted 1908)", sentence="15 years; served about two", why="The shipping magnate was freed after Army doctors said he was dying. Reports later said he had faked the illness; he lived until 1933.", src=W+"Charles_W._Morse"),
+  ],
+  legal=[
+    dict(k="Impeached", v="No", status="no", d="No articles of impeachment were voted on."),
+    dict(k="Criminally charged", v="No", status="no", d="Never charged."),
+    dict(k="Aides or cabinet convicted", v="No", status="no", d="No member of his cabinet or White House staff was convicted."),
+    dict(k="Special counsels", v="No", status="no", d="None were appointed. A joint committee of Congress investigated the Ballinger–Pinchot affair in 1910."),
+    dict(k="Misuse of DOJ, FBI or IRS", v="No finding", status="no", d="No official investigation found he used these agencies against opponents."),
+  ],
+  people=[
+    dict(name="Richard Ballinger", role="Secretary of the Interior", outcome="Resigned; not charged", d="Accused of favoring private claims to Alaska coal lands. A committee majority cleared him in 1910; he resigned in 1911."),
+    dict(name="Gifford Pinchot", role="Chief of the Forest Service", outcome="Fired; not charged", d="Fired in 1910 for publicly attacking Ballinger."),
+  ],
+  controversies=[
+    dict(title="The Ballinger–Pinchot affair", when="1909–1910", label="disputed", d="Taft fired the chief forester after he accused the interior secretary of helping private interests take Alaska coal lands. Hearings revealed that a memo Taft cited to clear Ballinger had been written after the fact and dated earlier; Taft acknowledged it.", outcome="A committee majority cleared Ballinger. The fight split Republicans and helped drive Roosevelt's 1912 challenge.", src=W+"Pinchot%E2%80%93Ballinger_controversy"),
+    dict(title="The Payne–Aldrich tariff", when="1909", label="disputed", d="Taft promised to lower tariffs but signed a bill that cut them only slightly, then called it the best tariff bill his party ever passed.", outcome="Progressive Republicans turned against him; Democrats won the House in 1910.", src=W+"Payne%E2%80%93Aldrich_Tariff_Act"),
+    dict(title="Marines to Nicaragua", when="1912", label="proven", d="Taft sent about 2,000 Marines to prop up a government friendly to U.S. banks, part of his 'dollar diplomacy'.", outcome="U.S. forces stayed, with one short break, until 1933.", src=W+"United_States_occupation_of_Nicaragua"),
+    dict(title="Suing U.S. Steel", when="1911", label="disputed", d="His antitrust suit against U.S. Steel cited its 1907 purchase of a rival, which Roosevelt had approved, and Roosevelt took it as a personal attack.", outcome="The Supreme Court ruled for U.S. Steel in 1920; the break with Roosevelt became permanent.", src=W+"U.S._Steel"),
+  ],
+  quotes=[
+    dict(q="I think the Payne bill is the best bill that the Republican party ever passed.", when="September 17, 1909", ctx="Speech in Winona, Minnesota, defending the tariff.", src=W+"Payne%E2%80%93Aldrich_Tariff_Act"),
+    dict(q="Even a rat in a corner will fight.", when="April 1912", ctx="Answering Theodore Roosevelt's attacks during the Republican primaries.", src=W+"1912_United_States_presidential_election"),
+  ],
+),
+
+# ------------------------------------------------------------------------------------------ McKINLEY
+"mckinley": dict(
+  impeached_short="No",
+  name="William McKinley", number="25th", party="Republican", home="Ohio",
+  terms=[("1897-03-04", "1901-03-04"), ("1901-03-04", "1901-09-14")], vp="Garret Hobart (1897–99), Theodore Roosevelt (1901)",
+  left="Assassinated September 1901",
+  summary="Won in 1896 on the gold standard and high tariffs. He signed the Dingley Tariff, which raised rates to record levels, led the country through the Spanish–American War in 1898, and took Puerto Rico, Guam and the Philippines, where U.S. troops then fought a long war against Filipino independence forces. He annexed Hawaii and signed the Gold Standard Act. He was shot in Buffalo six months into his second term.",
+  debt=dict(start=1_769_840_323, start_label="June 30, 1896 (end of fiscal 1896)", end=2_143_326_934, end_label="June 30, 1901 (end of fiscal 1901)",
+            note="Daily debt figures don't exist before 1993, so McKinley's numbers use the fiscal years closest to his terms, the same rule as every other page. Most of the rise paid for the Spanish–American War."),
+  unemployment=dict(start=14.5, start_label="1897", end=2.4, end_label="1901", cap='Yearly averages; monthly figures begin in 1948. Estimates by economist Stanley Lebergott.'),
+  eo_by_year={}, eo_total=185, eo_range=None, eo_source=('American Presidency Project: executive orders', 'https://www.presidency.ucsb.edu/statistics/data/executive-orders'),
+  eo_note="Count from the American Presidency Project.",
+  eo_notable=[
+    dict(n="", date="1899-05-29", t="Rolling back the civil service", d="Removed about 4,000 federal jobs from civil service rules, letting them be filled by patronage again."),
+  ],
+  clem_by_year={1900:(129,73), 1901:(162,50)},
+  clem_total=(291, 123), clem_scope="fiscal 1900–01 only", clem_source=('U.S. Dept. of Justice, clemency statistics', 'https://www.justice.gov/pardon/clemency-statistics'),
+  clem_note="The Justice Department's published counts begin in fiscal 1900 (July 1899), so only his last two years are shown.",
+  pardons=[],
+  legal=[
+    dict(k="Impeached", v="No", status="no", d="No articles of impeachment were voted on."),
+    dict(k="Criminally charged", v="No", status="no", d="Never charged."),
+    dict(k="Aides or cabinet convicted", v="No — one general court-martialed", status="partial", d="No cabinet member was convicted. The Army's commissary general, Charles Eagan, was court-martialed in 1899 for his public attack on General Nelson Miles during the 'embalmed beef' dispute.", src=W+"Russell_A._Alger"),
+    dict(k="Special counsels", v="No", status="no", d="None were appointed. A presidential commission (the Dodge Commission) investigated the War Department in 1898–99."),
+    dict(k="Misuse of DOJ, FBI or IRS", v="No finding", status="no", d="No official investigation found he used federal agencies against opponents."),
+  ],
+  people=[
+    dict(name="Russell Alger", role="Secretary of War", outcome="Resigned; not charged", d="Forced out in 1899 after the War Department was blamed for supply failures and disease that killed far more soldiers than combat did."),
+    dict(name="Charles Eagan", role="Commissary General of the Army", outcome="Convicted (court-martial)", d="Convicted in 1899 of conduct unbecoming an officer for a profane tirade against General Miles; McKinley reduced the sentence to a six-year suspension."),
+  ],
+  controversies=[
+    dict(title="The Philippine–American War", when="1899–1902", label="proven", d="After buying the Philippines from Spain, the U.S. fought Filipino forces seeking independence. About 4,200 U.S. soldiers and 20,000 Filipino fighters were killed, and at least 200,000 Filipino civilians died from violence, famine and disease. U.S. troops used torture, including the 'water cure'.", outcome="A Senate committee held hearings on abuses in 1902, after McKinley's death.", src=W+"Philippine%E2%80%93American_War"),
+    dict(title="Annexing Hawaii", when="1898", label="disputed", d="American businessmen had overthrown Hawaii's queen in 1893. When a treaty could not get two-thirds of the Senate, McKinley annexed the islands by a simple majority vote of both houses.", outcome="Congress formally apologized to Native Hawaiians in 1993.", src=W+"Newlands_Resolution"),
+    dict(title="The 'embalmed beef' scandal", when="1898–1899", label="disputed", d="General Nelson Miles charged that canned and refrigerated beef supplied to troops in the war was chemically treated and made soldiers sick.", outcome="A court of inquiry found the beef was poor but not chemically treated; Secretary of War Alger resigned amid the fallout.", src=W+"Russell_A._Alger"),
+    dict(title="Silence on the Wilmington coup", when="November 1898", label="disputed", d="White supremacists overthrew the elected, biracial government of Wilmington, North Carolina, killing dozens of Black residents. Black leaders appealed to McKinley, who did not intervene.", outcome="No one was prosecuted; North Carolina's 2006 commission called it a coup.", src=W+"Wilmington_insurrection_of_1898"),
+    dict(title="Record corporate money in 1896", when="1896", label="disputed", d="Campaign manager Mark Hanna raised an estimated $3.5 million, much of it assessed from banks and corporations, which was legal at the time.", outcome="Corporate contributions to federal campaigns were banned in 1907.", src=W+"Mark_Hanna"),
+  ],
+  quotes=[
+    dict(q="There was nothing left for us to do but to take them all, and to educate the Filipinos, and uplift and civilize and Christianize them.", when="November 1899", ctx="As recalled in 1903 by a Methodist minister who was at the meeting; historians question the exact wording.", src=W+"Philippine%E2%80%93American_War"),
+    dict(q="Expositions are the timekeepers of progress.", when="September 5, 1901", ctx="Speech at the Pan-American Exposition in Buffalo, the day before he was shot there.", src=W+"Assassination_of_William_McKinley"),
+  ],
+),
+
+# ------------------------------------------------------------------------------------------ B. HARRISON
+"bharrison": dict(
+  impeached_short="No",
+  name="Benjamin Harrison", number="23rd", party="Republican", home="Indiana",
+  terms=[("1889-03-04", "1893-03-04")], vp="Levi P. Morton",
+  left="Lost re-election in 1892 to Grover Cleveland",
+  summary="Grandson of President William Henry Harrison. He won the electoral vote in 1888 while losing the popular vote. He signed the Sherman Antitrust Act, the Sherman Silver Purchase Act, the McKinley Tariff and a large expansion of Civil War pensions, and six new states joined the Union. His Congress was the first in peacetime to spend a billion dollars.",
+  debt=dict(start=1_692_858_985, start_label="June 30, 1888 (end of fiscal 1888)", end=1_588_464_145, end_label="June 30, 1892 (end of fiscal 1892)",
+            note="Daily debt figures don't exist before 1993, so Harrison's numbers use the fiscal years closest to his term, the same rule as every other page."),
+  unemployment=dict(start=4.0, start_label="1890", end=3.0, end_label="1892", cap="Yearly averages. National estimates by economist Stanley Lebergott begin in 1890."),
+  eo_by_year={}, eo_total=143, eo_range=None, eo_source=('American Presidency Project: executive orders', 'https://www.presidency.ucsb.edu/statistics/data/executive-orders'),
+  eo_note="Count from the American Presidency Project.",
+  eo_notable=[],
+  clem_by_year={}, clem_total=None, clem_source=('U.S. Dept. of Justice, clemency statistics', 'https://www.justice.gov/pardon/clemency-statistics'),
+  clem_note="The Justice Department's published counts begin in 1900.",
+  pardons=[
+    dict(name="Mormon polygamists", kind="Amnesty", date="1893-01-04", crime="Polygamy and 'unlawful cohabitation' under the Edmunds Act", sentence="Various", why="Granted after the Latter-day Saints church renounced plural marriage in 1890, for those who had since obeyed the law. Cleveland broadened it in 1894.", src=W+"1890_Manifesto"),
+  ],
+  legal=[
+    dict(k="Impeached", v="No", status="no", d="No articles of impeachment were voted on."),
+    dict(k="Criminally charged", v="No", status="no", d="Never charged."),
+    dict(k="Aides or cabinet convicted", v="No", status="no", d="No member of his cabinet or White House staff was convicted."),
+    dict(k="Special counsels", v="No", status="no", d="None were appointed."),
+    dict(k="Misuse of DOJ, FBI or IRS", v="No finding", status="no", d="No official investigation found he used federal agencies against opponents."),
+  ],
+  people=[
+    dict(name="James Tanner", role="Commissioner of Pensions", outcome="Forced to resign; not charged", d="Raised pensions so freely, including for his own staff, that he was pushed out after six months in 1889. He had promised 'God help the surplus.'"),
+  ],
+  controversies=[
+    dict(title="'Blocks of five' vote buying", when="1888", label="charged", d="A letter from the Republican national treasurer, William Dudley, told Indiana party workers to 'divide the floaters into blocks of five' and put a trusted man in charge of each, which critics read as a plan to buy votes.", outcome="Dudley was indicted, but the case was dropped after the judge narrowed the law.", src=W+"1888_United_States_presidential_election"),
+    dict(title="The Wounded Knee massacre", when="December 29, 1890", label="proven", d="The Army's 7th Cavalry killed about 250 to 300 Lakota, many of them women and children, while disarming a camp at Wounded Knee Creek, South Dakota.", outcome="An Army inquiry cleared the commander, and 20 soldiers received the Medal of Honor. Congress expressed 'deep regret' in 1990.", src=W+"Wounded_Knee_Massacre"),
+    dict(title="The McKinley Tariff", when="1890", label="disputed", d="Raised average tariff rates to about 49 percent, and prices on many goods went up.", outcome="Republicans lost the House in a landslide that fall; Harrison lost in 1892.", src=W+"McKinley_Tariff"),
+  ],
+  quotes=[
+    dict(q="Providence has given us the victory.", when="November 1888", ctx="To party boss Matthew Quay after the election. Quay later said Harrison would never know how close a number of men came to the penitentiary to make him president.", src=W+"Matthew_Quay"),
+    dict(q="I pity the man who wants a coat so cheap that the man or woman who produces the cloth or shapes it into a garment will starve in the process.", when="1888", ctx="Campaign speech defending high tariffs.", src=W+"Benjamin_Harrison"),
+  ],
+),
+
+# ------------------------------------------------------------------------------------------ CLEVELAND
+"cleveland": dict(
+  impeached_short="No",
+  name="Grover Cleveland", number="22nd & 24th", party="Democratic", home="New York",
+  terms=[("1885-03-04", "1889-03-04"), ("1893-03-04", "1897-03-04")], vp="Thomas Hendricks (1885, died), Adlai Stevenson I (1893–97)",
+  left="Lost in 1888 despite winning the popular vote; won again in 1892",
+  summary="The first president to serve two non-consecutive terms. A small-government Democrat, he vetoed more bills in his first term than all earlier presidents combined, signed the Interstate Commerce Act, and fought high tariffs. His second term began with the Panic of 1893. He had the Sherman Silver Purchase Act repealed, borrowed gold through J.P. Morgan to protect the dollar, and sent federal troops to break the Pullman strike.",
+  debt=dict(start=1_830_528_924, start_label="June 30, 1884 (end of fiscal 1884)", end=1_692_858_985, end_label="June 30, 1888 (end of fiscal 1888)",
+            start2=1_588_464_145, start2_label="June 30, 1892 (end of fiscal 1892)", end2=1_769_840_323, end2_label="June 30, 1896 (end of fiscal 1896)",
+            note="Daily debt figures don't exist before 1993, so Cleveland's numbers use the fiscal years closest to his terms, the same rule as every other page. The debt fell in his first term and rose in his second, when the government borrowed to rebuild its gold reserve."),
+  unemployment=dict(start=11.7, start_label="1893", end=14.5, end_label="1896", cap="Yearly averages for his second term. National estimates by economist Stanley Lebergott begin in 1890, so none exist for his first term."),
+  eo_by_year={}, eo_total=253, eo_range=None, eo_source=('American Presidency Project: executive orders', 'https://www.presidency.ucsb.edu/statistics/data/executive-orders'),
+  eo_note="113 in the first term and 140 in the second, as counted by the American Presidency Project.",
+  eo_notable=[],
+  clem_by_year={}, clem_total=None, clem_source=('U.S. Dept. of Justice, clemency statistics', 'https://www.justice.gov/pardon/clemency-statistics'),
+  clem_note="The Justice Department's published counts begin in 1900.",
+  pardons=[
+    dict(name="Mormon polygamists", kind="Amnesty", date="1894-09-25", crime="Polygamy and 'unlawful cohabitation' under the Edmunds Act", sentence="Various", why="Expanded Benjamin Harrison's 1893 amnesty, restoring civil rights to those who had obeyed the law since 1890.", src=W+"1890_Manifesto"),
+  ],
+  legal=[
+    dict(k="Impeached", v="No", status="no", d="No articles of impeachment were voted on."),
+    dict(k="Criminally charged", v="No", status="no", d="Never charged."),
+    dict(k="Aides or cabinet convicted", v="No", status="no", d="No member of his cabinet or White House staff was convicted."),
+    dict(k="Special counsels", v="No", status="no", d="None were appointed."),
+    dict(k="Misuse of DOJ, FBI or IRS", v="Disputed — Pullman strike", status="partial", d="Attorney General Richard Olney, a former railroad lawyer who still sat on a railroad board, used a federal court injunction and troops against the 1894 Pullman strike. The Supreme Court upheld the injunction in 1895.", src=W+"In_re_Debs"),
+  ],
+  people=[],
+  controversies=[
+    dict(title="Maria Halpin's accusation", when="1874; public in 1884", label="alleged", d="Cleveland acknowledged he might be the father of Halpin's son and paid support. Halpin later said he had forced himself on her; after she began drinking, the boy was placed in an orphanage and she was briefly committed to an asylum, arrangements Cleveland was involved in.", outcome="The assault accusation was never tested in court. 'Ma, Ma, where's my Pa?' became a Republican chant in 1884.", src=W+"Maria_Crofts_Halpin"),
+    dict(title="Breaking the Pullman strike", when="1894", label="disputed", d="Over the objection of Illinois's governor, Cleveland sent federal troops to Chicago to end a nationwide railroad strike, citing the mail. About 30 strikers were killed, and union leader Eugene Debs was jailed for violating an injunction.", outcome="The Supreme Court upheld the injunction in In re Debs (1895).", src=W+"Pullman_Strike"),
+    dict(title="Secret cancer surgery", when="July 1893", label="proven", d="In the middle of a financial panic, surgeons removed a tumor from Cleveland's jaw on a friend's yacht in New York harbor. The White House denied a reporter's accurate story.", outcome="Confirmed in 1917 by one of the surgeons.", src=W+"Grover_Cleveland"),
+    dict(title="The Morgan gold deal", when="1895", label="disputed", d="To stop a run on the Treasury's gold, the government sold bonds to a syndicate led by J.P. Morgan and August Belmont on terms critics said handed them big profits.", outcome="The gold reserve was saved; a Senate committee investigated the bond sales in 1896.", src=W+"Panic_of_1893"),
+  ],
+  quotes=[
+    dict(q="Though the people support the Government, the Government should not support the people.", when="February 16, 1887", ctx="Veto of a bill giving $10,000 of seed grain to drought-stricken Texas farmers.", src=W+"Grover_Cleveland"),
+    dict(q="Tell the truth.", when="July 1884", ctx="His instruction to aides when the Halpin story broke during the campaign.", src=W+"1884_United_States_presidential_election"),
   ],
 ),
 }

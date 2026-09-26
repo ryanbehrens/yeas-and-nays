@@ -134,11 +134,14 @@ def page(slug, p):
             infl_txt.append((sy, ey, avg, cpi[ey] / cpi[sy] * 100))
     eo_years = p["eo_by_year"]; eo_total = sum(eo_years.values()) if eo_years else p["eo_total"]
     yrs_in_office = sum((b - a) for a, b in tf)
-    pard, comm = p["clem_total"]
+    pard, comm = p["clem_total"] or (0, 0)
     groups = [g for gl in p.get("clem_group", {}).values() for g in gl]
     group_n = sum(n for _, n in groups)
     legal = {x["k"]: x for x in p["legal"]}
     party_var = "--rep" if p["party"].startswith("Republican") else "--dem"
+    flipped = p["terms"][0][0] < "1897"
+    if flipped: party_var = "--dem" if party_var == "--rep" else "--rep"  # site-wide ideology adjustment
+    flipnote = ('<p class="flipnote">Party colors follow the site\'s ideology adjustment: before 1897, Democrats were generally the more conservative party, so they are shown in red and Republicans in blue.</p>' if flipped else "")
     term_txt = " and ".join(f'{s[:4]}–{(en or "")[:4] if en else "present"}' for s, en in p["terms"])
 
     t = [head(f'{p["name"]} · Yeas and Nays', f'{p["name"]}: the economy, executive orders, pardons, legal record and controversies, with sources.', "../")]
@@ -148,7 +151,7 @@ def page(slug, p):
     <div>
       <div class="eyebrow">{e(p["number"])} president of the United States · {e(term_txt)}</div>
       <h1>{e(p["name"])}</h1>
-      <div class="meta"><span class="chip"><span class="dot" style="background:var({party_var})"></span>{e(p["party"])}</span><span class="chip">Vice president: {e(p["vp"])}</span><span class="chip">{e(p["left"])}</span></div>
+      <div class="meta"><span class="chip"><span class="dot" style="background:var({party_var})"></span>{e(p["party"])}</span><span class="chip">Vice president: {e(p["vp"])}</span><span class="chip">{e(p["left"])}</span></div>{flipnote}
       <p class="sum">{e(p["summary"])}</p>
     </div>
   </section>
@@ -156,7 +159,7 @@ def page(slug, p):
 """)
     # --- tiles
     sg = lambda v: "+" if v >= 0 else "−"
-    debt_sub = " · ".join(f'{"1st term" if i == 0 and len(parts) > 1 else "2nd term so far" if i else "Start"}: {money(b - a)} ({sg(b - a)}{abs(b / a - 1) * 100:.0f}%)' if len(parts) > 1 else f'{money(a)} → {money(b)} ({sg(b - a)}{abs(b / a - 1) * 100:.0f}%)' for i, (a, b, *_) in enumerate(parts))
+    debt_sub = " · ".join(f'{"1st term" if i == 0 and len(parts) > 1 else ("2nd term" if p["terms"][-1][1] else "2nd term so far") if i else "Start"}: {money(b - a)} ({sg(b - a)}{abs(b / a - 1) * 100:.0f}%)' if len(parts) > 1 else f'{money(a)} → {money(b)} ({sg(b - a)}{abs(b / a - 1) * 100:.0f}%)' for i, (a, b, *_) in enumerate(parts))
     a_num, a_unit = money_parts(abs(added)); a_num = ("+" if added >= 0 else "−") + a_num.lstrip("+")
     debt_lab = "Debt added" if added >= 0 else "Debt paid down"
     r = ratio_txt
@@ -173,7 +176,7 @@ def page(slug, p):
     <a class="tile" href="#economy"><div class="lab"><span class="dot" style="background:var(--int)"></span>Unemployment</div><div class="val">{u_val}%</div><div class="sub">{e(u_sub)}</div></a>
     <a class="tile" href="#economy"><div class="lab"><span class="dot" style="background:var(--def)"></span>Average inflation</div><div class="val">{infl_val}<small>a year</small></div><div class="sub">{e(infl_sub)}</div></a>
     <a class="tile" href="#orders"><div class="lab">Executive orders</div><div class="val">{eo_total:,}</div><div class="sub">About {eo_total / yrs_in_office:.0f} a year in office</div></a>
-    <a class="tile" href="#pardons"><div class="lab">Pardons &amp; commutations</div><div class="val">{pard + comm + group_n:,}</div><div class="sub">{pard:,} pardons · {comm:,} commutations{f" · about {group_n:,} by group proclamation" if group_n else ""}</div></a>
+    <a class="tile" href="#pardons"><div class="lab">Pardons &amp; commutations</div><div class="val">{f"{pard + comm + group_n:,}" if p["clem_total"] else "—"}</div><div class="sub">{f"{pard:,} pardons · {comm:,} commutations" if p["clem_total"] else "Not recorded before 1900"}{f" · about {group_n:,} by group proclamation" if group_n else ""}{f" ({e(p['clem_scope'])})" if p.get("clem_scope") else ""}</div></a>
     <a class="tile" href="#legal"><div class="lab">Impeached</div><div class="val">{e(p["impeached_short"])}</div><div class="sub">{e(legal["Impeached"]["v"])} · Convicted of a crime: {e(legal.get("Convicted", {}).get("v", "No"))}</div></a>
   </div>
   </section>
@@ -197,7 +200,7 @@ def page(slug, p):
     <div class="grid2">
       <div class="card"><h3>National debt</h3><p class="cap">{e(parts[0][2])}: {money(parts[0][0])} → {e(parts[0][3])}: {money(parts[0][1])}{"" if len(parts) == 1 else f" · {e(parts[1][2])}: {money(parts[1][0])} → {e(parts[1][3])}: {money(parts[1][1])}"}</p><div class="chart" id="ch-debt"></div>{f'<p class="note">{e(dnote)}</p>' if dnote else ""}</div>
       <div class="card"><h3>Debt compared with the economy</h3><p class="cap">Debt as a share of GDP. Above 100% means the debt is bigger than a year of everything the country produces.</p><div class="chart" id="ch-ratio"></div></div>
-      <div class="card"><h3>Deficits and surpluses</h3><p class="cap">Money borrowed each budget year (below the line) or paid down (above).</p><div class="chart" id="ch-deficit"></div><div class="legend"><span><i class="sw" style="background:var(--def)"></i>Deficit</span><span><i class="sw" style="background:var(--debt)"></i>Surplus</span></div></div>
+      <div class="card"><h3>Deficits and surpluses</h3><p class="cap">Money borrowed each budget year (below the line) or paid down (above).{" The White House budget office's yearly figures begin in 1901." if y0 < 1901 else ""}</p><div class="chart" id="ch-deficit"></div><div class="legend"><span><i class="sw" style="background:var(--def)"></i>Deficit</span><span><i class="sw" style="background:var(--debt)"></i>Surplus</span></div></div>
       <div class="card"><h3>Unemployment</h3><p class="cap">{e(u_sub)}. {e(U.get("cap", "Monthly rates; the chart shows yearly averages."))}</p><div class="chart" id="ch-unemp"></div></div>
       <div class="card"><h3>Inflation</h3><p class="cap">How much prices rose each year (consumer price index).</p><div class="chart" id="ch-infl"></div></div>
       <div class="card"><h3>Cost of living</h3><p class="cap">What everyday prices and paychecks did while in office.</p>
@@ -209,7 +212,7 @@ def page(slug, p):
     # --- executive orders
     eo_chart = ('<div class="chart" id="ch-eo"></div>' if eo_years else
                 '<p class="note" style="font-size:13px">Yearly counts aren\'t reliable for this era. Orders were not numbered until 1907, when the State Department numbered the ones already in its files, and many orders were never numbered at all, so only the total is shown.</p>')
-    eo_items = "".join(f"""<details class="item"><summary><span class="t">{e(o["t"])}</span><span class="pill kind">EO {e(o["n"])}</span><span class="m">{fmt_date(o["date"])}</span></summary><div class="body"><p style="margin:0">{e(o["d"])}</p><a href="https://www.federalregister.gov/presidential-documents/executive-orders" target="_blank" rel="noopener">Federal Register</a></div></details>""" for o in p["eo_notable"])
+    eo_items = "".join(f"""<details class="item"><summary><span class="t">{e(o["t"])}</span><span class="pill kind">{"EO " + e(o["n"]) if o["n"] else "Order"}</span><span class="m">{fmt_date(o["date"])}</span></summary><div class="body"><p style="margin:0">{e(o["d"])}</p><a href="https://www.federalregister.gov/presidential-documents/executive-orders" target="_blank" rel="noopener">Federal Register</a></div></details>""" for o in p["eo_notable"])
     t.append(f"""  <section id="orders" class="block">
     <h2>Executive orders</h2>
     <p class="lede">{eo_total:,} orders{f', numbered {e(p["eo_range"])}' if p.get("eo_range") else ""}. {e(p.get("eo_note", ""))}</p>
@@ -223,15 +226,17 @@ def page(slug, p):
     def pardon_item(x):
         d = x["date"]; dd = fmt_date(d) if len(d) == 10 else d
         return f"""<details class="item"><summary><span class="t">{e(x["name"])}</span><span class="pill kind">{e(x["kind"])}</span><span class="m">{e(dd)}</span></summary><div class="body"><p style="margin:0"><b>The crime:</b> {e(x["crime"])}</p><p style="margin:0"><b>Sentence:</b> {e(x["sentence"])}</p><p style="margin:0"><b>Why it drew attention:</b> {e(x["why"])}</p><a href="{e(x["src"])}" target="_blank" rel="noopener">Source</a></div></details>"""
+    clem_chart = ('<div class="chart" id="ch-clem"></div><div class="legend"><span><i class="sw" style="background:var(--accent)"></i>Pardons</span><span><i class="sw" style="background:var(--int)"></i>Commutations</span></div>' if p["clem_by_year"] else
+                  '<p class="note" style="font-size:13px">The Justice Department\'s published clemency counts begin in fiscal 1900, so there are no reliable yearly totals for this presidency.</p>')
     group_html = "".join(f'<div class="row"><span>{e(n)}</span><b>{c:,}</b></div>' for n, c in groups)
     t.append(f"""  <section id="pardons" class="block">
     <h2>Pardons and commutations</h2>
     <p class="lede">A pardon wipes out the punishment for a federal crime; a commutation shortens a sentence but leaves the conviction. {e(p["clem_note"])}</p>
     <div class="grid2">
-      <div class="card"><h3>Granted each year</h3><div class="chart" id="ch-clem"></div><div class="legend"><span><i class="sw" style="background:var(--accent)"></i>Pardons</span><span><i class="sw" style="background:var(--int)"></i>Commutations</span></div>
+      <div class="card"><h3>Granted each year</h3>{clem_chart}
         {f'<div class="cost" style="margin-top:10px"><div class="row" style="border:0;padding:0"><span style="color:var(--muted);font-size:12px">Group proclamations (not in the chart)</span></div>{group_html}</div>' if groups else ""}
         <p class="note">Source: <a href="{e(p["clem_source"][1])}" target="_blank" rel="noopener">{e(p["clem_source"][0])}</a>, which lists every recipient with the crime and sentence.</p></div>
-      <div><h3 style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin:0 0 8px">Notable grants: tap to see the crime</h3><div class="list">{"".join(pardon_item(x) for x in p["pardons"])}</div></div>
+      <div><h3 style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin:0 0 8px">Notable grants: tap to see the crime</h3><div class="list">{"".join(pardon_item(x) for x in p["pardons"]) or '<p class="note" style="margin:0">No individual grants from this presidency are highlighted yet.</p>'}</div></div>
     </div>
   </section>
 """)
