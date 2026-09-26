@@ -41,7 +41,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 /* Hero */
 .hero{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:end;padding-block:10px 22px}
 .portrait{width:168px;aspect-ratio:4/5;border-radius:14px;overflow:hidden;background:var(--surface-2);border:1px solid var(--line);display:grid;place-items:center;position:relative}
-.portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 25%;display:block}
 .portrait .mono{font-family:var(--display);font-size:56px;color:var(--ink-2);letter-spacing:.02em}
 .portrait .ph{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .hero .eyebrow{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
@@ -144,7 +144,7 @@ blockquote footer a{color:var(--ink-2)}
 .pcard.live:hover{border-color:var(--muted);transform:translateY(-2px)}
 .pcard.soon{opacity:.55}
 .pcard .pic{aspect-ratio:4/5;background:var(--surface-2);display:grid;place-items:center;position:relative;overflow:hidden}
-.pcard .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.pcard .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 25%;display:block}
 .pcard .pic .mono{font-family:var(--display);font-size:40px;color:var(--ink-2)}
 .pcard .pic .num{position:absolute;top:8px;left:8px;font-size:11px;font-family:var(--mono);background:color-mix(in srgb,var(--bg) 75%,transparent);border-radius:6px;padding:1px 6px;color:var(--ink-2)}
 .pcard .pic .bar{position:absolute;left:0;right:0;bottom:0;height:4px}

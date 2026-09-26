@@ -72,6 +72,19 @@ FOOT = """  <footer class="pagefoot"><span>Yeas and Nays · How America got here
 </div>
 """
 
+# One file name per president: assets/presidents/<slug>.jpg (also used for future deep-dive pages)
+PORTRAIT_SLUG = {"George Washington":"washington","John Adams":"jadams","Thomas Jefferson":"jefferson","James Madison":"madison",
+  "James Monroe":"monroe","John Quincy Adams":"jqadams","Andrew Jackson":"jackson","Martin Van Buren":"vanburen",
+  "William Henry Harrison":"whharrison","John Tyler":"tyler","James K. Polk":"polk","Zachary Taylor":"taylor",
+  "Millard Fillmore":"fillmore","Franklin Pierce":"pierce","James Buchanan":"buchanan","Abraham Lincoln":"lincoln",
+  "Andrew Johnson":"ajohnson","Ulysses S. Grant":"grant","Rutherford B. Hayes":"hayes","James A. Garfield":"garfield",
+  "Chester A. Arthur":"arthur","Grover Cleveland":"cleveland","Benjamin Harrison":"bharrison","William McKinley":"mckinley",
+  "Theodore Roosevelt":"troosevelt","William Howard Taft":"taft","Woodrow Wilson":"wilson","Warren G. Harding":"harding",
+  "Calvin Coolidge":"coolidge","Herbert Hoover":"hoover","Franklin D. Roosevelt":"fdr","Harry S. Truman":"truman",
+  "Dwight D. Eisenhower":"eisenhower","John F. Kennedy":"jfk","Lyndon B. Johnson":"lbj","Richard Nixon":"nixon",
+  "Gerald Ford":"ford","Jimmy Carter":"carter","Ronald Reagan":"reagan","George H. W. Bush":"ghwbush",
+  "Bill Clinton":"clinton","George W. Bush":"gwbush","Barack Obama":"obama","Donald Trump":"trump","Joe Biden":"biden"}
+
 def slug_for(name):
     for k, v in PRESIDENTS.items():
         if v["name"] == name: return k
@@ -80,7 +93,7 @@ def slug_for(name):
 def portrait(slug, name, cls="portrait", placeholder=True, up="../"):
     initials = "".join(w[0] for w in name.replace(".", "").split() if w[0].isupper())[:2]
     mono = f'<span class="mono">{e(initials)}</span>' + ('<span class="ph">Portrait coming</span>' if placeholder else "")
-    if slug in PRESIDENTS:
+    if slug in PRESIDENTS or slug in PORTRAIT_SLUG.values():
         # Shows assets/presidents/<slug>.jpg if it exists; otherwise the image removes itself and the initials show.
         return mono + f'<img src="{up}assets/presidents/{slug}.jpg" alt="Official portrait of {e(name)}" loading="lazy" onerror="this.remove()">'
     return mono
@@ -276,7 +289,7 @@ def index():
             yrs = " & ".join(f'{a[:4]}–{b[:4] if b else "present"}' for a, b in p["terms"])
             cards.append(f'<a class="pcard live" href="presidents/{slug}.html"><div class="pic">{portrait(slug, name, placeholder=False, up="")}<span class="num">#{p["number"].replace("th","").replace("nd","").replace("rd","").replace(" & ","/").replace("st","")}</span><span class="bar" style="background:var({var})"></span></div><div class="info"><b>{e(name)}</b><span>{e(yrs)} · {e(party.split(" /")[0])}</span><em>Deep dive →</em></div></a>')
         else:
-            cards.append(f'<div class="pcard soon" aria-disabled="true"><div class="pic">{portrait("none", name, placeholder=False, up="")}<span class="num">#{num}</span><span class="bar" style="background:var({var})"></span></div><div class="info"><b>{e(name)}</b><span>{e(yrs)} · {e(party.split(" /")[0].split(" (")[0])}</span><span>Coming soon</span></div></div>')
+            cards.append(f'<div class="pcard soon" aria-disabled="true"><div class="pic">{portrait(PORTRAIT_SLUG.get(name, "none"), name, placeholder=False, up="")}<span class="num">#{num}</span><span class="bar" style="background:var({var})"></span></div><div class="info"><b>{e(name)}</b><span>{e(yrs)} · {e(party.split(" /")[0].split(" (")[0])}</span><span>Coming soon</span></div></div>')
     live = [c for c in cards if 'class="pcard live"' in c]
     t.append("\n".join("    " + c for c in live))
     t.append("""\n  </div>\n  <h2 style="font-family:var(--serif);font-weight:400;font-size:22px;margin:30px 0 4px">All presidents</h2>\n  <p style="color:var(--muted);font-size:13px;margin:0 0 6px">Colored bars show party, using the site's ideology adjustment: before 1897, Democrats are red and Republicans blue.</p>\n  <div class="pgrid">\n""")

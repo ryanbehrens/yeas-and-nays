@@ -10,8 +10,11 @@ Supreme Court rulings that moved the numbers.
 - `index.html` — **The Ledger**, the home page (timeline, debt, map, laws).
 - `presidents.html` — every president; `presidents/<name>.html` — deep dives (Carter, Reagan, Nixon, Clinton, G.W. Bush, Obama, Trump, Biden, G.H.W. Bush, Ford, Johnson, Kennedy so far).
 
-## Adding a president portrait
-Save the official portrait as `assets/presidents/<name>.jpg` (for example `assets/presidents/nixon.jpg`), about 600×750 pixels, then commit and push. It appears automatically.
+## Adding president portraits
+Run `sh scripts/get-portraits.sh` from the project folder. It downloads every official portrait
+(Library of Congress, public domain) into `portraits-to-crop/`, already named for the site
+(`washington.jpg` … `biden.jpg`). Crop any you like to 4:5 (optional; the site crops automatically),
+move them into `assets/presidents/`, then commit and push. Every president's card picks up its portrait.
 
 ## How it's built
 - `index.html` is the finished site. It's a single static page; Vercel serves it as-is (no build step).
