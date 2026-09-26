@@ -108,7 +108,7 @@ def page(slug, p):
     if "start2" in D: parts.append((D["start2"], D["end2"], D["start2_label"], D["end2_label"]))
     added = sum(b - a for a, b, *_ in parts)
     def fy_bounds(s, en):
-        sy = int(s[:4]) - 1
+        sd = dt.date.fromisoformat(s); sy = sd.year if sd.month >= 7 else sd.year - 1
         ed = dt.date.fromisoformat(en); ey = ed.year - 1 if ed.month < 7 else ed.year
         return sy, min(ey, LAST)
     ratio_txt = []; infl_txt = []; cost = []

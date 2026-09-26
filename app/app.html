@@ -536,7 +536,7 @@ function partyColor(code, t){
 }
 function partyVarAt(name, t){ const v = partyVar(name); if (!flipped(t)) return v; return v === "--dem" ? "--rep" : v === "--rep" ? "--dem" : v; }
 // Presidents with a deep-dive page
-const PRES_PAGES = {"Jimmy Carter":"carter", "Ronald Reagan":"reagan", "Richard Nixon":"nixon", "Bill Clinton":"clinton", "George W. Bush":"gwbush", "Barack Obama":"obama", "Donald Trump":"trump", "Joe Biden":"biden"};
+const PRES_PAGES = {"Jimmy Carter":"carter", "Ronald Reagan":"reagan", "Richard Nixon":"nixon", "Bill Clinton":"clinton", "George W. Bush":"gwbush", "Barack Obama":"obama", "Donald Trump":"trump", "Joe Biden":"biden", "George H. W. Bush":"ghwbush", "Gerald Ford":"ford", "Lyndon B. Johnson":"lbj", "John F. Kennedy":"jfk"};
 function partyVar(name){ if (!name) return "--mix"; if ((/^Democratic/.test(name) && !/^Democratic-Republican/.test(name)) || /^Jacksonian/.test(name)) return "--dem"; if (/^Republican/.test(name)) return "--rep"; return "--mix"; }
 function minWageAt(iso){ let r = null; for (const w of D.fedMinWage) if (w.date <= iso) r = w.rate; return r; }
 function electionFor(t){ // most recent presidential election decided by time t (elections held ~Nov)

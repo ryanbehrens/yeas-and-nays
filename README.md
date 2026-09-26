@@ -8,7 +8,7 @@ Supreme Court rulings that moved the numbers.
 
 ## Pages
 - `index.html` — **The Ledger**, the home page (timeline, debt, map, laws).
-- `presidents.html` — every president; `presidents/<name>.html` — deep dives (Carter, Reagan, Nixon, Clinton, G.W. Bush, Obama, Trump, Biden so far).
+- `presidents.html` — every president; `presidents/<name>.html` — deep dives (Carter, Reagan, Nixon, Clinton, G.W. Bush, Obama, Trump, Biden, G.H.W. Bush, Ford, Johnson, Kennedy so far).
 
 ## Adding a president portrait
 Save the official portrait as `assets/presidents/<name>.jpg` (for example `assets/presidents/nixon.jpg`), about 600×750 pixels, then commit and push. It appears automatically.
