@@ -62,7 +62,7 @@ def head(title, desc, up):
     <a class="logo" href="{up}index.html" aria-label="Yeas and Nays home">{ICON}<span class="wm">Yeas<em>and</em>Nays</span></a>
     <nav class="sections" aria-label="Sections">
       <a href="{up}index.html">The Ledger</a>
-      <a href="{up}presidents/index.html" aria-current="page">Presidents</a>
+      <a href="{up}presidents.html" aria-current="page">Presidents</a>
       <span title="Coming soon: the Supreme Court">The Bench <i>Soon</i></span>
       <span title="Coming soon: discussion and posts">The Floor <i>Soon</i></span>
     </nav>
@@ -77,12 +77,12 @@ def slug_for(name):
         if v["name"] == name: return k
     return None
 
-def portrait(slug, name, cls="portrait", placeholder=True):
+def portrait(slug, name, cls="portrait", placeholder=True, up="../"):
     initials = "".join(w[0] for w in name.replace(".", "").split() if w[0].isupper())[:2]
     mono = f'<span class="mono">{e(initials)}</span>' + ('<span class="ph">Portrait coming</span>' if placeholder else "")
     if slug in PRESIDENTS:
         # Shows assets/presidents/<slug>.jpg if it exists; otherwise the image removes itself and the initials show.
-        return mono + f'<img src="../assets/presidents/{slug}.jpg" alt="Official portrait of {e(name)}" loading="lazy" onerror="this.remove()">'
+        return mono + f'<img src="{up}assets/presidents/{slug}.jpg" alt="Official portrait of {e(name)}" loading="lazy" onerror="this.remove()">'
     return mono
 
 LABEL = {"proven": "Proven", "charged": "Charged", "alleged": "Alleged", "disputed": "Disputed"}
@@ -129,7 +129,7 @@ def page(slug, p):
     term_txt = " and ".join(f'{s[:4]}–{(en or "")[:4] if en else "present"}' for s, en in p["terms"])
 
     t = [head(f'{p["name"]} · Yeas and Nays', f'{p["name"]}: the economy, executive orders, pardons, legal record and controversies, with sources.', "../")]
-    t.append(f'  <nav class="crumbs"><a href="index.html">Presidents</a> / {e(p["name"])}</nav>\n')
+    t.append(f'  <nav class="crumbs"><a href="../presidents.html">Presidents</a> / {e(p["name"])}</nav>\n')
     t.append(f"""  <section class="hero">
     <div class="portrait">{portrait(slug, p["name"])}</div>
     <div>
@@ -251,7 +251,7 @@ def page(slug, p):
     return "".join(t)
 
 def index():
-    t = [head("Presidents · Yeas and Nays", "Every U.S. president, with deep dives into the economy, executive orders, pardons, legal records and controversies.", "../")]
+    t = [head("Presidents · Yeas and Nays", "Every U.S. president, with deep dives into the economy, executive orders, pardons, legal records and controversies.", "")]
     t.append("""  <nav class="crumbs">Presidents</nav>
   <section class="hero" style="grid-template-columns:1fr;padding-bottom:6px">
     <div><div class="eyebrow">The presidents</div><h1>Every president, held to the same standard</h1>
@@ -274,9 +274,9 @@ def index():
             done_slug.add(slug)
             p = PRESIDENTS[slug]
             yrs = " & ".join(f'{a[:4]}–{b[:4] if b else "present"}' for a, b in p["terms"])
-            cards.append(f'<a class="pcard live" href="{slug}.html"><div class="pic">{portrait(slug, name, placeholder=False)}<span class="num">#{p["number"].replace("th","").replace("nd","").replace("rd","").replace(" & ","/").replace("st","")}</span><span class="bar" style="background:var({var})"></span></div><div class="info"><b>{e(name)}</b><span>{e(yrs)} · {e(party.split(" /")[0])}</span><em>Deep dive →</em></div></a>')
+            cards.append(f'<a class="pcard live" href="presidents/{slug}.html"><div class="pic">{portrait(slug, name, placeholder=False, up="")}<span class="num">#{p["number"].replace("th","").replace("nd","").replace("rd","").replace(" & ","/").replace("st","")}</span><span class="bar" style="background:var({var})"></span></div><div class="info"><b>{e(name)}</b><span>{e(yrs)} · {e(party.split(" /")[0])}</span><em>Deep dive →</em></div></a>')
         else:
-            cards.append(f'<div class="pcard soon" aria-disabled="true"><div class="pic">{portrait("none", name, placeholder=False)}<span class="num">#{num}</span><span class="bar" style="background:var({var})"></span></div><div class="info"><b>{e(name)}</b><span>{e(yrs)} · {e(party.split(" /")[0].split(" (")[0])}</span><span>Coming soon</span></div></div>')
+            cards.append(f'<div class="pcard soon" aria-disabled="true"><div class="pic">{portrait("none", name, placeholder=False, up="")}<span class="num">#{num}</span><span class="bar" style="background:var({var})"></span></div><div class="info"><b>{e(name)}</b><span>{e(yrs)} · {e(party.split(" /")[0].split(" (")[0])}</span><span>Coming soon</span></div></div>')
     live = [c for c in cards if 'class="pcard live"' in c]
     t.append("\n".join("    " + c for c in live))
     t.append("""\n  </div>\n  <h2 style="font-family:var(--serif);font-weight:400;font-size:22px;margin:30px 0 4px">All presidents</h2>\n  <p style="color:var(--muted);font-size:13px;margin:0 0 6px">Colored bars show party, using the site's ideology adjustment: before 1897, Democrats are red and Republicans blue.</p>\n  <div class="pgrid">\n""")
@@ -289,5 +289,7 @@ def index():
 os.makedirs(os.path.join(ROOT, "presidents"), exist_ok=True)
 for slug, p in PRESIDENTS.items():
     open(os.path.join(ROOT, "presidents", f"{slug}.html"), "w").write(page(slug, p))
-open(os.path.join(ROOT, "presidents", "index.html"), "w").write(index())
+open(os.path.join(ROOT, "presidents.html"), "w").write(index())
+old = os.path.join(ROOT, "presidents", "index.html")
+if os.path.exists(old): os.remove(old)
 print("built", ", ".join(PRESIDENTS), "+ index")
