@@ -132,7 +132,7 @@ def page(slug, p):
         if ey > sy:
             avg = ((cpi[ey] / cpi[sy]) ** (1 / (ey - sy)) - 1) * 100
             infl_txt.append((sy, ey, avg, cpi[ey] / cpi[sy] * 100))
-    eo_years = p["eo_by_year"]; eo_total = sum(eo_years.values())
+    eo_years = p["eo_by_year"]; eo_total = sum(eo_years.values()) if eo_years else p["eo_total"]
     yrs_in_office = sum((b - a) for a, b in tf)
     pard, comm = p["clem_total"]
     groups = [g for gl in p.get("clem_group", {}).values() for g in gl]
@@ -155,8 +155,10 @@ def page(slug, p):
   <nav class="jump" aria-label="Jump to section"><a href="#numbers">At a glance</a><a href="#economy">Economy</a><a href="#orders">Executive orders</a><a href="#pardons">Pardons</a><a href="#legal">Legal record</a><a href="#controversies">Controversies</a><a href="#quotes">In their words</a></nav>
 """)
     # --- tiles
-    a_num, a_unit = money_parts(added)
-    debt_sub = " · ".join(f'{"1st term" if i == 0 and len(parts) > 1 else "2nd term so far" if i else "Start"}: {money(b - a)} (+{(b / a - 1) * 100:.0f}%)' if len(parts) > 1 else f'{money(a)} → {money(b)} (+{(b / a - 1) * 100:.0f}%)' for i, (a, b, *_) in enumerate(parts))
+    sg = lambda v: "+" if v >= 0 else "−"
+    debt_sub = " · ".join(f'{"1st term" if i == 0 and len(parts) > 1 else "2nd term so far" if i else "Start"}: {money(b - a)} ({sg(b - a)}{abs(b / a - 1) * 100:.0f}%)' if len(parts) > 1 else f'{money(a)} → {money(b)} ({sg(b - a)}{abs(b / a - 1) * 100:.0f}%)' for i, (a, b, *_) in enumerate(parts))
+    a_num, a_unit = money_parts(abs(added)); a_num = ("+" if added >= 0 else "−") + a_num.lstrip("+")
+    debt_lab = "Debt added" if added >= 0 else "Debt paid down"
     r = ratio_txt
     ratio_val = f'{r[-1][3]:.0f}%'
     ratio_sub = " · ".join(f'FY{sy}: {r0:.0f}% → FY{ey}: {r1:.0f}%' for sy, ey, r0, r1 in r)
@@ -166,7 +168,7 @@ def page(slug, p):
     infl_sub = " · ".join(f'{sy}–{ey}: {avg:.1f}% a year' for sy, ey, avg, _ in infl_txt)
     t.append(f"""  <section id="numbers" class="block" style="border-top:0;padding-top:4px">
   <div class="tiles">
-    <a class="tile" href="#economy"><div class="lab"><span class="dot" style="background:var(--debt)"></span>Debt added</div><div class="val">{a_num}<small>{a_unit}</small></div><div class="sub">{e(debt_sub)}</div></a>
+    <a class="tile" href="#economy"><div class="lab"><span class="dot" style="background:var(--debt)"></span>{debt_lab}</div><div class="val">{a_num}<small>{a_unit}</small></div><div class="sub">{e(debt_sub)}</div></a>
     <a class="tile" href="#economy"><div class="lab">Debt-to-GDP, latest</div><div class="val">{ratio_val}</div><div class="sub">{e(ratio_sub)}</div></a>
     <a class="tile" href="#economy"><div class="lab"><span class="dot" style="background:var(--int)"></span>Unemployment</div><div class="val">{u_val}%</div><div class="sub">{e(u_sub)}</div></a>
     <a class="tile" href="#economy"><div class="lab"><span class="dot" style="background:var(--def)"></span>Average inflation</div><div class="val">{infl_val}<small>a year</small></div><div class="sub">{e(infl_sub)}</div></a>
@@ -205,13 +207,15 @@ def page(slug, p):
   </section>
 """)
     # --- executive orders
+    eo_chart = ('<div class="chart" id="ch-eo"></div>' if eo_years else
+                '<p class="note" style="font-size:13px">Yearly counts aren\'t reliable for this era. Orders were not numbered until 1907, when the State Department numbered the ones already in its files, and many orders were never numbered at all, so only the total is shown.</p>')
     eo_items = "".join(f"""<details class="item"><summary><span class="t">{e(o["t"])}</span><span class="pill kind">EO {e(o["n"])}</span><span class="m">{fmt_date(o["date"])}</span></summary><div class="body"><p style="margin:0">{e(o["d"])}</p><a href="https://www.federalregister.gov/presidential-documents/executive-orders" target="_blank" rel="noopener">Federal Register</a></div></details>""" for o in p["eo_notable"])
     t.append(f"""  <section id="orders" class="block">
     <h2>Executive orders</h2>
-    <p class="lede">{eo_total:,} orders, numbered {e(p["eo_range"])}. {e(p.get("eo_note", ""))}</p>
+    <p class="lede">{eo_total:,} orders{f', numbered {e(p["eo_range"])}' if p.get("eo_range") else ""}. {e(p.get("eo_note", ""))}</p>
     <div class="grid2">
-      <div class="card"><h3>Orders signed each year</h3><div class="chart" id="ch-eo"></div><p class="note">Source: <a href="{e(p["eo_source"][1])}" target="_blank" rel="noopener">{e(p["eo_source"][0])}</a> (full list of every order).</p></div>
-      <div><h3 style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin:0 0 8px">Notable orders</h3><div class="list">{eo_items}</div></div>
+      <div class="card"><h3>Orders signed each year</h3>{eo_chart}<p class="note">Source: <a href="{e(p["eo_source"][1])}" target="_blank" rel="noopener">{e(p["eo_source"][0])}</a> (full list of every order).</p></div>
+      <div><h3 style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin:0 0 8px">Notable orders</h3><div class="list">{eo_items or '<p class="note" style="margin:0">Most orders in this era were routine, such as setting aside public land or exempting jobs from civil service rules.</p>'}</div></div>
     </div>
   </section>
 """)
@@ -258,7 +262,7 @@ def page(slug, p):
     <div class="quotes">{quotes}</div>
   </section>
   <section class="block" style="padding-bottom:0">
-    <div class="method"><b>How this page is made.</b> Every president gets the same sections and the same checklist. A controversy is listed if it led to an investigation by Congress, an inspector general, a special or independent counsel or a court, or was a sustained national story covered across the political spectrum. Labels follow the strongest official finding, not media coverage. Debt figures come from the U.S. Treasury; deficits and GDP from the White House budget office and the Commerce Department; unemployment from the Bureau of Labor Statistics (before 1948, the Census Bureau's Historical Statistics); prices from MeasuringWorth; executive orders from the Federal Register and National Archives; clemency from the Justice Department.</div>
+    <div class="method"><b>How this page is made.</b> Every president gets the same sections and the same checklist. A controversy is listed if it led to an investigation by Congress, an inspector general, a special or independent counsel or a court, or was a sustained national story covered across the political spectrum. Labels follow the strongest official finding, not media coverage. Debt figures come from the U.S. Treasury; deficits and GDP from the White House budget office and the Commerce Department; unemployment from the Bureau of Labor Statistics (before 1948, yearly estimates by Stanley Lebergott via NBER and the Census Bureau's Historical Statistics); prices from MeasuringWorth; executive orders from the Federal Register and National Archives; clemency from the Justice Department.</div>
   </section>
 """)
     t.append(FOOT)
