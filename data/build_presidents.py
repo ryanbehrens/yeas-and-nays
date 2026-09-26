@@ -186,14 +186,17 @@ def page(slug, p):
         m0, m1 = minwage(s), minwage(en2)
         if m0: mw_rows.append(f'<div class="row"><span>Federal minimum wage, {s[:4]} → {en2[:4]}</span><b>${m0:.2f} → ${m1:.2f}</b></div>')
     dnote = p["debt"].get("note", "")
+    first = p["terms"][0][0]
+    fy_txt = ("Budget years run October to September, so a new president's first budget year starts the fall after they take office." if first >= "1977"
+              else "Budget years ran July to June until 1976 (now October to September), so each year's figures cover parts of two calendar years.")
     t.append(f"""  <section id="economy" class="block">
     <h2>The economy, first day to last</h2>
-    <p class="lede">Shaded areas show the years in office, with a few years before and after for comparison. Budget years run October to September, so a new president's first budget year starts the fall after they take office.</p>
+    <p class="lede">Shaded areas show the years in office, with a few years before and after for comparison. {fy_txt}</p>
     <div class="grid2">
       <div class="card"><h3>National debt</h3><p class="cap">{e(parts[0][2])}: {money(parts[0][0])} → {e(parts[0][3])}: {money(parts[0][1])}{"" if len(parts) == 1 else f" · {e(parts[1][2])}: {money(parts[1][0])} → {e(parts[1][3])}: {money(parts[1][1])}"}</p><div class="chart" id="ch-debt"></div>{f'<p class="note">{e(dnote)}</p>' if dnote else ""}</div>
       <div class="card"><h3>Debt compared with the economy</h3><p class="cap">Debt as a share of GDP. Above 100% means the debt is bigger than a year of everything the country produces.</p><div class="chart" id="ch-ratio"></div></div>
       <div class="card"><h3>Deficits and surpluses</h3><p class="cap">Money borrowed each budget year (below the line) or paid down (above).</p><div class="chart" id="ch-deficit"></div><div class="legend"><span><i class="sw" style="background:var(--def)"></i>Deficit</span><span><i class="sw" style="background:var(--debt)"></i>Surplus</span></div></div>
-      <div class="card"><h3>Unemployment</h3><p class="cap">{e(u_sub)} (monthly). Chart shows yearly averages.</p><div class="chart" id="ch-unemp"></div></div>
+      <div class="card"><h3>Unemployment</h3><p class="cap">{e(u_sub)}. {e(U.get("cap", "Monthly rates; the chart shows yearly averages."))}</p><div class="chart" id="ch-unemp"></div></div>
       <div class="card"><h3>Inflation</h3><p class="cap">How much prices rose each year (consumer price index).</p><div class="chart" id="ch-infl"></div></div>
       <div class="card"><h3>Cost of living</h3><p class="cap">What everyday prices and paychecks did while in office.</p>
         <div class="cost">{"".join(cost_rows)}{"".join(mw_rows)}</div>
@@ -236,7 +239,7 @@ def page(slug, p):
     <p class="lede">The same checklist for every president. Tap a row for details and sources.</p>
     <div class="check">{rows}</div>
     <h3 style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin:22px 0 0">People around the president who were charged or penalized</h3>
-    <div class="people">{people}</div>
+    <div class="people">{people or '<p class="note" style="margin:6px 0 0">No one in the administration was charged or formally penalized.</p>'}</div>
   </section>
 """)
     # --- controversies
@@ -255,7 +258,7 @@ def page(slug, p):
     <div class="quotes">{quotes}</div>
   </section>
   <section class="block" style="padding-bottom:0">
-    <div class="method"><b>How this page is made.</b> Every president gets the same sections and the same checklist. A controversy is listed if it led to an investigation by Congress, an inspector general, a special or independent counsel or a court, or was a sustained national story covered across the political spectrum. Labels follow the strongest official finding, not media coverage. Debt figures come from the U.S. Treasury; deficits and GDP from the White House budget office and the Commerce Department; unemployment from the Bureau of Labor Statistics; prices from MeasuringWorth; executive orders from the Federal Register and National Archives; clemency from the Justice Department.</div>
+    <div class="method"><b>How this page is made.</b> Every president gets the same sections and the same checklist. A controversy is listed if it led to an investigation by Congress, an inspector general, a special or independent counsel or a court, or was a sustained national story covered across the political spectrum. Labels follow the strongest official finding, not media coverage. Debt figures come from the U.S. Treasury; deficits and GDP from the White House budget office and the Commerce Department; unemployment from the Bureau of Labor Statistics (before 1948, the Census Bureau's Historical Statistics); prices from MeasuringWorth; executive orders from the Federal Register and National Archives; clemency from the Justice Department.</div>
   </section>
 """)
     t.append(FOOT)
@@ -270,8 +273,6 @@ def index():
     <div><div class="eyebrow">The presidents</div><h1>Every president, held to the same standard</h1>
     <p class="sum">Pick a president to see what happened to the debt, jobs and prices on their watch, every executive order and pardon, their legal record, and the controversies, each one labeled by what was actually proven. Deep dives are being added a few at a time.</p></div>
   </section>
-  <h2 style="font-family:var(--serif);font-weight:400;font-size:22px;margin:18px 0 4px">Deep dives</h2>
-  <div class="pgrid">
 """)
     num = 0; cards = []; done_slug = set(); done_names = set()
     for name, party, s, en in ALL_PRES:
@@ -290,11 +291,17 @@ def index():
             cards.append(f'<a class="pcard live" href="presidents/{slug}.html"><div class="pic">{portrait(slug, name, placeholder=False, up="")}<span class="num">#{p["number"].replace("th","").replace("nd","").replace("rd","").replace(" & ","/").replace("st","")}</span><span class="bar" style="background:var({var})"></span></div><div class="info"><b>{e(name)}</b><span>{e(yrs)} · {e(party.split(" /")[0])}</span><em>Deep dive →</em></div></a>')
         else:
             cards.append(f'<div class="pcard soon" aria-disabled="true"><div class="pic">{portrait(PORTRAIT_SLUG.get(name, "none"), name, placeholder=False, up="")}<span class="num">#{num}</span><span class="bar" style="background:var({var})"></span></div><div class="info"><b>{e(name)}</b><span>{e(yrs)} · {e(party.split(" /")[0].split(" (")[0])}</span><span>Coming soon</span></div></div>')
-    live = [c for c in cards if 'class="pcard live"' in c]
-    t.append("\n".join("    " + c for c in live))
-    t.append("""\n  </div>\n  <h2 style="font-family:var(--serif);font-weight:400;font-size:22px;margin:30px 0 4px">All presidents</h2>\n  <p style="color:var(--muted);font-size:13px;margin:0 0 6px">Colored bars show party, using the site's ideology adjustment: before 1897, Democrats are red and Republicans blue.</p>\n  <div class="pgrid">\n""")
-    t.append("\n".join("    " + c for c in cards))
-    t.append("\n  </div>\n")
+    n_live = sum('class="pcard live"' in c for c in cards)
+    t.append(f"""  <div class="ptools"><p>{n_live} of {len(cards)} presidents have a deep dive so far. Colored bars show party, using the site's ideology adjustment: before 1897, Democrats are red and Republicans blue.</p>
+    <div class="ptbtns"><button type="button" class="pbtn" id="pf" aria-pressed="false">Deep dives only</button><button type="button" class="pbtn" id="ps">Oldest first</button></div></div>
+  <div class="pgrid" id="pg">
+""")
+    t.append("\n".join("    " + c for c in reversed(cards)))
+    t.append("""\n  </div>
+<script>(function(){var g=document.getElementById("pg"),f=document.getElementById("pf"),s=document.getElementById("ps");
+f.onclick=function(){var on=f.getAttribute("aria-pressed")!=="true";f.setAttribute("aria-pressed",on);g.classList.toggle("only",on);};
+s.onclick=function(){s.textContent=s.textContent==="Oldest first"?"Newest first":"Oldest first";Array.prototype.slice.call(g.children).reverse().forEach(function(c){g.appendChild(c);});};})();</script>
+""")
     t.append(FOOT)
     t.append("</body>\n</html>\n")
     return "".join(t)

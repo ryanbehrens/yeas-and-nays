@@ -176,3 +176,13 @@ blockquote footer a{color:var(--ink-2)}
   blockquote p{font-size:17px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.ptools{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin:18px 0 4px}
+.ptools p{color:var(--muted);font-size:13px;margin:0;max-width:640px}
+.ptbtns{display:flex;gap:8px}
+.pbtn{font:inherit;font-size:13px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer}
+.pbtn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.pgrid.only .pcard.soon{display:none}
+.pcard.live{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.pcard.live em{color:var(--accent);font-style:normal;font-weight:600;font-size:12px}
+.hero>div{min-width:0}
+.hero .meta .chip{white-space:normal;max-width:100%;line-height:1.35}
