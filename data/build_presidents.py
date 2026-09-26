@@ -165,15 +165,19 @@ def page(slug, p):
     r = ratio_txt
     ratio_val = f'{r[-1][3]:.0f}%'
     ratio_sub = " · ".join(f'FY{sy}: {r0:.0f}% → FY{ey}: {r1:.0f}%' for sy, ey, r0, r1 in r)
-    u_sub = f'{U["start_label"]}: {U["start"]}% → {U["end_label"]}: {U["end"]}%' + (f' · {U["start2_label"]}: {U["start2"]}% → {U["end2_label"]}: {U["end2"]}%' if "start2" in U else "")
-    u_val = U.get("end2", U["end"])
+    if U is None:
+        u_sub, u_val, u_cap = "No national estimates before 1890", "—", "Economist Stanley Lebergott's yearly estimates, the earliest national series, begin in 1890"
+    else:
+      u_cap = U.get("cap", "Monthly rates; the chart shows yearly averages.")
+      u_sub = f'{U["start_label"]}: {U["start"]}% → {U["end_label"]}: {U["end"]}%' + (f' · {U["start2_label"]}: {U["start2"]}% → {U["end2_label"]}: {U["end2"]}%' if "start2" in U else "")
+      u_val = f'{U.get("end2", U["end"])}%'
     infl_val = f'{infl_txt[0][2]:.1f}%'
     infl_sub = " · ".join(f'{sy}–{ey}: {avg:.1f}% a year' for sy, ey, avg, _ in infl_txt)
     t.append(f"""  <section id="numbers" class="block" style="border-top:0;padding-top:4px">
   <div class="tiles">
     <a class="tile" href="#economy"><div class="lab"><span class="dot" style="background:var(--debt)"></span>{debt_lab}</div><div class="val">{a_num}<small>{a_unit}</small></div><div class="sub">{e(debt_sub)}</div></a>
     <a class="tile" href="#economy"><div class="lab">Debt-to-GDP, latest</div><div class="val">{ratio_val}</div><div class="sub">{e(ratio_sub)}</div></a>
-    <a class="tile" href="#economy"><div class="lab"><span class="dot" style="background:var(--int)"></span>Unemployment</div><div class="val">{u_val}%</div><div class="sub">{e(u_sub)}</div></a>
+    <a class="tile" href="#economy"><div class="lab"><span class="dot" style="background:var(--int)"></span>Unemployment</div><div class="val">{u_val}</div><div class="sub">{e(u_sub)}</div></a>
     <a class="tile" href="#economy"><div class="lab"><span class="dot" style="background:var(--def)"></span>Average inflation</div><div class="val">{infl_val}<small>a year</small></div><div class="sub">{e(infl_sub)}</div></a>
     <a class="tile" href="#orders"><div class="lab">Executive orders</div><div class="val">{eo_total:,}</div><div class="sub">About {eo_total / yrs_in_office:.0f} a year in office</div></a>
     <a class="tile" href="#pardons"><div class="lab">Pardons &amp; commutations</div><div class="val">{f"{pard + comm + group_n:,}" if p["clem_total"] else "—"}</div><div class="sub">{f"{pard:,} pardons · {comm:,} commutations" if p["clem_total"] else "Not recorded before 1900"}{f" · about {group_n:,} by group proclamation" if group_n else ""}{f" ({e(p['clem_scope'])})" if p.get("clem_scope") else ""}</div></a>
@@ -200,8 +204,8 @@ def page(slug, p):
     <div class="grid2">
       <div class="card"><h3>National debt</h3><p class="cap">{e(parts[0][2])}: {money(parts[0][0])} → {e(parts[0][3])}: {money(parts[0][1])}{"" if len(parts) == 1 else f" · {e(parts[1][2])}: {money(parts[1][0])} → {e(parts[1][3])}: {money(parts[1][1])}"}</p><div class="chart" id="ch-debt"></div>{f'<p class="note">{e(dnote)}</p>' if dnote else ""}</div>
       <div class="card"><h3>Debt compared with the economy</h3><p class="cap">Debt as a share of GDP. Above 100% means the debt is bigger than a year of everything the country produces.</p><div class="chart" id="ch-ratio"></div></div>
-      <div class="card"><h3>Deficits and surpluses</h3><p class="cap">Money borrowed each budget year (below the line) or paid down (above).{" The White House budget office's yearly figures begin in 1901." if y0 < 1901 else ""}</p><div class="chart" id="ch-deficit"></div><div class="legend"><span><i class="sw" style="background:var(--def)"></i>Deficit</span><span><i class="sw" style="background:var(--debt)"></i>Surplus</span></div></div>
-      <div class="card"><h3>Unemployment</h3><p class="cap">{e(u_sub)}. {e(U.get("cap", "Monthly rates; the chart shows yearly averages."))}</p><div class="chart" id="ch-unemp"></div></div>
+      <div class="card"><h3>Deficits and surpluses</h3><p class="cap">Money borrowed each budget year (below the line) or paid down (above).{" The White House budget office's yearly figures begin in 1901." if y0 < 1901 else ""}</p><div class="chart" id="ch-deficit"></div>{'<div class="legend"><span><i class="sw" style="background:var(--def)"></i>Deficit</span><span><i class="sw" style="background:var(--debt)"></i>Surplus</span></div>' if any("bal" in r for r in econ) else ""}</div>
+      <div class="card"><h3>Unemployment</h3><p class="cap">{e(u_sub)}. {e(u_cap)}</p><div class="chart" id="ch-unemp"></div></div>
       <div class="card"><h3>Inflation</h3><p class="cap">How much prices rose each year (consumer price index).</p><div class="chart" id="ch-infl"></div></div>
       <div class="card"><h3>Cost of living</h3><p class="cap">What everyday prices and paychecks did while in office.</p>
         <div class="cost">{"".join(cost_rows)}{"".join(mw_rows)}</div>

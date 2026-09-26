@@ -1264,4 +1264,153 @@ PRESIDENTS = {
     dict(q="Tell the truth.", when="July 1884", ctx="His instruction to aides when the Halpin story broke during the campaign.", src=W+"1884_United_States_presidential_election"),
   ],
 ),
+
+# ------------------------------------------------------------------------------------------ ARTHUR
+"arthur": dict(
+  impeached_short="No",
+  name="Chester A. Arthur", number="21st", party="Republican", home="New York",
+  terms=[("1881-09-19", "1885-03-04")], vp="None",
+  left="Not nominated for a full term in 1884",
+  summary="A product of Senator Roscoe Conkling's New York machine whom Hayes had fired as customs collector. He became president when Garfield died and surprised his critics by signing the Pendleton Act, which created the merit-based civil service. He also signed the Chinese Exclusion Act, began rebuilding the Navy, and hid that he had a fatal kidney disease.",
+  debt=dict(start=2_069_013_570, start_label="June 30, 1881 (end of fiscal 1881)", end=1_830_528_924, end_label="June 30, 1884 (end of fiscal 1884)", note="Daily debt figures don't exist before 1993, so Arthur's numbers use the fiscal years closest to his term, the same rule as every other page."),
+  unemployment=None,
+  eo_by_year={}, eo_total=96, eo_range=None, eo_source=('American Presidency Project: executive orders', 'https://www.presidency.ucsb.edu/statistics/data/executive-orders'), eo_note="Count from the American Presidency Project.",
+  eo_notable=[],
+  clem_by_year={}, clem_total=None, clem_source=('U.S. Dept. of Justice, clemency statistics', 'https://www.justice.gov/pardon/clemency-statistics'), clem_note="The Justice Department's published counts begin in 1900.",
+  pardons=[],
+  legal=[
+    dict(k="Impeached", v="No", status="no", d="No articles of impeachment were voted on."),
+    dict(k="Criminally charged", v="No", status="no", d="Never charged."),
+    dict(k="Aides or cabinet convicted", v="No", status="no", d="No member of his cabinet or White House staff was convicted. Defendants in the Star Route postal fraud cases, including his 1880 campaign ally Stephen Dorsey, were acquitted."),
+    dict(k="Special counsels", v="Yes — for the Star Route cases", status="yes", d="His Justice Department hired outside special prosecutors to try the Star Route mail-contract fraud cases in 1882–83.", src=W+"Star_Route_scandal"),
+    dict(k="Misuse of DOJ, FBI or IRS", v="No finding", status="no", d="No official investigation found he used federal agencies against opponents."),
+  ],
+  people=[
+    dict(name="Stephen Dorsey", role="Former senator; secretary of the 1880 Republican campaign", outcome="Tried; acquitted", d="Charged in the Star Route fraud cases; one trial ended in a hung jury and the second in acquittal (1883)."),
+    dict(name="Thomas Brady", role="Second Assistant Postmaster General", outcome="Tried; acquitted", d="Ran the rural mail routes at the center of the fraud; fired by Garfield in 1881, acquitted in 1883."),
+  ],
+  controversies=[
+    dict(title="The Chinese Exclusion Act", when="1882", label="disputed", d="After vetoing a 20-year version, Arthur signed a 10-year ban on Chinese laborers, the first U.S. law to bar immigrants by nationality.", outcome="It was extended and made permanent, and repealed in 1943. Congress formally expressed regret in 2011 and 2012.", src=W+"Chinese_Exclusion_Act"),
+    dict(title="The Star Route trials", when="1882–1883", label="charged", d="Contractors and postal officials were accused of padding payments for rural mail routes by millions of dollars.", outcome="All the main defendants were acquitted.", src=W+"Star_Route_scandal"),
+    dict(title="The New York Custom House machine", when="1871–1878", label="proven", d="As collector of the Port of New York, Arthur ran a patronage operation in which employees were hired for party loyalty and expected to pay political assessments.", outcome="A federal commission found the office overstaffed and politicized in 1877; Hayes fired him in 1878.", src=W+"Chester_A._Arthur"),
+    dict(title="Hiding a fatal illness", when="1882–1885", label="proven", d="Arthur learned he had Bright's disease, a fatal kidney condition, early in his term and kept it secret.", outcome="He made only a token effort for the 1884 nomination and died in November 1886.", src=W+"Chester_A._Arthur"),
+  ],
+  quotes=[
+    dict(q="Men may die, but the fabrics of our free institutions remain unshaken.", when="September 22, 1881", ctx="Inaugural address after Garfield's death.", src=W+"Chester_A._Arthur"),
+  ],
+),
+
+# ------------------------------------------------------------------------------------------ GARFIELD
+"garfield": dict(
+  impeached_short="No",
+  name="James A. Garfield", number="20th", party="Republican", home="Ohio",
+  terms=[("1881-03-04", "1881-09-19")], vp="Chester A. Arthur",
+  left="Shot July 2, 1881; died September 19",
+  summary="A Civil War general and longtime Ohio congressman, nominated on the 36th ballot as a compromise. He took on Senator Roscoe Conkling over who controlled federal jobs in New York and won, and ordered an investigation of fraud in rural mail contracts. Four months in, he was shot by a disappointed office seeker; his doctors' unsanitary care likely caused the infection that killed him. His death pushed Congress to pass civil service reform.",
+  debt=dict(start=2_120_415_371, start_label="June 30, 1880 (end of fiscal 1880)", end=2_069_013_570, end_label="June 30, 1881 (end of fiscal 1881)", note="Daily debt figures don't exist before 1993, so Garfield's numbers use the fiscal years closest to his term, the same rule as every other page."),
+  unemployment=None,
+  eo_by_year={}, eo_total=6, eo_range=None, eo_source=('American Presidency Project: executive orders', 'https://www.presidency.ucsb.edu/statistics/data/executive-orders'), eo_note="Count from the American Presidency Project. He served 200 days, most of them bedridden.",
+  eo_notable=[],
+  clem_by_year={}, clem_total=None, clem_source=('U.S. Dept. of Justice, clemency statistics', 'https://www.justice.gov/pardon/clemency-statistics'), clem_note="The Justice Department's published counts begin in 1900.",
+  pardons=[],
+  legal=[
+    dict(k="Impeached", v="No", status="no", d="No articles of impeachment were voted on."),
+    dict(k="Criminally charged", v="No", status="no", d="Never charged."),
+    dict(k="Aides or cabinet convicted", v="No", status="no", d="No member of his cabinet or White House staff was convicted."),
+    dict(k="Special counsels", v="No", status="no", d="None were appointed during his 200 days."),
+    dict(k="Misuse of DOJ, FBI or IRS", v="No finding", status="no", d="No official investigation found he used federal agencies against opponents."),
+  ],
+  people=[
+    dict(name="Thomas Brady", role="Second Assistant Postmaster General", outcome="Fired; later acquitted", d="Garfield forced him out in 1881 over the Star Route mail fraud; he was acquitted in 1883."),
+  ],
+  controversies=[
+    dict(title="Crédit Mobilier", when="1867–1873", label="disputed", d="A House committee found that as a congressman Garfield had received stock and a $329 payment from Crédit Mobilier, a railroad construction company that bribed members of Congress. Garfield said it was a loan he had repaid.", outcome="The committee took no action against him; two other congressmen were censured.", src=W+"Cr%C3%A9dit_Mobilier_scandal"),
+    dict(title="The Star Route fraud", when="1881", label="charged", d="Garfield ordered an investigation of padded contracts for rural mail routes, even though some of those involved had helped his campaign.", outcome="The cases were tried under Arthur; the main defendants were acquitted.", src=W+"Star_Route_scandal"),
+  ],
+  quotes=[
+    dict(q="The elevation of the negro race from slavery to the full rights of citizenship is the most important political change we have known since the adoption of the Constitution of 1787.", when="March 4, 1881", ctx="Inaugural address.", src=W+"James_A._Garfield"),
+    dict(q="This brings on the contest at once and will settle the question whether the President is registering clerk of the Senate or the Executive of the United States.", when="May 1881", ctx="On his fight with Senator Conkling over the New York customs job.", src=W+"James_A._Garfield"),
+  ],
+),
+
+# ------------------------------------------------------------------------------------------ HAYES
+"hayes": dict(
+  impeached_short="No",
+  name="Rutherford B. Hayes", number="19th", party="Republican", home="Ohio",
+  terms=[("1877-03-04", "1881-03-04")], vp="William A. Wheeler",
+  left="Kept his pledge to serve one term",
+  summary="Won the disputed 1876 election by one electoral vote after a special commission gave him all 20 contested votes. He then withdrew the last federal troops from the South, ending Reconstruction. He used federal troops against the Great Railroad Strike of 1877, returned the dollar to gold in 1879, pushed civil service reform, and vetoed a bill to bar Chinese immigrants.",
+  debt=dict(start=2_180_395_067, start_label="June 30, 1876 (end of fiscal 1876)", end=2_120_415_371, end_label="June 30, 1880 (end of fiscal 1880)", note="Daily debt figures don't exist before 1993, so Hayes's numbers use the fiscal years closest to his term, the same rule as every other page."),
+  unemployment=None,
+  eo_by_year={}, eo_total=92, eo_range=None, eo_source=('American Presidency Project: executive orders', 'https://www.presidency.ucsb.edu/statistics/data/executive-orders'), eo_note="Count from the American Presidency Project.",
+  eo_notable=[
+    dict(n="", date="1877-06-22", t="Keeping federal workers out of politics", d="Barred federal employees from managing political campaigns and banned political assessments on their salaries."),
+  ],
+  clem_by_year={}, clem_total=None, clem_source=('U.S. Dept. of Justice, clemency statistics', 'https://www.justice.gov/pardon/clemency-statistics'), clem_note="The Justice Department's published counts begin in 1900.",
+  pardons=[
+    dict(name="Ezra Heywood", kind="Pardon", date="1878", crime="Mailing 'obscene' material under the Comstock Act: a pamphlet arguing against marriage laws (convicted 1878)", sentence="Prison; served six months", why="Free-speech advocates petitioned for his release; the case was an early test of the Comstock law.", src="https://firstamendment.mtsu.edu/article/angela-and-ezra-heywood/"),
+  ],
+  legal=[
+    dict(k="Impeached", v="No", status="no", d="No articles of impeachment were voted on."),
+    dict(k="Criminally charged", v="No", status="no", d="Never charged."),
+    dict(k="Aides or cabinet convicted", v="No", status="no", d="No member of his cabinet or White House staff was convicted."),
+    dict(k="Special counsels", v="No", status="no", d="None were appointed. A House committee (the Potter Committee) investigated the 1876 election in 1878–79."),
+    dict(k="Misuse of DOJ, FBI or IRS", v="No finding", status="no", d="No official investigation found he used federal agencies against opponents."),
+  ],
+  people=[
+    dict(name="Chester A. Arthur", role="Collector of the Port of New York", outcome="Fired; not charged", d="Removed in 1878 as part of Hayes's push against patronage. He later became president."),
+  ],
+  controversies=[
+    dict(title="The Compromise of 1877", when="1877", label="disputed", d="A 15-member commission voted 8–7, along party lines, to give Hayes all 20 disputed electoral votes. Southern Democrats accepted the result, and Hayes withdrew federal troops from Louisiana and South Carolina.", outcome="Reconstruction ended; within two decades Southern states had stripped most Black citizens of the vote.", src=W+"Compromise_of_1877"),
+    dict(title="Fraud in the 1876 count", when="1876–1877", label="disputed", d="Republican-run election boards in Florida, Louisiana and South Carolina threw out enough votes to give Hayes those states; Democrats had used violence to keep Black Republicans from voting.", outcome="A House investigation in 1878–79 found wrongdoing on both sides, including coded telegrams from Tilden allies offering bribes.", src=W+"1876_United_States_presidential_election"),
+    dict(title="Troops against the railroad strike", when="July 1877", label="disputed", d="After wage cuts set off the first nationwide strike, Hayes sent federal troops at governors' requests. About 100 people were killed in clashes across the country.", outcome="The strike collapsed within weeks.", src=W+"Great_Railroad_Strike_of_1877"),
+  ],
+  quotes=[
+    dict(q="He serves his party best who serves his country best.", when="March 5, 1877", ctx="Inaugural address.", src=W+"Rutherford_B._Hayes"),
+    dict(q="The strikers have been put down by force; but now for the real remedy.", when="August 5, 1877", ctx="Diary entry after the railroad strike.", src=W+"Great_Railroad_Strike_of_1877"),
+  ],
+),
+
+# ------------------------------------------------------------------------------------------ GRANT
+"grant": dict(
+  impeached_short="No",
+  name="Ulysses S. Grant", number="18th", party="Republican", home="Illinois",
+  terms=[("1869-03-04", "1873-03-04"), ("1873-03-04", "1877-03-04")], vp="Schuyler Colfax (1869–73), Henry Wilson (1873–75)",
+  left="Served two terms",
+  summary="The general who won the Civil War. As president he enforced Reconstruction, created the Justice Department, and used it and federal troops to break up the Ku Klux Klan. He signed laws committing the country to pay its war debts in gold, vetoed a bill to print more paper money after the Panic of 1873, created Yellowstone, the first national park, and settled war claims with Britain. His administration was rocked by corruption scandals among the people around him.",
+  debt=dict(start=2_611_687_851, start_label="June 30, 1868 (end of fiscal 1868)", end=2_180_395_067, end_label="June 30, 1876 (end of fiscal 1876)", note="Daily debt figures don't exist before 1993, so Grant's numbers use the fiscal years closest to his term, the same rule as every other page."),
+  unemployment=None,
+  eo_by_year={}, eo_total=217, eo_range=None, eo_source=('American Presidency Project: executive orders', 'https://www.presidency.ucsb.edu/statistics/data/executive-orders'), eo_note="Count from the American Presidency Project.",
+  eo_notable=[],
+  clem_by_year={}, clem_total=None, clem_source=('U.S. Dept. of Justice, clemency statistics', 'https://www.justice.gov/pardon/clemency-statistics'), clem_note="The Justice Department's published counts begin in 1900.",
+  pardons=[
+    dict(name="John McDonald", kind="Pardon", date="1877-01-26", crime="Leading the Whiskey Ring, which stole millions in federal liquor taxes (convicted 1875)", sentence="18 months and a $5,000 fine", why="McDonald was the Grant-appointed tax supervisor in St. Louis at the center of the biggest scandal of Grant's presidency. Grant pardoned him five weeks before leaving office.", src=W+"John_McDonald_(Union_army_general)"),
+  ],
+  legal=[
+    dict(k="Impeached", v="No", status="no", d="No articles of impeachment were voted on."),
+    dict(k="Criminally charged", v="No — one speeding stop", status="no", d="Never charged with a crime. A Washington police officer stopped him in 1872 for racing his horse carriage, and he paid a $20 penalty."),
+    dict(k="Aides or cabinet convicted", v="Yes — officials; cabinet member impeached", status="yes", d="More than 100 people were convicted in the Whiskey Ring, including Treasury tax official John McDonald. War Secretary William Belknap was impeached by the House. Grant's private secretary, Orville Babcock, was indicted and acquitted.", src=W+"Whiskey_Ring"),
+    dict(k="Special counsels", v="Yes — one, fired", status="yes", d="Grant appointed John Henderson as special prosecutor for the Whiskey Ring in 1875, then fired him after Henderson criticized Grant in court over Babcock.", src=W+"Whiskey_Ring"),
+    dict(k="Misuse of DOJ, FBI or IRS", v="No finding", status="no", d="No official investigation found he used federal agencies against opponents. His Justice Department's use of force against the Klan was authorized by Congress."),
+  ],
+  people=[
+    dict(name="John McDonald", role="Supervisor of internal revenue, St. Louis", outcome="Convicted", d="Ringleader of the Whiskey Ring (1875). Grant pardoned him in 1877."),
+    dict(name="William Belknap", role="Secretary of War", outcome="Impeached; Senate acquitted", d="Took payments from a trading post at Fort Sill. He resigned hours before the House unanimously impeached him (1876); the Senate vote fell short of two-thirds, with many saying it had no power to try a former official."),
+    dict(name="Orville Babcock", role="Private secretary", outcome="Indicted; acquitted", d="Charged in the Whiskey Ring. Grant gave a sworn statement in his defense, and he was acquitted in 1876."),
+    dict(name="William Richardson", role="Secretary of the Treasury", outcome="Resigned; not charged", d="Resigned in 1874 over the Sanborn contract, which let a private collector keep half of the back taxes he gathered."),
+    dict(name="Schuyler Colfax", role="Vice President", outcome="Not charged; dropped from ticket", d="Named in the Crédit Mobilier bribery scandal; not renominated in 1872."),
+  ],
+  controversies=[
+    dict(title="The Whiskey Ring", when="1871–1875", label="proven", d="Distillers and Treasury officials, mostly in St. Louis, conspired to skim millions of dollars in liquor taxes.", outcome="More than 100 convictions. Grant's secretary was acquitted after Grant testified for him, and Grant pardoned the ring's leader.", src=W+"Whiskey_Ring"),
+    dict(title="The Belknap bribery", when="1870–1876", label="charged", d="The secretary of war and his wives received about $20,000 from a man who held a lucrative Army trading post.", outcome="Impeached unanimously by the House; acquitted by the Senate.", src=W+"William_W._Belknap"),
+    dict(title="Black Friday", when="September 1869", label="proven", d="Financiers Jay Gould and Jim Fisk tried to corner the gold market, using Grant's brother-in-law to get inside information. When Grant ordered the Treasury to sell gold, the price collapsed and many investors were ruined.", outcome="A congressional investigation in 1870 cleared Grant of wrongdoing.", src=W+"Black_Friday_(1869)"),
+    dict(title="Crédit Mobilier", when="Revealed 1872", label="proven", d="A railroad construction company had given its stock to members of Congress, including Grant's vice president, Schuyler Colfax, while they oversaw its government funding.", outcome="The House censured two congressmen; Colfax was dropped from the 1872 ticket.", src=W+"Cr%C3%A9dit_Mobilier_scandal"),
+    dict(title="General Order No. 11", when="December 1862", label="proven", d="Before his presidency, as a Union general, Grant ordered all Jews expelled from his military district.", outcome="Lincoln revoked it within weeks. Grant later called it wrong, and as president appointed more Jewish officials than any predecessor.", src=W+"General_Order_No._11_(1862)"),
+  ],
+  quotes=[
+    dict(q="Let us have peace.", when="May 29, 1868", ctx="Letter accepting the Republican nomination.", src=W+"Ulysses_S._Grant"),
+    dict(q="Let no guilty man escape.", when="July 29, 1875", ctx="Note on a letter about the Whiskey Ring investigation.", src=W+"Whiskey_Ring"),
+    dict(q="Failures have been errors of judgment, not of intent.", when="December 5, 1876", ctx="Final annual message to Congress, acknowledging the mistakes of his administration.", src=W+"Ulysses_S._Grant"),
+  ],
+),
 }
