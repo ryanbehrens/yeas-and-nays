@@ -87,6 +87,9 @@ button{cursor:pointer}
 .era-meta{display:grid;gap:4px;padding-bottom:6px;min-width:0}
 .era-pres{font-family:var(--serif);font-size:clamp(17px,2vw,21px)}
 .era-pres i{color:var(--muted);font-size:.8em}
+.pres-link{color:inherit;text-decoration:none;border-bottom:1px solid var(--muted)}
+.pres-link:hover{border-bottom-color:var(--ink)}
+.pres-link span{font-size:.75em;color:var(--muted)}
 .era-line{display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--ink-2);font-size:13px}
 .chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;border-radius:999px;padding:2px 9px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
 .dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none}
@@ -329,6 +332,7 @@ footer a{color:var(--ink-2)}
     </a>
     <nav class="sections" aria-label="Sections">
       <a href="#" aria-current="page">The Ledger</a>
+      <a href="presidents/index.html">Presidents</a>
       <span title="Coming soon: the Supreme Court, its justices and rulings">The Bench <i>Soon</i></span>
       <span title="Coming soon: discussion and posts">The Floor <i>Soon</i></span>
     </nav>
@@ -531,6 +535,8 @@ function partyColor(code, t){
   return D.parties[code] ? D.parties[code].color : css("--neutral-state");
 }
 function partyVarAt(name, t){ const v = partyVar(name); if (!flipped(t)) return v; return v === "--dem" ? "--rep" : v === "--rep" ? "--dem" : v; }
+// Presidents with a deep-dive page
+const PRES_PAGES = {"Richard Nixon":"nixon", "Bill Clinton":"clinton", "Barack Obama":"obama", "Donald Trump":"trump"};
 function partyVar(name){ if (!name) return "--mix"; if ((/^Democratic/.test(name) && !/^Democratic-Republican/.test(name)) || /^Jacksonian/.test(name)) return "--dem"; if (/^Republican/.test(name)) return "--rep"; return "--mix"; }
 function minWageAt(iso){ let r = null; for (const w of D.fedMinWage) if (w.date <= iso) r = w.rate; return r; }
 function electionFor(t){ // most recent presidential election decided by time t (elections held ~Nov)
@@ -676,7 +682,8 @@ function updateEra(){
     line.innerHTML = `<span class="chip">${y < 1787 ? "13 states declared independence" : n + " states have ratified the Constitution"}</span>`;
     return;
   }
-  pres.innerHTML = `${p.name} <i>· ${p.party}</i>`;
+  const pslug = PRES_PAGES[p.name];
+  pres.innerHTML = pslug ? `<a class="pres-link" href="presidents/${pslug}.html">${p.name} <span aria-hidden="true">→</span></a> <i>· ${p.party}</i>` : `${p.name} <i>· ${p.party}</i>`;
   const ctrl = (lbl, party, seats) => `<span class="chip"><span class="dot" style="background:var(${partyVarAt(party, S.t)})"></span>${lbl}: ${party} ${seats}</span>`;
   line.innerHTML = `<span class="chip">${ord(c.n)} Congress</span>${ctrl("House", c.house, c.houseSeats.replace("-","–"))}${ctrl("Senate", c.senate, c.senateSeats.replace("-","–"))}<span class="chip">${n} states</span>`;
 }

@@ -6,6 +6,13 @@
 debt-to-GDP, the minimum wage, presidential elections by state, and the landmark laws and
 Supreme Court rulings that moved the numbers.
 
+## Pages
+- `index.html` — **The Ledger**, the home page (timeline, debt, map, laws).
+- `presidents/index.html` — every president; `presidents/<name>.html` — deep dives (Nixon, Clinton, Obama, Trump so far).
+
+## Adding a president portrait
+Save the official portrait as `assets/presidents/<name>.jpg` (for example `assets/presidents/nixon.jpg`), about 600×750 pixels, then commit and push. It appears automatically.
+
 ## How it's built
 - `index.html` is the finished site. It's a single static page; Vercel serves it as-is (no build step).
 - `app/app.html` is the page source (layout, styles, and code).
@@ -16,6 +23,7 @@ Supreme Court rulings that moved the numbers.
 
 ## Rebuilding
 ```
+python3 data/build_presidents.py   # regenerates the president pages from data/presidents_data.py
 python3 data/build.py   # regenerates app/data.js from the data files
 sh app/build.sh         # combines app.html + data.js into index.html
 ```
