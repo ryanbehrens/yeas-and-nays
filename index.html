@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" type="image/svg+xml" href="assets/yeas-nays-icon.svg">
 <meta name="description" content="Scrub from 1776 to today and watch the national debt, deficits, interest, minimum wage and the states change, with the laws and court rulings that moved them.">
-<style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<meta name="theme-color" content="#0d1311">
+<style>:root{color-scheme:dark;background:#0d1311}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Yeas &amp; Nays</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,6 +48,18 @@
   --brand:#9aa6ec; --brand-text:#e8ebfa; --dem:#4f7fe6; --rep:#e05252; --rep-soft:#a8645a; --mix:#8f8a9c; --neutral-state:#56615b;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
 }
+/* Yeas & Nays is always dark ("night mode"), whatever the device setting */
+:root,:root[data-theme="light"]{
+  color-scheme:dark;
+  --bg:#0d1311; --surface:#141c19; --surface-2:#1c2622; --ink:#e2eae5; --ink-2:#b2bfb8; --muted:#8a988f; --line:#2a3630; --ghost:#1d2723;
+  --accent:#3f9f75;
+  --debt:#3f9f75; --debt-0:#1f4a37; --debt-1:#2d7556; --debt-2:#3f9f75; --debt-3:#7ccaa4; --debt-4:#c2ecd6;
+  --def:#c08229; --def-0:#4f3512; --def-1:#86591c; --def-2:#c08229; --def-3:#e2b066; --def-4:#f5dcb3;
+  --int:#8d74d8; --int-0:#35295e; --int-1:#5b479e; --int-2:#8d74d8; --int-3:#b9a8ee; --int-4:#e1d8fb;
+  --brand:#9aa6ec; --brand-text:#e8ebfa; --dem:#4f7fe6; --rep:#e05252; --rep-soft:#a8645a; --mix:#8f8a9c; --neutral-state:#56615b;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
+}
+
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.5;padding:0 20px 150px;}
