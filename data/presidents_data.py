@@ -1413,4 +1413,159 @@ PRESIDENTS = {
     dict(q="Failures have been errors of judgment, not of intent.", when="December 5, 1876", ctx="Final annual message to Congress, acknowledging the mistakes of his administration.", src=W+"Ulysses_S._Grant"),
   ],
 ),
+
+# ------------------------------------------------------------------------------------------ A. JOHNSON
+"ajohnson": dict(
+  impeached_short="Yes — acquitted",
+  name="Andrew Johnson", number="17th", party="National Union (a Democrat)", home="Tennessee",
+  terms=[("1865-04-15", "1869-03-04")], vp="None",
+  left="Not nominated in 1868",
+  summary="A Tennessee Democrat who stayed loyal to the Union and was put on Lincoln's 1864 ticket. After the assassination he pardoned most former Confederates and let Southern states rejoin with governments that passed 'Black Codes'. He vetoed the Civil Rights Act of 1866 and the Freedmen's Bureau bill, and Congress overrode him. He opposed the 14th Amendment. He was the first president impeached and was acquitted by one vote. The purchase of Alaska happened on his watch.",
+  debt=dict(start=1_815_784_371, start_label="June 30, 1864 (end of fiscal 1864)", end=2_611_687_851, end_label="June 30, 1868 (end of fiscal 1868)",
+            note="Daily debt figures don't exist before 1993, so Johnson's numbers use the fiscal years closest to his term, the same rule as every other page." + " Almost all of the rise came in fiscal 1865 (July 1864 to June 1865), the last year of the war, which was mostly Lincoln's; from June 1865 to June 1868 the debt fell from $2.68 billion to $2.61 billion."),
+  unemployment=None,
+  eo_by_year={}, eo_total=79, eo_range=None, eo_source=('American Presidency Project: executive orders', 'https://www.presidency.ucsb.edu/statistics/data/executive-orders'), eo_note="Count from the American Presidency Project.",
+  eo_notable=[],
+  clem_by_year={}, clem_total=None, clem_source=('U.S. Dept. of Justice, clemency statistics', 'https://www.justice.gov/pardon/clemency-statistics'),
+  clem_note="The Justice Department's published counts begin in 1900." + " Besides four amnesty proclamations for former Confederates (the last, on Christmas 1868, covered everyone), he granted roughly 13,500 individual pardons to Confederate leaders and wealthy planters who applied.",
+  pardons=[
+    dict(name="Samuel Mudd", kind="Pardon", date="1869-02-08", crime="Conspiracy in Lincoln's assassination: he set John Wilkes Booth's broken leg and hid what he knew (military commission, 1865)", sentence="Life in prison; served nearly four years", why="Pardoned for his work fighting a yellow fever outbreak at the Fort Jefferson prison. Johnson also pardoned two other conspirators, Samuel Arnold and Edman Spangler, in his last weeks.", src=W+"Samuel_Mudd"),
+    dict(name="Former Confederates", kind="Amnesty", date="1868-12-25", crime="Treason and rebellion", sentence="None imposed", why="His final proclamation granted a full, unconditional pardon to everyone who took part in the rebellion, including Jefferson Davis.", src=W+"Andrew_Johnson"),
+  ],
+  legal=[
+    dict(k="Impeached", v="Yes — acquitted by one vote", status="yes", d="The House impeached him in February 1868 on 11 articles, mainly for firing War Secretary Edwin Stanton in violation of the Tenure of Office Act. The Senate voted 35–19 to convict, one vote short of two-thirds.", src=W+"Impeachment_of_Andrew_Johnson"),
+    dict(k="Criminally charged", v="No", status="no", d="Never charged."),
+    dict(k="Aides or cabinet convicted", v="No", status="no", d="No member of his cabinet or White House staff was convicted."),
+    dict(k="Special counsels", v="No", status="no", d="None were appointed."),
+    dict(k="Misuse of DOJ, FBI or IRS", v="No finding", status="no", d="No official investigation found he used federal agencies against opponents. The Supreme Court later ruled the Tenure of Office Act unconstitutional (1926)."),
+  ],
+  people=[
+    dict(name="Edwin Stanton", role="Secretary of War", outcome="Fired; not charged", d="Johnson's attempt to remove him in 1868 led directly to the impeachment. Stanton barricaded himself in his office until the Senate acquitted Johnson."),
+  ],
+  controversies=[
+    dict(title="The impeachment", when="1868", label="charged", d="Congress's Radical Republicans impeached Johnson for removing Stanton without Senate approval and for speeches attacking Congress. Many historians see the charges as a proxy for the fight over Reconstruction.", outcome="Acquitted by one vote; he served out his term.", src=W+"Impeachment_of_Andrew_Johnson"),
+    dict(title="Undoing Reconstruction", when="1865–1868", label="proven", d="Johnson let Southern states rejoin under governments that passed Black Codes restricting freed people's work and movement, returned confiscated land to planters, and vetoed civil rights and Freedmen's Bureau bills.", outcome="Congress overrode his vetoes, passed the 14th Amendment and took over Reconstruction in 1867.", src=W+"Reconstruction_era"),
+    dict(title="The 'Swing Around the Circle'", when="1866", label="proven", d="On a speaking tour before the midterms, Johnson traded insults with hecklers and accused Radical Republicans of treason.", outcome="Republicans won veto-proof majorities; the speeches became the basis for an article of impeachment.", src=W+"Andrew_Johnson"),
+  ],
+  quotes=[
+    dict(q="Treason must be made odious, and traitors must be punished and impoverished.", when="April 1865", ctx="Soon after taking office. Within months he was pardoning Confederate leaders.", src=W+"Andrew_Johnson"),
+    dict(q="In the progress of nations negroes have shown less capacity for government than any other race of people.", when="December 3, 1867", ctx="Annual message to Congress, arguing against Black voting rights.", src=W+"Andrew_Johnson"),
+  ],
+),
+
+# ------------------------------------------------------------------------------------------ LINCOLN
+"lincoln": dict(
+  impeached_short="No",
+  name="Abraham Lincoln", number="16th", party="Republican", home="Illinois",
+  terms=[("1861-03-04", "1865-03-04"), ("1865-03-04", "1865-04-15")], vp="Hannibal Hamlin (1861–65), Andrew Johnson (1865)",
+  left="Assassinated April 1865",
+  summary="Elected in 1860 on a platform against the spread of slavery; eleven Southern states seceded. He led the Union through the Civil War, issued the Emancipation Proclamation, pushed the 13th Amendment abolishing slavery through Congress, and signed the first federal income tax, paper money ('greenbacks'), the Homestead Act and the transcontinental railroad. He also suspended habeas corpus and allowed the military arrest of thousands of civilians. He was assassinated days after the war ended.",
+  debt=dict(start=64_842_288, start_label="June 30, 1860 (end of fiscal 1860)", end=1_815_784_371, end_label="June 30, 1864 (end of fiscal 1864)",
+            note="Daily debt figures don't exist before 1993, so Lincoln's numbers use the fiscal years closest to his term, the same rule as every other page." + " The Civil War took the debt from $65 million to $2.68 billion by June 30, 1865, eleven weeks after his death."),
+  unemployment=None,
+  eo_by_year={}, eo_total=48, eo_range=None, eo_source=('American Presidency Project: executive orders', 'https://www.presidency.ucsb.edu/statistics/data/executive-orders'), eo_note="Count from the American Presidency Project. His best-known acts, like the Emancipation Proclamation, were proclamations, not executive orders.",
+  eo_notable=[
+    dict(n="1", date="1862-10-20", t="A provisional court for Louisiana", d="Set up a federal court in Union-occupied Louisiana. It is numbered 1 because the State Department later numbered orders starting from it."),
+    dict(n="", date="1863-01-01", t="The Emancipation Proclamation", d="A proclamation, not an executive order: declared enslaved people in Confederate-held areas free and allowed Black men to join the Union army. It did not apply to border states that stayed in the Union."),
+  ],
+  clem_by_year={}, clem_total=None, clem_source=('U.S. Dept. of Justice, clemency statistics', 'https://www.justice.gov/pardon/clemency-statistics'),
+  clem_note="The Justice Department's published counts begin in 1900." + " In December 1863 he offered a pardon by proclamation to most Confederates who swore loyalty to the Union.",
+  pardons=[
+    dict(name="303 Dakota men", kind="Commutations", date="1862-12", crime="Killings of settlers during the U.S.–Dakota War in Minnesota (military commission, 1862)", sentence="Death", why="Lincoln reviewed the trial records and let 39 of the 303 death sentences stand, later reprieving one more; 38 men were hanged on December 26, 1862, the largest mass execution in U.S. history.", src=W+"Dakota_War_of_1862"),
+    dict(name="Clement Vallandigham", kind="Commutation", date="1863-05", crime="Speech against the war (military commission, 1863)", sentence="Prison for the rest of the war", why="An Ohio Democratic leader arrested by the Army for a speech. Lincoln changed his sentence to banishment to the Confederacy.", src=W+"Clement_Vallandigham"),
+    dict(name="Nathaniel Gordon", kind="Respite only", date="1862-02", crime="Slave trading (convicted 1861)", sentence="Death", why="Lincoln refused to commute the sentence, granting only a two-week delay. Gordon was the only American executed for slave trading.", src=W+"Nathaniel_Gordon"),
+  ],
+  legal=[
+    dict(k="Impeached", v="No", status="no", d="No articles of impeachment were voted on."),
+    dict(k="Criminally charged", v="No", status="no", d="Never charged."),
+    dict(k="Aides or cabinet convicted", v="No — War Secretary censured", status="partial", d="No one was convicted. The House censured his first war secretary, Simon Cameron, in 1862 over corrupt and wasteful Army contracts.", src=W+"Simon_Cameron"),
+    dict(k="Special counsels", v="No", status="no", d="None were appointed."),
+    dict(k="Misuse of DOJ, FBI or IRS", v="Disputed — wartime arrests", status="partial", d="There was no Justice Department or FBI yet. Lincoln suspended habeas corpus and allowed military arrests of civilians, including critics of the war. The Supreme Court ruled in 1866 (Ex parte Milligan) that military trials of civilians where regular courts were open were unconstitutional.", src=W+"Ex_parte_Milligan"),
+  ],
+  people=[
+    dict(name="Simon Cameron", role="Secretary of War", outcome="Censured by the House", d="Removed in 1862 and sent as minister to Russia after reports of corrupt and wasteful contracts."),
+  ],
+  controversies=[
+    dict(title="Suspending habeas corpus", when="1861–1865", label="disputed", d="Lincoln suspended the right to challenge detention in court, first in Maryland and later nationwide, and ignored Chief Justice Roger Taney's 1861 ruling that only Congress could do so. About 13,000 civilians were held by the military.", outcome="Congress authorized the suspension in 1863; the Supreme Court limited military trials of civilians in 1866.", src=W+"Ex_parte_Merryman"),
+    dict(title="Arresting a critic for a speech", when="1863", label="disputed", d="The Army arrested Clement Vallandigham, a former Democratic congressman, for a speech attacking the war, and a military commission convicted him.", outcome="Lincoln banished him to the Confederacy; the Supreme Court declined to review the case.", src=W+"Clement_Vallandigham"),
+    dict(title="The Dakota executions", when="December 1862", label="disputed", d="After a war in Minnesota in which hundreds of settlers were killed, 38 Dakota men were hanged after trials that often lasted minutes.", outcome="Lincoln had commuted 264 death sentences, over the protests of Minnesota officials; the Dakota were then expelled from the state.", src=W+"Dakota_War_of_1862"),
+    dict(title="Plans to resettle Black Americans abroad", when="1862", label="proven", d="Lincoln urged Black leaders at the White House to support colonizing freed people in Central America or Africa, and backed a failed settlement in Haiti.", outcome="He stopped promoting colonization publicly after 1863.", src=W+"Abraham_Lincoln_and_slavery"),
+  ],
+  quotes=[
+    dict(q="My paramount object in this struggle is to save the Union, and is not either to save or to destroy slavery.", when="August 22, 1862", ctx="Letter to newspaper editor Horace Greeley, a month before announcing emancipation.", src=W+"Abraham_Lincoln_and_slavery"),
+    dict(q="Government of the people, by the people, for the people, shall not perish from the earth.", when="November 19, 1863", ctx="Gettysburg Address.", src=W+"Gettysburg_Address"),
+    dict(q="With malice toward none, with charity for all.", when="March 4, 1865", ctx="Second inaugural address.", src=W+"Abraham_Lincoln%27s_second_inaugural_address"),
+    dict(q="I am not, nor ever have been in favor of bringing about in any way the social and political equality of the white and black races.", when="September 18, 1858", ctx="Debate with Stephen Douglas in Charleston, Illinois, before his presidency.", src=W+"Lincoln%E2%80%93Douglas_debates"),
+  ],
+),
+
+# ------------------------------------------------------------------------------------------ BUCHANAN
+"buchanan": dict(
+  impeached_short="No",
+  name="James Buchanan", number="15th", party="Democratic", home="Pennsylvania",
+  terms=[("1857-03-04", "1861-03-04")], vp="John C. Breckinridge",
+  left="Did not run in 1860",
+  summary="A veteran diplomat elected in 1856. He quietly pressed the Supreme Court toward the Dred Scott decision, backed Kansas's proslavery Lecompton constitution despite fraud in its adoption, and split his own party. The Panic of 1857 hit early in his term. When Southern states began seceding after Lincoln's election, he said secession was illegal but that the government had no power to stop it.",
+  debt=dict(start=31_972_538, start_label="June 30, 1856 (end of fiscal 1856)", end=64_842_288, end_label="June 30, 1860 (end of fiscal 1860)", note="Daily debt figures don't exist before 1993, so Buchanan's numbers use the fiscal years closest to his term, the same rule as every other page."),
+  unemployment=None,
+  eo_by_year={}, eo_total=16, eo_range=None, eo_source=('American Presidency Project: executive orders', 'https://www.presidency.ucsb.edu/statistics/data/executive-orders'), eo_note="Count from the American Presidency Project.",
+  eo_notable=[],
+  clem_by_year={}, clem_total=None, clem_source=('U.S. Dept. of Justice, clemency statistics', 'https://www.justice.gov/pardon/clemency-statistics'), clem_note="The Justice Department's published counts begin in 1900.",
+  pardons=[
+    dict(name="Brigham Young and Utah's settlers", kind="Amnesty", date="1858-04-06", crime="Sedition and treason for resisting federal authority in the Utah War", sentence="None imposed", why="Offered in exchange for accepting federal rule, ending a standoff in which the Army had marched on Utah Territory.", src=W+"Utah_War"),
+  ],
+  legal=[
+    dict(k="Impeached", v="No — investigated", status="no", d="No articles were voted on. A House committee led by John Covode investigated his administration in 1860.", src=W+"Covode_Committee"),
+    dict(k="Criminally charged", v="No", status="no", d="Never charged."),
+    dict(k="Aides or cabinet convicted", v="No — War Secretary indicted", status="partial", d="Secretary of War John Floyd resigned in December 1860 and was indicted over missing Indian trust bonds; the charges were dropped.", src=W+"John_B._Floyd"),
+    dict(k="Special counsels", v="No", status="no", d="None were appointed."),
+    dict(k="Misuse of DOJ, FBI or IRS", v="No finding", status="no", d="No official investigation found he used federal law enforcement against opponents. The Covode Committee's findings concerned patronage and bribery (see controversies)."),
+  ],
+  people=[
+    dict(name="John Floyd", role="Secretary of War", outcome="Indicted; charges dropped", d="Resigned in 1860 amid the Indian trust bond scandal and accusations that he had moved arms to Southern arsenals. He became a Confederate general."),
+    dict(name="Godard Bailey", role="Interior Department clerk", outcome="Indicted; never tried", d="Admitted taking about $870,000 in bonds held in trust for Native American tribes and giving them to a contractor, a relative of Floyd's."),
+  ],
+  controversies=[
+    dict(title="Pressuring the Court on Dred Scott", when="1857", label="proven", d="Before taking office, Buchanan wrote to Justice Robert Grier urging him to join the Southern majority. In his inaugural address he told the country to accept the ruling, 'whatever it may be', while already knowing the outcome.", outcome="The Court ruled that Black Americans could not be citizens and that Congress could not ban slavery in the territories; the letters became public later.", src=W+"Dred_Scott_v._Sandford"),
+    dict(title="The Lecompton constitution", when="1857–1858", label="proven", d="Buchanan pushed Congress to admit Kansas as a slave state under a constitution written by a proslavery minority and adopted amid fraud.", outcome="Congress refused; Kansas voters rejected it by a wide margin in 1858. The fight split the Democratic Party.", src=W+"Lecompton_Constitution"),
+    dict(title="Buying votes (the Covode Committee)", when="1860", label="proven", d="A House investigation found his administration had used patronage, contracts and cash to win votes for the Lecompton constitution and in elections.", outcome="No one was prosecuted; Republicans used the report in the 1860 campaign.", src=W+"Covode_Committee"),
+    dict(title="Doing nothing about secession", when="December 1860 – March 1861", label="disputed", d="Buchanan declared secession illegal but said the Constitution gave the federal government no power to force a state to stay. Seven states left the Union before he left office.", outcome="Historians usually rank him among the worst presidents for his handling of the crisis.", src=W+"James_Buchanan"),
+  ],
+  quotes=[
+    dict(q="The long-continued and intemperate interference of the Northern people with the question of slavery in the Southern States has at length produced its natural effects.", when="December 3, 1860", ctx="Annual message to Congress, weeks before South Carolina seceded.", src=W+"James_Buchanan"),
+    dict(q="If you are as happy, my dear sir, on entering this house as I am on leaving it, you are the happiest man in this country.", when="March 4, 1861", ctx="Reportedly said to Lincoln on Inauguration Day.", src=W+"James_Buchanan"),
+  ],
+),
+
+# ------------------------------------------------------------------------------------------ PIERCE
+"pierce": dict(
+  impeached_short="No",
+  name="Franklin Pierce", number="14th", party="Democratic", home="New Hampshire",
+  terms=[("1853-03-04", "1857-03-04")], vp="William R. King (died April 1853)",
+  left="Denied renomination in 1856",
+  summary="A New Hampshire Democrat sympathetic to the South. He signed the Kansas–Nebraska Act, which let settlers vote on slavery and set off the violence of 'Bleeding Kansas', and recognized the proslavery territorial legislature elected with the help of fraud. He enforced the Fugitive Slave Act, completed the Gadsden Purchase from Mexico, and his diplomats' Ostend Manifesto urged taking Cuba from Spain. His party refused to renominate him.",
+  debt=dict(start=66_199_342, start_label="June 30, 1852 (end of fiscal 1852)", end=31_972_538, end_label="June 30, 1856 (end of fiscal 1856)", note="Daily debt figures don't exist before 1993, so Pierce's numbers use the fiscal years closest to his term, the same rule as every other page."),
+  unemployment=None,
+  eo_by_year={}, eo_total=35, eo_range=None, eo_source=('American Presidency Project: executive orders', 'https://www.presidency.ucsb.edu/statistics/data/executive-orders'), eo_note="Count from the American Presidency Project.",
+  eo_notable=[],
+  clem_by_year={}, clem_total=None, clem_source=('U.S. Dept. of Justice, clemency statistics', 'https://www.justice.gov/pardon/clemency-statistics'), clem_note="The Justice Department's published counts begin in 1900.",
+  pardons=[],
+  legal=[
+    dict(k="Impeached", v="No", status="no", d="No articles of impeachment were voted on."),
+    dict(k="Criminally charged", v="No", status="no", d="Never charged."),
+    dict(k="Aides or cabinet convicted", v="No", status="no", d="No member of his cabinet or White House staff was convicted."),
+    dict(k="Special counsels", v="No", status="no", d="None were appointed."),
+    dict(k="Misuse of DOJ, FBI or IRS", v="No finding", status="no", d="No official investigation found he used federal law enforcement against opponents."),
+  ],
+  people=[],
+  controversies=[
+    dict(title="The Kansas–Nebraska Act", when="1854", label="disputed", d="Pierce signed a law repealing the Missouri Compromise's ban on slavery in the northern territories and letting settlers decide. Pro- and antislavery settlers poured into Kansas.", outcome="Years of violence known as 'Bleeding Kansas'; the backlash created the Republican Party.", src=W+"Kansas%E2%80%93Nebraska_Act"),
+    dict(title="Backing a fraudulently elected legislature", when="1855–1856", label="proven", d="Thousands of Missourians crossed into Kansas to vote in its 1855 election. Pierce recognized the proslavery legislature they elected and called the rival free-state government an act of rebellion.", outcome="A House committee found in 1856 that the election had been carried by fraud.", src=W+"Bleeding_Kansas"),
+    dict(title="Returning Anthony Burns to slavery", when="1854", label="proven", d="Pierce sent federal troops and a revenue cutter to Boston to return Anthony Burns, who had escaped slavery, to Virginia under the Fugitive Slave Act, at a cost of about $40,000.", outcome="Burns was later bought out of slavery by Boston supporters; the case turned many Northerners against the law.", src=W+"Anthony_Burns"),
+    dict(title="The Ostend Manifesto", when="1854", label="proven", d="Three U.S. diplomats, including future president James Buchanan, wrote a memo arguing the U.S. would be justified in taking Cuba by force if Spain refused to sell it.", outcome="It leaked and caused an uproar; the administration disavowed it.", src=W+"Ostend_Manifesto"),
+  ],
+  quotes=[
+    dict(q="I hold that the laws of 1850, commonly called the 'compromise measures,' are strictly constitutional and to be unhesitatingly carried into effect.", when="March 4, 1853", ctx="Inaugural address, pledging to enforce the Fugitive Slave Act.", src=W+"Franklin_Pierce"),
+  ],
+),
 }
