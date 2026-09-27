@@ -85,15 +85,17 @@ PORTRAIT_SLUG = {"George Washington":"washington","John Adams":"jadams","Thomas 
   "Gerald Ford":"ford","Jimmy Carter":"carter","Ronald Reagan":"reagan","George H. W. Bush":"ghwbush",
   "Bill Clinton":"clinton","George W. Bush":"gwbush","Barack Obama":"obama","Donald Trump":"trump","Joe Biden":"biden"}
 
+PARTY_HEX = {"F": "#c9a227", "DR": "#2f9e8f", "NR": "#d4803a", "W": "#e0a33a"}
 def side(party):
-    """Which side a party counts as, using the same grouping as the Ledger: Federalists and Whigs with
-    the Republicans, Democratic-Republicans and Jacksonians with the Democrats. Returns a CSS color var."""
+    """True party color in every era: Democrats blue, Republicans red, earlier parties their own colors, gray for none."""
     l = party.lower()
-    if l.startswith(("unaffiliated", "whig (expelled")): return "--mix"
-    if "democratic-republican" in l: return "--dem"
-    if l.startswith(("republican", "federalist", "whig")): return "--rep"
-    if "democrat" in l: return "--dem"
-    return "--mix"
+    if l.startswith(("unaffiliated", "no party", "whig (expelled")): return "var(--mix)"
+    if l.startswith("democratic-republican"): return PARTY_HEX["DR"]
+    if l.startswith("federalist"): return PARTY_HEX["F"]
+    if l.startswith("whig"): return PARTY_HEX["W"]
+    if l.startswith("republican"): return "var(--rep)"
+    if "democrat" in l: return "var(--dem)"
+    return "var(--mix)"
 
 def slug_for(name):
     for k, v in PRESIDENTS.items():
@@ -152,11 +154,9 @@ def page(slug, p):
     group_n = sum(n for _, n in groups)
     legal = {x["k"]: x for x in p["legal"]}
     party_var = side(p["party"])
-    flipped = p["terms"][0][0] < "1897"
-    if flipped and party_var != "--mix": party_var = "--dem" if party_var == "--rep" else "--rep"  # site-wide ideology adjustment
-    transition = "1897" <= p["terms"][0][0] < "1933"
-    flipnote_t = ('<p class="flipnote">This presidency falls in the 1896–1932 transition, when both parties had progressive and conservative wings; the site uses today\'s colors from 1897 on, but they are the least certain in these years.</p>' if transition else "")
-    flipnote = ('<p class="flipnote">Party colors follow the site\'s ideology adjustment: before 1897, Democrats were generally the more conservative party, so they are shown in red and Republicans in blue.</p>' if flipped else "")
+    transition = "1896" <= p["terms"][0][0] < "1933"
+    flipnote_t = ('<p class="flipnote">This presidency falls in the realignment era (1896–1932), when the two parties were trading positions and both had progressive and conservative wings.</p>' if transition else "")
+    flipnote = ""
     term_txt = " and ".join(f'{s[:4]}–{(en or "")[:4] if en else "present"}' for s, en in p["terms"])
 
     t = [head(f'{p["name"]} · Yeas and Nays', f'{p["name"]}: the economy, executive orders, pardons, legal record and controversies, with sources.', "../")]
@@ -166,7 +166,7 @@ def page(slug, p):
     <div>
       <div class="eyebrow">{e(p["number"])} president of the United States · {e(term_txt)}</div>
       <h1>{e(p["name"])}</h1>
-      <div class="meta"><span class="chip"><span class="dot" style="background:var({party_var})"></span>{e(p["party"])}</span><span class="chip">Vice president: {e(p["vp"])}</span><span class="chip">{e(p["left"])}</span></div>{flipnote}{flipnote_t}
+      <div class="meta"><span class="chip"><span class="dot" style="background:{party_var}"></span>{e(p["party"])}</span><span class="chip">Vice president: {e(p["vp"])}</span><span class="chip">{e(p["left"])}</span></div>{flipnote}{flipnote_t}
       <p class="sum">{e(p["summary"])}</p>
     </div>
   </section>
@@ -309,7 +309,6 @@ def index():
         num += 1
         slug = slug_for(name)
         var = side(party)
-        if int(s[:4]) < 1897 and var != "--mix": var = "--dem" if var == "--rep" else "--rep"  # site-wide ideology adjustment
         yrs = f'{s[:4]}–{en[:4] if en else "present"}'
         if (slug and slug in done_slug) or name in done_names:
             continue  # one card per person (Cleveland and Trump served twice)
@@ -318,11 +317,11 @@ def index():
             done_slug.add(slug)
             p = PRESIDENTS[slug]
             yrs = " & ".join(f'{a[:4]}–{b[:4] if b else "present"}' for a, b in p["terms"])
-            cards.append(f'<a class="pcard live" href="presidents/{slug}.html"><div class="pic">{portrait(slug, name, placeholder=False, up="")}<span class="num">#{p["number"].replace("th","").replace("nd","").replace("rd","").replace(" & ","/").replace("st","")}</span><span class="bar" style="background:var({var})"></span></div><div class="info"><b>{e(name)}</b><span>{e(yrs)} · {e(party.split(" /")[0])}</span><em>Deep dive →</em></div></a>')
+            cards.append(f'<a class="pcard live" href="presidents/{slug}.html"><div class="pic">{portrait(slug, name, placeholder=False, up="")}<span class="num">#{p["number"].replace("th","").replace("nd","").replace("rd","").replace(" & ","/").replace("st","")}</span><span class="bar" style="background:{var}"></span></div><div class="info"><b>{e(name)}</b><span>{e(yrs)} · {e(party.split(" /")[0])}</span><em>Deep dive →</em></div></a>')
         else:
-            cards.append(f'<div class="pcard soon" aria-disabled="true"><div class="pic">{portrait(PORTRAIT_SLUG.get(name, "none"), name, placeholder=False, up="")}<span class="num">#{num}</span><span class="bar" style="background:var({var})"></span></div><div class="info"><b>{e(name)}</b><span>{e(yrs)} · {e(party.split(" /")[0].split(" (")[0])}</span><span>Coming soon</span></div></div>')
+            cards.append(f'<div class="pcard soon" aria-disabled="true"><div class="pic">{portrait(PORTRAIT_SLUG.get(name, "none"), name, placeholder=False, up="")}<span class="num">#{num}</span><span class="bar" style="background:{var}"></span></div><div class="info"><b>{e(name)}</b><span>{e(yrs)} · {e(party.split(" /")[0].split(" (")[0])}</span><span>Coming soon</span></div></div>')
     n_live = sum('class="pcard live"' in c for c in cards)
-    t.append(f"""  <div class="ptools"><p>{"Every president has a deep dive." if n_live == len(cards) else f"{n_live} of {len(cards)} presidents have a deep dive so far."} Colored bars show party, using the site's ideology adjustment: before 1897, Democrats (and Democratic-Republicans) are red and Republicans (and Federalists and Whigs) blue. Gray means no party or a break with it.</p>
+    t.append(f"""  <div class="ptools"><p>{"Every president has a deep dive." if n_live == len(cards) else f"{n_live} of {len(cards)} presidents have a deep dive so far."} Colored bars show party: Democrats blue, Republicans red, and earlier parties (Federalists gold, Democratic-Republicans teal, Whigs orange) their own colors. Gray means no party or a break with it.</p>
     <div class="ptbtns">{"" if n_live == len(cards) else '<button type="button" class="pbtn" id="pf" aria-pressed="false">Deep dives only</button>'}<button type="button" class="pbtn" id="ps">Oldest first</button></div></div>
   <div class="pgrid" id="pg">
 """)
