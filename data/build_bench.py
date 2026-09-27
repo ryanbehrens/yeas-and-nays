@@ -124,7 +124,12 @@ def portrait_url(name):
 
 PAGE = dict(people=sorted(people.values(), key=lambda p: p["first"]), balance=balance, rulings=rulings, topics=TOPICS, leans=LEAN_NAMES, today=TODAY)
 
-t = [head("The Bench · Yeas and Nays", "Every Supreme Court justice, who appointed them, how they voted, and the landmark rulings that shaped the country.", "", current="bench")]
+import seo
+BDESC = "All 116 Supreme Court justices: who appointed them, Republican or Democrat, and how they voted, plus 77 landmark rulings from Marbury v. Madison to Dobbs, sorted by what they did."
+t = [head("The Supreme Court: every justice and landmark ruling | Yeas and Nays", BDESC, "", current="bench", path="/bench", image="/assets/og/bench.jpg",
+          jsonld=[{"@context": "https://schema.org", "@type": "CollectionPage", "name": "The Bench: the Supreme Court", "url": seo.url("/bench"), "description": BDESC,
+                   "about": {"@type": "GovernmentOrganization", "name": "Supreme Court of the United States"}},
+                  seo.breadcrumbs(("Yeas and Nays", "/"), ("The Bench", "/bench"))])]
 t.append("""  <nav class="crumbs">The Bench</nav>
   <section class="hero" style="grid-template-columns:1fr;padding-bottom:6px">
     <div><div class="eyebrow">The Supreme Court</div><h1>The Bench</h1>

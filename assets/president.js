@@ -104,6 +104,22 @@
   drawAll();
   let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(drawAll, 150); });
 
+  // every executive order: search, topic, year, show more
+  document.querySelectorAll(".eoall").forEach(box => {
+    const items = [...box.querySelectorAll(".eolist li")], q = box.querySelector(".eoq"), tg = box.querySelector(".eotg"), yr = box.querySelector(".eoy"),
+      more = box.querySelector(".eomore"), count = box.querySelector(".eocount"); let shown = 50;
+    items.forEach(li => li._t = li.textContent.toLowerCase());
+    function apply(){
+      const qs = q.value.trim().toLowerCase(), t = tg.value, y = yr.value; let n = 0, vis = 0;
+      items.forEach(li => { const ok = (!qs || li._t.includes(qs)) && (!t || ("|" + li.dataset.tg + "|").includes("|" + t + "|")) && (!y || li.dataset.y === y);
+        if (ok) n++; const show = ok && n <= shown; li.hidden = !show; if (show) vis++; });
+      count.textContent = `Showing ${vis.toLocaleString()} of ${n.toLocaleString()}`; more.hidden = vis >= n;
+    }
+    [q, tg, yr].forEach(el => el.addEventListener("input", () => { shown = 50; apply(); }));
+    more.addEventListener("click", () => { shown += 200; apply(); });
+    apply();
+  });
+
   // highlight current section in the jump bar
   const jump = document.querySelector(".jump");
   if (jump && "IntersectionObserver" in window){

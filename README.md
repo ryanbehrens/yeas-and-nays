@@ -29,6 +29,7 @@ move them into `assets/presidents/`, then commit and push. Every president's car
 ```
 python3 data/build_presidents.py   # regenerates the president pages from data/presidents_data.py
 python3 data/build_bench.py        # regenerates bench.html and data/court_items.json (run before data/build.py)
+python3 data/build_sitemap.py      # regenerates sitemap.xml and robots.txt (site address lives in data/seo.py)
 python3 data/build.py   # regenerates app/data.js from the data files
 sh app/build.sh         # combines app.html + data.js into index.html
 ```
@@ -36,3 +37,6 @@ sh app/build.sh         # combines app.html + data.js into index.html
 ## Deploying
 The GitHub repository is connected to Vercel. Every push to `main` deploys to the live site;
 pushes to other branches get their own preview link.
+
+## Search engines
+Every page has a title, description, canonical link, share preview (assets/og/) and structured data, set in `data/seo.py`. After deploying, submit `https://yeas-and-nays.vercel.app/sitemap.xml` in Google Search Console and Bing Webmaster Tools. If the site moves to a custom domain, change `SITE` in `data/seo.py` and rebuild.

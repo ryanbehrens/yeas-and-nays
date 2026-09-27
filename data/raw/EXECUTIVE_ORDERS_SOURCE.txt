@@ -1,0 +1,6 @@
+executive_orders.json
+  Every executive order with number, signing date, title, source link, status and topic tags, trimmed from
+  the Executive Orders Archive (github.com/alinuxfan/executive-orders-archive; executiveordersarchive.org),
+  which compiles The American Presidency Project (UC Santa Barbara) and the Federal Register. Complete from
+  1929 (Hoover) on; earlier years are partial because early orders were not numbered or collected
+  consistently. Topic tags are the archive's automated classification. Snapshot synced 2026-09-25.

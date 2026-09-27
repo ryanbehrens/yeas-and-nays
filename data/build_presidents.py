@@ -5,6 +5,7 @@ import os, json, html, datetime as dt, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from presidents_data import PRESIDENTS
 from political import PRESIDENTS as ALL_PRES, FED_MINWAGE
+import seo
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 RAW = os.path.join(os.path.dirname(__file__), "raw")
@@ -37,13 +38,46 @@ def money_parts(v, digits=2):
     for div, w in ((1e12, "trillion"), (1e9, "billion"), (1e6, "million")):
         if a >= div: return f"{s}${a/div:.{digits}f}", w
     return f"{s}${a:,.0f}", ""
+EO_ALL = json.load(open(os.path.join(RAW, "executive_orders.json")))
+EO_NAMES = {"Martin van Buren": "Martin Van Buren", "Harry S Truman": "Harry S. Truman", "Gerald R. Ford": "Gerald Ford", "George Bush": "George H. W. Bush",
+            "William J. Clinton": "Bill Clinton", "Joseph R. Biden, Jr.": "Joe Biden", "Donald J. Trump (1st Term)": "Donald Trump",
+            "Donald J. Trump (2nd Term)": "Donald Trump"}
+def eo_list_for(name):
+    rows = [o for o in EO_ALL if EO_NAMES.get(o["p"], o["p"]) == name]
+    return sorted(rows, key=lambda o: (o["d"] or "", o["n"] or 0))
+
+def eo_full_section(p):
+    rows = eo_list_for(p["name"])
+    if not rows: return ""
+    complete = p["terms"][0][0] >= "1929"
+    topics = sorted({t for o in rows for t in o["tg"]})
+    yrs = sorted({o["d"][:4] for o in rows if o["d"]})
+    items = []
+    for o in rows:
+        num = f'{o["n"]}{o["sfx"] or ""}' if o["n"] else ""
+        st = f'<span class="eost">{e(o["s"])}</span>' if o["s"] else ""
+        items.append(f'<li data-y="{o["d"][:4]}" data-tg="{e("|".join(o["tg"]))}"><span class="eon">{("EO " + e(num)) if num else "Order"}</span><span class="eod">{fmt_date(o["d"]) if o["d"] else ""}</span>'
+                     f'<a class="eot" href="{e(o["u"])}" target="_blank" rel="noopener">{e(o["t"])}</a>{st}</li>')
+    note = ("" if complete else f'<p class="note">Incomplete: orders before 1929 were not numbered or collected consistently. This archive has {len(rows):,} of the roughly {p["eo_total"]:,} orders counted for this president.</p>')
+    return f"""
+    <details class="eoall" id="all-orders"><summary>Every executive order{"" if complete else " we have"} <b>{len(rows):,}</b><span>Search, filter by topic or year, and open any order's full text</span></summary>
+      {note}
+      <div class="eoctl"><input type="search" class="eoq" placeholder="Search titles" aria-label="Search executive orders">
+        <select class="eotg" aria-label="Topic"><option value="">All topics</option>{"".join(f'<option>{e(t)}</option>' for t in topics)}</select>
+        <select class="eoy" aria-label="Year"><option value="">All years</option>{"".join(f'<option>{y}</option>' for y in yrs)}</select>
+        <span class="eocount"></span></div>
+      <ol class="eolist">{"".join(items)}</ol>
+      <button type="button" class="pbtn eomore">Show more</button>
+      <p class="note">Source: <a href="https://executiveordersarchive.org" target="_blank" rel="noopener">Executive Orders Archive</a>, compiled from the American Presidency Project and the Federal Register. Topics are the archive's automated tags; "Revoked" and similar labels come from the Federal Register's records.</p>
+    </details>"""
+
 def fmt_date(iso):
     d = dt.date.fromisoformat(iso); return d.strftime("%B %-d, %Y")
 
 ICON = open(os.path.join(ROOT, "assets", "icon-inline.svg")).read()
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Merriweather:ital,wght@0,900;1,700&display=swap">'
 
-def head(title, desc, up, current="presidents"):
+def head(title, desc, up, current="presidents", path="/", image="/assets/og/site.jpg", kind="website", jsonld=None):
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -52,6 +86,7 @@ def head(title, desc, up, current="presidents"):
 <meta name="theme-color" content="#0d1311">
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}">
+{seo.tags(title, desc, path, image, kind, jsonld)}
 <link rel="icon" type="image/svg+xml" href="{up}assets/yeas-nays-icon.svg">
 {FONTS}
 <link rel="stylesheet" href="{up}assets/site.css">
@@ -159,7 +194,19 @@ def page(slug, p):
     flipnote = ""
     term_txt = " and ".join(f'{s[:4]}–{(en or "")[:4] if en else "present"}' for s, en in p["terms"])
 
-    t = [head(f'{p["name"]} · Yeas and Nays', f'{p["name"]}: the economy, executive orders, pardons, legal record and controversies, with sources.', "../")]
+    spans = []
+    for a, b in p["terms"]:
+        if spans and spans[-1][1] == a: spans[-1][1] = b
+        else: spans.append([a, b])
+    yrs_txt = " and ".join(f'{a[:4]}–{b[:4] if b else "present"}' for a, b in spans)
+    ptitle = f'{p["name"]}: economy, executive orders, pardons and scandals | Yeas and Nays'
+    pdesc = (f'{p["name"]}, {p["number"]} president ({p["party"].split(" (")[0]}, {yrs_txt}): what happened to the debt, jobs and prices, '
+             f'every executive order, pardons, legal record and controversies, with sources.')
+    ld = [{"@context": "https://schema.org", "@type": "ProfilePage", "name": ptitle, "url": seo.url(f"/presidents/{slug}"), "description": pdesc,
+           "mainEntity": {"@type": "Person", "name": p["name"], "jobTitle": f'{p["number"]} President of the United States', "description": p["summary"],
+                          "image": seo.url(f"/assets/presidents/{slug}.jpg")}},
+          seo.breadcrumbs(("Yeas and Nays", "/"), ("Presidents", "/presidents"), (p["name"], f"/presidents/{slug}"))]
+    t = [head(ptitle, pdesc, "../", path=f"/presidents/{slug}", image=f"/assets/og/{slug}.jpg", kind="profile", jsonld=ld)]
     t.append(f'  <nav class="crumbs"><a href="../presidents.html">Presidents</a> / {e(p["name"])}</nav>\n')
     t.append(f"""  <section class="hero">
     <div class="portrait">{portrait(slug, p["name"])}</div>
@@ -240,7 +287,7 @@ def page(slug, p):
     <div class="grid2">
       <div class="card"><h3>Orders signed each year</h3>{eo_chart}<p class="note">Source: <a href="{e(p["eo_source"][1])}" target="_blank" rel="noopener">{e(p["eo_source"][0])}</a> (full list of every order).</p></div>
       <div><h3 style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin:0 0 8px">Notable orders</h3><div class="list">{eo_items or '<p class="note" style="margin:0">Most orders in this era were routine, such as setting aside public land or exempting jobs from civil service rules.</p>'}</div></div>
-    </div>
+    </div>{eo_full_section(p)}
   </section>
 """)
     # --- pardons
@@ -297,7 +344,10 @@ def page(slug, p):
     return "".join(t)
 
 def index():
-    t = [head("Presidents · Yeas and Nays", "Every U.S. president, with deep dives into the economy, executive orders, pardons, legal records and controversies.", "")]
+    idesc = "All 45 U.S. presidents, Washington to Biden and Trump: the national debt and economy on each one's watch, every executive order, pardons, legal records and controversies, held to the same standard."
+    t = [head("Every U.S. president, held to the same standard | Yeas and Nays", idesc, "", path="/presidents", image="/assets/og/presidents.jpg",
+              jsonld=[{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Every U.S. president", "url": seo.url("/presidents"), "description": idesc},
+                      seo.breadcrumbs(("Yeas and Nays", "/"), ("Presidents", "/presidents"))])]
     t.append("""  <nav class="crumbs">Presidents</nav>
   <section class="hero" style="grid-template-columns:1fr;padding-bottom:6px">
     <div><div class="eyebrow">The presidents</div><h1>Every president, held to the same standard</h1>
