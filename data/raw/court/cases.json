@@ -1,0 +1,2311 @@
+{
+ "marbury": {
+  "name": "WILLIAM MARBURY v. JAMES MADISON, SECRETARY OF STATE OF THE UNITED STATES",
+  "decided": "1803-02-24",
+  "mv": 6,
+  "dv": 0,
+  "direction": "conservative",
+  "author": "John Marshall",
+  "precedent_altered": false,
+  "unconst": "federal-statute",
+  "maj": [
+   "John Marshall",
+   "William Cushing",
+   "William Paterson",
+   "Samuel Chase",
+   "Bushrod Washington",
+   "Alfred Moore"
+  ],
+  "dis": [],
+  "issue": "judicial-power",
+  "file": "1803/1803-005.yaml",
+  "cite": {
+   "us": "5 U.S. 137",
+   "led": "2 L. Ed. 60",
+   "lexis": "1803 U.S. LEXIS 352"
+  }
+ },
+ "mcculloch": {
+  "name": "M'CULLOCH v. THE STATE OF MARYLAND et al.",
+  "decided": "1819-03-06",
+  "mv": 6,
+  "dv": 0,
+  "direction": "liberal",
+  "author": "John Marshall",
+  "precedent_altered": false,
+  "unconst": "state-law",
+  "maj": [
+   "John Marshall",
+   "Bushrod Washington",
+   "William Johnson Jr.",
+   "Henry Brockholst Livingston",
+   "Gabriel Duvall",
+   "Joseph Story"
+  ],
+  "dis": [],
+  "issue": "federalism",
+  "file": "1819/1819-023.yaml",
+  "cite": {
+   "us": "17 U.S. 316",
+   "led": "4 L. Ed. 579",
+   "lexis": "1819 U.S. LEXIS 320"
+  }
+ },
+ "dartmouth": {
+  "name": "THE TRUSTEES OF DARTMOUTH COLLEGE v. WOODWARD",
+  "decided": "1819-02-25",
+  "mv": 5,
+  "dv": 1,
+  "direction": "conservative",
+  "author": "John Marshall",
+  "precedent_altered": false,
+  "unconst": "state-law",
+  "maj": [
+   "John Marshall",
+   "Bushrod Washington",
+   "William Johnson Jr.",
+   "Henry Brockholst Livingston",
+   "Joseph Story"
+  ],
+  "dis": [
+   "Gabriel Duvall"
+  ],
+  "issue": "economic-activity",
+  "file": "1819/1819-021.yaml",
+  "cite": {
+   "us": "17 U.S. 518",
+   "led": "4 L. Ed. 629",
+   "lexis": "1819 U.S. LEXIS 330"
+  }
+ },
+ "gibbons": {
+  "name": "GIBBONS, APPELLANT, v. OGDEN, RESPONDENT",
+  "decided": "1824-03-02",
+  "mv": 5,
+  "dv": 0,
+  "direction": "liberal",
+  "author": "John Marshall",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "John Marshall",
+   "Bushrod Washington",
+   "William Johnson Jr.",
+   "Gabriel Duvall",
+   "Joseph Story"
+  ],
+  "dis": [],
+  "issue": "economic-activity",
+  "file": "1824/1824-012.yaml",
+  "cite": {
+   "us": "22 U.S. 1",
+   "led": "6 L. Ed. 23",
+   "lexis": "1824 U.S. LEXIS 370"
+  }
+ },
+ "worcester": {
+  "name": "SAMUEL A. WORCESTER, PLAINTIFF IN ERROR v. THE STATE OF GEORGIA",
+  "decided": "1832-03-03",
+  "mv": 6,
+  "dv": 0,
+  "direction": "liberal",
+  "author": "John Marshall",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "John Marshall",
+   "Gabriel Duvall",
+   "Joseph Story",
+   "Smith Thompson",
+   "John McLean",
+   "Henry Baldwin"
+  ],
+  "dis": [],
+  "issue": "civil-rights",
+  "file": "1832/1832-046.yaml",
+  "cite": {
+   "us": "31 U.S. 515",
+   "led": "8 L. Ed. 483",
+   "lexis": "1832 U.S. LEXIS 489"
+  }
+ },
+ "barron": {
+  "name": "JOHN BARRON, SURVIVOR OF JOHN CRAIG, FOR THE USE OF LUKE TIERNAN, EXECUTOR OF JOHN CRAIG v. THE MAYOR AND CITY COUNCIL OF BALTIMORE",
+  "decided": "1833-02-16",
+  "mv": 6,
+  "dv": 0,
+  "direction": "liberal",
+  "author": "John Marshall",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "John Marshall",
+   "William Johnson Jr.",
+   "Gabriel Duvall",
+   "Joseph Story",
+   "Smith Thompson",
+   "John McLean"
+  ],
+  "dis": [],
+  "issue": "due-process",
+  "file": "1833/1833-012.yaml",
+  "cite": {
+   "us": "32 U.S. 243",
+   "led": "8 L. Ed. 672",
+   "lexis": "1833 U.S. LEXIS 346"
+  }
+ },
+ "prigg": {
+  "name": "EDWARD PRIGG, PLAINTIFF IN ERROR, v. THE COMMONWEALTH OF PENNSYLVANIA, DEFENDANT IN ERROR",
+  "decided": "1842-03-01",
+  "mv": 8,
+  "dv": 1,
+  "direction": "conservative",
+  "author": "Joseph Story",
+  "precedent_altered": false,
+  "unconst": "state-law",
+  "maj": [
+   "Roger Brooke Taney",
+   "Joseph Story",
+   "Smith Thompson",
+   "Henry Baldwin",
+   "James Moore Wayne",
+   "John Catron",
+   "John McKinley",
+   "Peter Vivian Daniel"
+  ],
+  "dis": [
+   "John McLean"
+  ],
+  "issue": "civil-rights",
+  "file": "1842/1842-021.yaml",
+  "cite": {
+   "us": "41 U.S. 539",
+   "led": "10 L. Ed. 1060",
+   "lexis": "1842 U.S. LEXIS 387"
+  }
+ },
+ "dredscott": {
+  "name": "DRED SCOTT, PLAINTIFF IN ERROR, v. JOHN F. A. SANDFORD",
+  "decided": "1857-03-06",
+  "mv": 7,
+  "dv": 2,
+  "direction": "conservative",
+  "author": "Roger Brooke Taney",
+  "precedent_altered": false,
+  "unconst": "federal-statute",
+  "maj": [
+   "Roger Brooke Taney",
+   "James Moore Wayne",
+   "John Catron",
+   "Peter Vivian Daniel",
+   "Samuel Nelson",
+   "Robert Cooper Grier",
+   "John Archibald Campbell"
+  ],
+  "dis": [
+   "John McLean",
+   "Benjamin Robbins Curtis"
+  ],
+  "issue": "civil-rights",
+  "file": "1856/1856-061.yaml",
+  "cite": {
+   "us": "60 U.S. 393",
+   "led": "15 L. Ed. 691",
+   "lexis": "1856 U.S. LEXIS 472"
+  }
+ },
+ "milligan": {
+  "name": "ex parte MILLIGAN",
+  "decided": "1866-04-03",
+  "mv": 9,
+  "dv": 0,
+  "direction": "liberal",
+  "author": "David Davis",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "Salmon Portland Chase",
+   "James Moore Wayne",
+   "Samuel Nelson",
+   "Robert Cooper Grier",
+   "Nathan Clifford",
+   "Noah Haynes Swayne",
+   "Samuel Freeman Miller",
+   "David Davis",
+   "Stephen Johnson Field"
+  ],
+  "dis": [],
+  "issue": "criminal-procedure",
+  "file": "1865/1865-075.yaml",
+  "cite": {
+   "us": "71 U.S. 2",
+   "led": "18 L. Ed. 281",
+   "lexis": "1866 U.S. LEXIS 861"
+  }
+ },
+ "hepburn": {
+  "name": "HEPBURN v. GRISWOLD",
+  "decided": "1870-02-07",
+  "mv": 4,
+  "dv": 3,
+  "direction": "conservative",
+  "author": "Salmon Portland Chase",
+  "precedent_altered": false,
+  "unconst": "federal-statute",
+  "maj": [
+   "Salmon Portland Chase",
+   "Samuel Nelson",
+   "Nathan Clifford",
+   "Stephen Johnson Field"
+  ],
+  "dis": [
+   "Noah Haynes Swayne",
+   "Samuel Freeman Miller",
+   "David Davis"
+  ],
+  "issue": "economic-activity",
+  "file": "1869/1869-165.yaml",
+  "cite": {
+   "us": "75 U.S. 603",
+   "led": "19 L. Ed. 513",
+   "lexis": "1868 U.S. LEXIS 1136"
+  }
+ },
+ "legaltender": {
+  "name": "LEGAL TENDER CASES (KNOX v. LEE)",
+  "decided": "1871-05-01",
+  "mv": 5,
+  "dv": 4,
+  "direction": "liberal",
+  "author": "William Strong",
+  "precedent_altered": true,
+  "unconst": "none",
+  "maj": [
+   "Noah Haynes Swayne",
+   "Samuel Freeman Miller",
+   "David Davis",
+   "William Strong",
+   "Joseph P. Bradley"
+  ],
+  "dis": [
+   "Salmon Portland Chase",
+   "Samuel Nelson",
+   "Nathan Clifford",
+   "Stephen Johnson Field"
+  ],
+  "issue": "economic-activity",
+  "file": "1870/1870-132.yaml",
+  "cite": {
+   "us": "79 U.S. 457",
+   "led": "20 L. Ed. 287",
+   "lexis": "1870 U.S. LEXIS 1220"
+  }
+ },
+ "slaughterhouse": {
+  "name": "SLAUGHTER-HOUSE CASES.; THE BUTCHERS' BENEVOLENT ASSOCIATION OF NEW ORLEANS v. THE CRESCENT CITY LIVE-STOCK LANDING AND SLAUGHTER-HOUSE COMPANY.",
+  "decided": "1873-04-14",
+  "mv": 5,
+  "dv": 4,
+  "direction": "liberal",
+  "author": "Samuel Freeman Miller",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "Nathan Clifford",
+   "Samuel Freeman Miller",
+   "David Davis",
+   "William Strong",
+   "Ward Hunt"
+  ],
+  "dis": [
+   "Salmon Portland Chase",
+   "Noah Haynes Swayne",
+   "Stephen Johnson Field",
+   "Joseph P. Bradley"
+  ],
+  "issue": "economic-activity",
+  "file": "1872/1872-150.yaml",
+  "cite": {
+   "us": "83 U.S. 36",
+   "led": "21 L. Ed. 394",
+   "lexis": "1872 U.S. LEXIS 1139"
+  }
+ },
+ "cruikshank": {
+  "name": "UNITED STATES v. CRUIKSHANK et al.",
+  "decided": "1876-03-27",
+  "mv": 8,
+  "dv": 1,
+  "direction": "conservative",
+  "author": "Morrison Remick Waite",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "Morrison Remick Waite",
+   "Noah Haynes Swayne",
+   "Samuel Freeman Miller",
+   "David Davis",
+   "Stephen Johnson Field",
+   "William Strong",
+   "Joseph P. Bradley",
+   "Ward Hunt"
+  ],
+  "dis": [
+   "Nathan Clifford"
+  ],
+  "issue": "federalism",
+  "file": "1875/1875-142.yaml",
+  "cite": {
+   "us": "92 U.S. 542",
+   "led": "23 L. Ed. 588",
+   "lexis": "1875 U.S. LEXIS 1794"
+  }
+ },
+ "munn": {
+  "name": "MUNN v. ILLINOIS",
+  "decided": "1877-03-01",
+  "mv": 7,
+  "dv": 2,
+  "direction": "liberal",
+  "author": "Morrison Remick Waite",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "Morrison Remick Waite",
+   "Nathan Clifford",
+   "Noah Haynes Swayne",
+   "Samuel Freeman Miller",
+   "David Davis",
+   "Joseph P. Bradley",
+   "Ward Hunt"
+  ],
+  "dis": [
+   "Stephen Johnson Field",
+   "William Strong"
+  ],
+  "issue": "economic-activity",
+  "file": "1876/1876-120.yaml",
+  "cite": {
+   "us": "94 U.S. 113",
+   "led": "24 L. Ed. 77",
+   "lexis": "1876 U.S. LEXIS 1842"
+  }
+ },
+ "civilrightscases": {
+  "name": "CIVIL RIGHTS CASES: UNITED STATES v. STANLEY",
+  "decided": "1883-10-15",
+  "mv": 8,
+  "dv": 1,
+  "direction": "conservative",
+  "author": "Joseph P. Bradley",
+  "precedent_altered": false,
+  "unconst": "federal-statute",
+  "maj": [
+   "Morrison Remick Waite",
+   "Samuel Freeman Miller",
+   "Stephen Johnson Field",
+   "Joseph P. Bradley",
+   "William Burnham Woods",
+   "Stanley Matthews",
+   "Horace Gray",
+   "Samuel M. Blatchford"
+  ],
+  "dis": [
+   "John Marshall Harlan"
+  ],
+  "issue": "civil-rights",
+  "file": "1883/1883-004.yaml",
+  "cite": {
+   "us": "109 U.S. 3",
+   "sct": "3 S. Ct. 18",
+   "led": "27 L. Ed. 835",
+   "lexis": "1883 U.S. LEXIS 928"
+  }
+ },
+ "yickwo": {
+  "name": "YICK WO v. HOPKINS, SHERIFF",
+  "decided": "1886-05-10",
+  "mv": 9,
+  "dv": 0,
+  "direction": "liberal",
+  "author": "Stanley Matthews",
+  "precedent_altered": false,
+  "unconst": "local-ordinance",
+  "maj": [
+   "Morrison Remick Waite",
+   "Samuel Freeman Miller",
+   "Stephen Johnson Field",
+   "Joseph P. Bradley",
+   "John Marshall Harlan",
+   "William Burnham Woods",
+   "Stanley Matthews",
+   "Horace Gray",
+   "Samuel M. Blatchford"
+  ],
+  "dis": [],
+  "issue": "civil-rights",
+  "file": "1885/1885-269.yaml",
+  "cite": {
+   "us": "118 U.S. 356",
+   "sct": "6 S. Ct. 1064",
+   "led": "30 L. Ed. 220",
+   "lexis": "1886 U.S. LEXIS 1938"
+  }
+ },
+ "ecknight": {
+  "name": "UNITED STATES v. E.C. KNIGHT COMPANY",
+  "decided": "1895-01-21",
+  "mv": 7,
+  "dv": 1,
+  "direction": "conservative",
+  "author": "Melville Weston Fuller",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "Melville Weston Fuller",
+   "Stephen Johnson Field",
+   "Horace Gray",
+   "David Josiah Brewer",
+   "Henry Billings Brown",
+   "George Shiras Jr.",
+   "Edward Douglass White"
+  ],
+  "dis": [
+   "John Marshall Harlan"
+  ],
+  "issue": "economic-activity",
+  "file": "1894/1894-074.yaml",
+  "cite": {
+   "us": "156 U.S. 1",
+   "sct": "15 S. Ct. 249",
+   "led": "39 L. Ed. 325",
+   "lexis": "1895 U.S. LEXIS 2118"
+  }
+ },
+ "pollock": {
+  "name": "POLLOCK v. FARMERS' LOAN AND TRUST COMPANY. (REHEARING)",
+  "decided": "1895-05-20",
+  "mv": 5,
+  "dv": 4,
+  "direction": "conservative",
+  "author": "Melville Weston Fuller",
+  "precedent_altered": true,
+  "unconst": "federal-statute",
+  "maj": [
+   "Melville Weston Fuller",
+   "Stephen Johnson Field",
+   "Horace Gray",
+   "David Josiah Brewer",
+   "George Shiras Jr."
+  ],
+  "dis": [
+   "John Marshall Harlan",
+   "Henry Billings Brown",
+   "Howell Edmunds Jackson",
+   "Edward Douglass White"
+  ],
+  "issue": "federal-taxation",
+  "file": "1894/1894-236.yaml",
+  "cite": {
+   "us": "158 U.S. 601",
+   "sct": "15 S. Ct. 912",
+   "led": "39 L. Ed. 1108",
+   "lexis": "1895 U.S. LEXIS 2280"
+  }
+ },
+ "debs": {
+  "name": "in re DEBS, PETITIONER",
+  "decided": "1895-05-27",
+  "mv": 8,
+  "dv": 0,
+  "direction": "conservative",
+  "author": "David Josiah Brewer",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "Melville Weston Fuller",
+   "Stephen Johnson Field",
+   "John Marshall Harlan",
+   "Horace Gray",
+   "David Josiah Brewer",
+   "Henry Billings Brown",
+   "George Shiras Jr.",
+   "Edward Douglass White"
+  ],
+  "dis": [],
+  "issue": "criminal-procedure",
+  "file": "1894/1894-235.yaml",
+  "cite": {
+   "us": "158 U.S. 564",
+   "sct": "15 S. Ct. 900",
+   "led": "39 L. Ed. 1092",
+   "lexis": "1895 U.S. LEXIS 2279"
+  }
+ },
+ "plessy": {
+  "name": "PLESSY v. FERGUSON",
+  "decided": "1896-05-18",
+  "mv": 7,
+  "dv": 1,
+  "direction": "conservative",
+  "author": "Henry Billings Brown",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "Melville Weston Fuller",
+   "Stephen Johnson Field",
+   "Horace Gray",
+   "Henry Billings Brown",
+   "George Shiras Jr.",
+   "Edward Douglass White",
+   "Rufus Wheeler Peckham"
+  ],
+  "dis": [
+   "John Marshall Harlan"
+  ],
+  "issue": "civil-rights",
+  "file": "1895/1895-271.yaml",
+  "cite": {
+   "us": "163 U.S. 537",
+   "sct": "16 S. Ct. 1138",
+   "led": "41 L. Ed. 256",
+   "lexis": "1896 U.S. LEXIS 3390"
+  }
+ },
+ "wongkimark": {
+  "name": "UNITED STATES v. WONG KIM ARK",
+  "decided": "1898-03-28",
+  "mv": 7,
+  "dv": 2,
+  "direction": "liberal",
+  "author": "Horace Gray",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "Horace Gray",
+   "David Josiah Brewer",
+   "Henry Billings Brown",
+   "George Shiras Jr.",
+   "Edward Douglass White",
+   "Rufus Wheeler Peckham",
+   "Joseph McKenna"
+  ],
+  "dis": [
+   "Melville Weston Fuller",
+   "John Marshall Harlan"
+  ],
+  "issue": "civil-rights",
+  "file": "1897/1897-100.yaml",
+  "cite": {
+   "us": "169 U.S. 649",
+   "sct": "18 S. Ct. 456",
+   "led": "42 L. Ed. 890",
+   "lexis": "1898 U.S. LEXIS 1515"
+  }
+ },
+ "lochner": {
+  "name": "LOCHNER v. NEW YORK",
+  "decided": "1905-04-17",
+  "mv": 5,
+  "dv": 4,
+  "direction": "conservative",
+  "author": "Rufus Wheeler Peckham",
+  "precedent_altered": false,
+  "unconst": "state-law",
+  "maj": [
+   "Melville Weston Fuller",
+   "David Josiah Brewer",
+   "Henry Billings Brown",
+   "Rufus Wheeler Peckham",
+   "Joseph McKenna"
+  ],
+  "dis": [
+   "John Marshall Harlan",
+   "Edward Douglass White",
+   "Oliver Wendell Holmes Jr.",
+   "William Rufus Day"
+  ],
+  "issue": "economic-activity",
+  "file": "1904/1904-096.yaml",
+  "cite": {
+   "us": "198 U.S. 45",
+   "sct": "25 S. Ct. 539",
+   "led": "49 L. Ed. 937",
+   "lexis": "1905 U.S. LEXIS 1153"
+  }
+ },
+ "muller": {
+  "name": "MULLER, PLAINTIFF IN ERROR, v. THE STATE OF OREGON",
+  "decided": "1908-02-24",
+  "mv": 9,
+  "dv": 0,
+  "direction": "conservative",
+  "author": "David Josiah Brewer",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "Melville Weston Fuller",
+   "John Marshall Harlan",
+   "David Josiah Brewer",
+   "Edward Douglass White",
+   "Rufus Wheeler Peckham",
+   "Joseph McKenna",
+   "Oliver Wendell Holmes Jr.",
+   "William Rufus Day",
+   "William Henry Moody"
+  ],
+  "dis": [],
+  "issue": "civil-rights",
+  "file": "1907/1907-083.yaml",
+  "cite": {
+   "us": "208 U.S. 412",
+   "sct": "28 S. Ct. 324",
+   "led": "52 L. Ed. 551",
+   "lexis": "1908 U.S. LEXIS 1452"
+  }
+ },
+ "hammer": {
+  "name": "HAMMER, UNITED STATES ATTORNEY FOR THE WESTERN DISTRICT OF NORTH CAROLINA, v. DAGENHART et al.",
+  "decided": "1918-06-03",
+  "mv": 5,
+  "dv": 4,
+  "direction": "conservative",
+  "author": "William Rufus Day",
+  "precedent_altered": false,
+  "unconst": "federal-statute",
+  "maj": [
+   "Edward Douglass White",
+   "William Rufus Day",
+   "Willis Van Devanter",
+   "Mahlon Pitney",
+   "James Clark McReynolds"
+  ],
+  "dis": [
+   "Joseph McKenna",
+   "Oliver Wendell Holmes Jr.",
+   "Louis Dembitz Brandeis",
+   "John Hessin Clarke"
+  ],
+  "issue": "civil-rights",
+  "file": "1917/1917-137.yaml",
+  "cite": {
+   "us": "247 U.S. 251",
+   "sct": "38 S. Ct. 529",
+   "led": "62 L. Ed. 1101",
+   "lexis": "1918 U.S. LEXIS 1907"
+  }
+ },
+ "schenck": {
+  "name": "SCHENCK v. UNITED STATES",
+  "decided": "1919-03-03",
+  "mv": 9,
+  "dv": 0,
+  "direction": "conservative",
+  "author": "Oliver Wendell Holmes Jr.",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "Edward Douglass White",
+   "Joseph McKenna",
+   "Oliver Wendell Holmes Jr.",
+   "William Rufus Day",
+   "Willis Van Devanter",
+   "Mahlon Pitney",
+   "James Clark McReynolds",
+   "Louis Dembitz Brandeis",
+   "John Hessin Clarke"
+  ],
+  "dis": [],
+  "issue": "first-amendment",
+  "file": "1918/1918-168.yaml",
+  "cite": {
+   "us": "249 U.S. 47",
+   "sct": "39 S. Ct. 247",
+   "led": "63 L. Ed. 470",
+   "lexis": "1919 U.S. LEXIS 2223"
+  }
+ },
+ "adkins": {
+  "name": "ADKINS et al., CONSTITUTING THE MINIMUM WAGE BOARD OF THE DISTRICT OF COLUMBIA, v. CHILDREN'S HOSPITAL OF THE DISTRICT OF COLUMBIA",
+  "decided": "1923-04-09",
+  "mv": 5,
+  "dv": 3,
+  "direction": "conservative",
+  "author": "George Sutherland",
+  "precedent_altered": false,
+  "unconst": "federal-statute",
+  "maj": [
+   "Joseph McKenna",
+   "Willis Van Devanter",
+   "James Clark McReynolds",
+   "George Sutherland",
+   "Pierce Butler"
+  ],
+  "dis": [
+   "William Howard Taft",
+   "Oliver Wendell Holmes Jr.",
+   "Edward Terry Sanford"
+  ],
+  "issue": "civil-rights",
+  "file": "1922/1922-151.yaml",
+  "cite": {
+   "us": "261 U.S. 525",
+   "sct": "43 S. Ct. 394",
+   "led": "67 L. Ed. 785",
+   "lexis": "1923 U.S. LEXIS 2588"
+  }
+ },
+ "buck": {
+  "name": "BUCK v. BELL, SUPERINTENDENT",
+  "decided": "1927-05-02",
+  "mv": 8,
+  "dv": 1,
+  "direction": "conservative",
+  "author": "Oliver Wendell Holmes Jr.",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "William Howard Taft",
+   "Oliver Wendell Holmes Jr.",
+   "Willis Van Devanter",
+   "James Clark McReynolds",
+   "Louis Dembitz Brandeis",
+   "George Sutherland",
+   "Edward Terry Sanford",
+   "Harlan Fiske Stone"
+  ],
+  "dis": [
+   "Pierce Butler"
+  ],
+  "issue": "civil-rights",
+  "file": "1926/1926-061.yaml",
+  "cite": {
+   "us": "274 U.S. 200",
+   "sct": "47 S. Ct. 584",
+   "led": "71 L. Ed. 1000",
+   "lexis": "1927 U.S. LEXIS 20"
+  }
+ },
+ "goldclause": {
+  "name": "NORMAN v. BALTIMORE & OHIO RAILROAD CO.",
+  "decided": "1935-02-18",
+  "mv": 5,
+  "dv": 4,
+  "direction": "liberal",
+  "author": "Charles Evans Hughes",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "Charles Evans Hughes",
+   "Louis Dembitz Brandeis",
+   "Harlan Fiske Stone",
+   "Owen Josephus Roberts",
+   "Benjamin Nathan Cardozo"
+  ],
+  "dis": [
+   "Willis Van Devanter",
+   "James Clark McReynolds",
+   "George Sutherland",
+   "Pierce Butler"
+  ],
+  "issue": "economic-activity",
+  "file": "1934/1934-079.yaml",
+  "cite": {
+   "us": "294 U.S. 240",
+   "sct": "55 S. Ct. 407",
+   "led": "79 L. Ed. 885",
+   "lexis": "1935 U.S. LEXIS 257"
+  }
+ },
+ "schechter": {
+  "name": "A. L. A. SCHECHTER POULTRY CORP. et al. v. UNITED STATES",
+  "decided": "1935-05-27",
+  "mv": 9,
+  "dv": 0,
+  "direction": "conservative",
+  "author": "Charles Evans Hughes",
+  "precedent_altered": false,
+  "unconst": "federal-statute",
+  "maj": [
+   "Charles Evans Hughes",
+   "Willis Van Devanter",
+   "James Clark McReynolds",
+   "Louis Dembitz Brandeis",
+   "George Sutherland",
+   "Pierce Butler",
+   "Harlan Fiske Stone",
+   "Owen Josephus Roberts",
+   "Benjamin Nathan Cardozo"
+  ],
+  "dis": [],
+  "issue": "economic-activity",
+  "file": "1934/1934-052.yaml",
+  "cite": {
+   "us": "295 U.S. 495",
+   "sct": "55 S. Ct. 837",
+   "led": "79 L. Ed. 1570",
+   "lexis": "1935 U.S. LEXIS 1088"
+  }
+ },
+ "butler": {
+  "name": "UNITED STATES v. BUTLER et al., RECEIVERS OF HOOSAC MILLS CORP.",
+  "decided": "1936-01-06",
+  "mv": 6,
+  "dv": 3,
+  "direction": "conservative",
+  "author": "Owen Josephus Roberts",
+  "precedent_altered": false,
+  "unconst": "federal-statute",
+  "maj": [
+   "Charles Evans Hughes",
+   "Willis Van Devanter",
+   "James Clark McReynolds",
+   "George Sutherland",
+   "Pierce Butler",
+   "Owen Josephus Roberts"
+  ],
+  "dis": [
+   "Louis Dembitz Brandeis",
+   "Harlan Fiske Stone",
+   "Benjamin Nathan Cardozo"
+  ],
+  "issue": "federal-taxation",
+  "file": "1935/1935-132.yaml",
+  "cite": {
+   "us": "297 U.S. 1",
+   "sct": "56 S. Ct. 312",
+   "led": "80 L. Ed. 477",
+   "lexis": "1936 U.S. LEXIS 946"
+  }
+ },
+ "westcoast": {
+  "name": "WEST COAST HOTEL CO. v. PARRISH et al.",
+  "decided": "1937-03-29",
+  "mv": 5,
+  "dv": 4,
+  "direction": "liberal",
+  "author": "Charles Evans Hughes",
+  "precedent_altered": true,
+  "unconst": "none",
+  "maj": [
+   "Charles Evans Hughes",
+   "Louis Dembitz Brandeis",
+   "Harlan Fiske Stone",
+   "Owen Josephus Roberts",
+   "Benjamin Nathan Cardozo"
+  ],
+  "dis": [
+   "Willis Van Devanter",
+   "James Clark McReynolds",
+   "George Sutherland",
+   "Pierce Butler"
+  ],
+  "issue": "civil-rights",
+  "file": "1936/1936-050.yaml",
+  "cite": {
+   "us": "300 U.S. 379",
+   "sct": "57 S. Ct. 578",
+   "led": "81 L. Ed. 703",
+   "lexis": "1937 U.S. LEXIS 1119"
+  }
+ },
+ "helvering": {
+  "name": "HELVERING, COMMISSIONER OF INTERNAL REVENUE, et al. v. DAVIS",
+  "decided": "1937-05-24",
+  "mv": 7,
+  "dv": 2,
+  "direction": "liberal",
+  "author": "Benjamin Nathan Cardozo",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "Charles Evans Hughes",
+   "Willis Van Devanter",
+   "Louis Dembitz Brandeis",
+   "George Sutherland",
+   "Harlan Fiske Stone",
+   "Owen Josephus Roberts",
+   "Benjamin Nathan Cardozo"
+  ],
+  "dis": [
+   "James Clark McReynolds",
+   "Pierce Butler"
+  ],
+  "issue": "federal-taxation",
+  "file": "1936/1936-103.yaml",
+  "cite": {
+   "us": "301 U.S. 619",
+   "sct": "57 S. Ct. 904",
+   "led": "81 L. Ed. 1307",
+   "lexis": "1937 U.S. LEXIS 1200"
+  }
+ },
+ "darby": {
+  "name": "UNITED STATES v. DARBY",
+  "decided": "1941-02-03",
+  "mv": 8,
+  "dv": 0,
+  "direction": "liberal",
+  "author": "Harlan Fiske Stone",
+  "precedent_altered": true,
+  "unconst": "none",
+  "maj": [
+   "Charles Evans Hughes",
+   "Harlan Fiske Stone",
+   "Owen Josephus Roberts",
+   "Hugo L. Black",
+   "Stanley F. Reed",
+   "Felix Frankfurter",
+   "William O. Douglas",
+   "Frank Murphy"
+  ],
+  "dis": [],
+  "issue": "unions",
+  "file": "1940/1940-092.yaml",
+  "cite": {
+   "us": "312 U.S. 100",
+   "sct": "61 S. Ct. 451",
+   "led": "85 L. Ed. 609",
+   "lexis": "1941 U.S. LEXIS 1222"
+  }
+ },
+ "wickard": {
+  "name": "WICKARD, SECRETARY OF AGRICULTURE, et al. v. FILBURN",
+  "decided": "1942-11-09",
+  "mv": 8,
+  "dv": 0,
+  "direction": "liberal",
+  "author": "Robert H. Jackson",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "Harlan Fiske Stone",
+   "Owen Josephus Roberts",
+   "Hugo L. Black",
+   "Stanley F. Reed",
+   "Felix Frankfurter",
+   "William O. Douglas",
+   "Frank Murphy",
+   "Robert H. Jackson"
+  ],
+  "dis": [],
+  "issue": "economic-activity",
+  "file": "1942/1942-005.yaml",
+  "cite": {
+   "us": "317 U.S. 111",
+   "sct": "63 S. Ct. 82",
+   "led": "87 L. Ed. 122",
+   "lexis": "1942 U.S. LEXIS 1046"
+  }
+ },
+ "korematsu": {
+  "name": "KOREMATSU v. UNITED STATES",
+  "decided": "1944-12-18",
+  "mv": 6,
+  "dv": 3,
+  "direction": "conservative",
+  "author": "Hugo L. Black",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "Harlan Fiske Stone",
+   "Hugo L. Black",
+   "Stanley F. Reed",
+   "Felix Frankfurter",
+   "William O. Douglas",
+   "Wiley B. Rutledge"
+  ],
+  "dis": [
+   "Owen Josephus Roberts",
+   "Frank Murphy",
+   "Robert H. Jackson"
+  ],
+  "issue": "civil-rights",
+  "file": "1944/1944-018.yaml",
+  "cite": {
+   "us": "323 U.S. 214",
+   "sct": "65 S. Ct. 193",
+   "led": "89 L. Ed. 194",
+   "lexis": "1944 U.S. LEXIS 1341"
+  }
+ },
+ "youngstown": {
+  "name": "YOUNGSTOWN SHEET & TUBE CO. ET AL. v. SAWYER",
+  "decided": "1952-06-02",
+  "mv": 6,
+  "dv": 3,
+  "direction": "unspecifiable",
+  "author": "Hugo L. Black",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "Tom C. Clark",
+   "Harold H. Burton",
+   "Robert H. Jackson",
+   "William O. Douglas",
+   "Felix Frankfurter",
+   "Hugo L. Black"
+  ],
+  "dis": [
+   "Sherman Minton",
+   "Stanley F. Reed",
+   "Fred M. Vinson"
+  ],
+  "issue": "miscellaneous",
+  "file": "1951/1951-088.yaml",
+  "cite": {
+   "us": "343 U.S. 579",
+   "sct": "72 S. Ct. 863",
+   "led": "96 L. Ed. 2d 1153",
+   "lexis": "1952 U.S. LEXIS 2625"
+  }
+ },
+ "brown": {
+  "name": "BROWN et al. v. BOARD OF EDUCATION OF TOPEKA et al.",
+  "decided": "1954-05-17",
+  "mv": 9,
+  "dv": 0,
+  "direction": "liberal",
+  "author": "Earl Warren",
+  "precedent_altered": true,
+  "unconst": "state-law",
+  "maj": [
+   "Hugo L. Black",
+   "William O. Douglas",
+   "Earl Warren",
+   "Tom C. Clark",
+   "Felix Frankfurter",
+   "Harold H. Burton",
+   "Stanley F. Reed",
+   "Sherman Minton",
+   "Robert H. Jackson"
+  ],
+  "dis": [],
+  "issue": "civil-rights",
+  "file": "1953/1953-069.yaml",
+  "cite": {
+   "us": "347 U.S. 483",
+   "sct": "74 S. Ct. 686",
+   "led": "98 L. Ed. 2d 873",
+   "lexis": "1954 U.S. LEXIS 2094"
+  }
+ },
+ "mapp": {
+  "name": "MAPP v. OHIO",
+  "decided": "1961-06-19",
+  "mv": 6,
+  "dv": 3,
+  "direction": "liberal",
+  "author": "Tom C. Clark",
+  "precedent_altered": true,
+  "unconst": "none",
+  "maj": [
+   "Hugo L. Black",
+   "William O. Douglas",
+   "Potter Stewart",
+   "William J. Brennan, Jr.",
+   "Earl Warren",
+   "Tom C. Clark"
+  ],
+  "dis": [
+   "John Marshall Harlan II",
+   "Felix Frankfurter",
+   "Charles E. Whittaker"
+  ],
+  "issue": "criminal-procedure",
+  "file": "1960/1960-133.yaml",
+  "cite": {
+   "us": "367 U.S. 643",
+   "sct": "81 S. Ct. 1684",
+   "led": "6 L. Ed. 2d 1081",
+   "lexis": "1961 U.S. LEXIS 812"
+  }
+ },
+ "baker": {
+  "name": "BAKER et al. v. CARR et al.",
+  "decided": "1962-03-26",
+  "mv": 6,
+  "dv": 2,
+  "direction": "liberal",
+  "author": "William J. Brennan, Jr.",
+  "precedent_altered": true,
+  "unconst": "none",
+  "maj": [
+   "Hugo L. Black",
+   "William O. Douglas",
+   "Potter Stewart",
+   "William J. Brennan, Jr.",
+   "Earl Warren",
+   "Tom C. Clark"
+  ],
+  "dis": [
+   "John Marshall Harlan II",
+   "Felix Frankfurter"
+  ],
+  "issue": "civil-rights",
+  "file": "1961/1961-051.yaml",
+  "cite": {
+   "us": "369 U.S. 186",
+   "sct": "82 S. Ct. 691",
+   "led": "7 L. Ed. 2d 663",
+   "lexis": "1962 U.S. LEXIS 1567"
+  }
+ },
+ "engel": {
+  "name": "ENGEL et al. v. VITALE et al.",
+  "decided": "1962-06-25",
+  "mv": 6,
+  "dv": 1,
+  "direction": "liberal",
+  "author": "Hugo L. Black",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "John Marshall Harlan II",
+   "Hugo L. Black",
+   "William O. Douglas",
+   "William J. Brennan, Jr.",
+   "Earl Warren",
+   "Tom C. Clark"
+  ],
+  "dis": [
+   "Potter Stewart"
+  ],
+  "issue": "first-amendment",
+  "file": "1961/1961-105.yaml",
+  "cite": {
+   "us": "370 U.S. 421",
+   "sct": "82 S. Ct. 1261",
+   "led": "8 L. Ed. 2d 601",
+   "lexis": "1962 U.S. LEXIS 847"
+  }
+ },
+ "gideon": {
+  "name": "GIDEON v. WAINWRIGHT, CORRECTIONS DIRECTOR",
+  "decided": "1963-03-18",
+  "mv": 9,
+  "dv": 0,
+  "direction": "liberal",
+  "author": "Hugo L. Black",
+  "precedent_altered": true,
+  "unconst": "state-law",
+  "maj": [
+   "John Marshall Harlan II",
+   "Hugo L. Black",
+   "William O. Douglas",
+   "Potter Stewart",
+   "William J. Brennan, Jr.",
+   "Byron R. White",
+   "Earl Warren",
+   "Tom C. Clark",
+   "Arthur J. Goldberg"
+  ],
+  "dis": [],
+  "issue": "criminal-procedure",
+  "file": "1962/1962-058.yaml",
+  "cite": {
+   "us": "372 U.S. 335",
+   "sct": "83 S. Ct. 792",
+   "led": "9 L. Ed. 2d 799",
+   "lexis": "1963 U.S. LEXIS 1942"
+  }
+ },
+ "nytsullivan": {
+  "name": "NEW YORK TIMES CO. v. SULLIVAN",
+  "decided": "1964-03-09",
+  "mv": 9,
+  "dv": 0,
+  "direction": "liberal",
+  "author": "William J. Brennan, Jr.",
+  "precedent_altered": false,
+  "unconst": "state-law",
+  "maj": [
+   "John Marshall Harlan II",
+   "Hugo L. Black",
+   "William O. Douglas",
+   "Potter Stewart",
+   "William J. Brennan, Jr.",
+   "Byron R. White",
+   "Earl Warren",
+   "Tom C. Clark",
+   "Arthur J. Goldberg"
+  ],
+  "dis": [],
+  "issue": "first-amendment",
+  "file": "1963/1963-067.yaml",
+  "cite": {
+   "us": "376 U.S. 254",
+   "sct": "84 S. Ct. 710",
+   "led": "11 L. Ed. 2d 686",
+   "lexis": "1964 U.S. LEXIS 1655"
+  }
+ },
+ "heartofatlanta": {
+  "name": "HEART OF ATLANTA MOTEL, INC. v. UNITED STATES et al.",
+  "decided": "1964-12-14",
+  "mv": 9,
+  "dv": 0,
+  "direction": "liberal",
+  "author": "Tom C. Clark",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "John Marshall Harlan II",
+   "Hugo L. Black",
+   "William O. Douglas",
+   "Potter Stewart",
+   "William J. Brennan, Jr.",
+   "Byron R. White",
+   "Earl Warren",
+   "Tom C. Clark",
+   "Arthur J. Goldberg"
+  ],
+  "dis": [],
+  "issue": "civil-rights",
+  "file": "1964/1964-017.yaml",
+  "cite": {
+   "us": "379 U.S. 241",
+   "sct": "85 S. Ct. 348",
+   "led": "13 L. Ed. 2d 258",
+   "lexis": "1964 U.S. LEXIS 2187"
+  }
+ },
+ "griswold": {
+  "name": "GRISWOLD et al. v. CONNECTICUT",
+  "decided": "1965-06-07",
+  "mv": 7,
+  "dv": 2,
+  "direction": "liberal",
+  "author": "William O. Douglas",
+  "precedent_altered": false,
+  "unconst": "state-law",
+  "maj": [
+   "John Marshall Harlan II",
+   "William O. Douglas",
+   "William J. Brennan, Jr.",
+   "Byron R. White",
+   "Earl Warren",
+   "Tom C. Clark",
+   "Arthur J. Goldberg"
+  ],
+  "dis": [
+   "Hugo L. Black",
+   "Potter Stewart"
+  ],
+  "issue": "privacy",
+  "file": "1964/1964-121.yaml",
+  "cite": {
+   "us": "381 U.S. 479",
+   "sct": "85 S. Ct. 1678",
+   "led": "14 L. Ed. 2d 510",
+   "lexis": "1965 U.S. LEXIS 2282"
+  }
+ },
+ "miranda": {
+  "name": "MIRANDA v. ARIZONA",
+  "decided": "1966-06-13",
+  "mv": 5,
+  "dv": 4,
+  "direction": "liberal",
+  "author": "Earl Warren",
+  "precedent_altered": true,
+  "unconst": "none",
+  "maj": [
+   "Hugo L. Black",
+   "William O. Douglas",
+   "William J. Brennan, Jr.",
+   "Earl Warren",
+   "Abe Fortas"
+  ],
+  "dis": [
+   "John Marshall Harlan II",
+   "Potter Stewart",
+   "Byron R. White",
+   "Tom C. Clark"
+  ],
+  "issue": "criminal-procedure",
+  "file": "1965/1965-122.yaml",
+  "cite": {
+   "us": "384 U.S. 436",
+   "sct": "86 S. Ct. 1602",
+   "led": "16 L. Ed. 2d 694",
+   "lexis": "1966 U.S. LEXIS 2817"
+  }
+ },
+ "loving": {
+  "name": "LOVING et ux. v. VIRGINIA",
+  "decided": "1967-06-12",
+  "mv": 9,
+  "dv": 0,
+  "direction": "liberal",
+  "author": "Earl Warren",
+  "precedent_altered": false,
+  "unconst": "state-law",
+  "maj": [
+   "John Marshall Harlan II",
+   "Hugo L. Black",
+   "William O. Douglas",
+   "Potter Stewart",
+   "William J. Brennan, Jr.",
+   "Byron R. White",
+   "Earl Warren",
+   "Tom C. Clark",
+   "Abe Fortas"
+  ],
+  "dis": [],
+  "issue": "civil-rights",
+  "file": "1966/1966-119.yaml",
+  "cite": {
+   "us": "388 U.S. 1",
+   "sct": "87 S. Ct. 1817",
+   "led": "18 L. Ed. 2d 1010",
+   "lexis": "1967 U.S. LEXIS 1082"
+  }
+ },
+ "tinker": {
+  "name": "TINKER et al. v. DES MOINES INDEPENDENT COMMUNITY SCHOOL DISTRICT et al.",
+  "decided": "1969-02-24",
+  "mv": 7,
+  "dv": 2,
+  "direction": "liberal",
+  "author": "Abe Fortas",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "William O. Douglas",
+   "Potter Stewart",
+   "Thurgood Marshall",
+   "William J. Brennan, Jr.",
+   "Byron R. White",
+   "Earl Warren",
+   "Abe Fortas"
+  ],
+  "dis": [
+   "John Marshall Harlan II",
+   "Hugo L. Black"
+  ],
+  "issue": "first-amendment",
+  "file": "1968/1968-043.yaml",
+  "cite": {
+   "us": "393 U.S. 503",
+   "sct": "89 S. Ct. 733",
+   "led": "21 L. Ed. 2d 731",
+   "lexis": "1969 U.S. LEXIS 2443"
+  }
+ },
+ "brandenburg": {
+  "name": "BRANDENBURG v. OHIO",
+  "decided": "1969-06-09",
+  "mv": 8,
+  "dv": 0,
+  "direction": "liberal",
+  "author": null,
+  "precedent_altered": true,
+  "unconst": "state-law",
+  "maj": [
+   "John Marshall Harlan II",
+   "Hugo L. Black",
+   "William O. Douglas",
+   "Potter Stewart",
+   "Thurgood Marshall",
+   "William J. Brennan, Jr.",
+   "Byron R. White",
+   "Earl Warren"
+  ],
+  "dis": [],
+  "issue": "first-amendment",
+  "file": "1968/1968-124.yaml",
+  "cite": {
+   "us": "395 U.S. 444",
+   "sct": "89 S. Ct. 1827",
+   "led": "23 L. Ed. 2d 430",
+   "lexis": "1969 U.S. LEXIS 1367"
+  }
+ },
+ "pentagonpapers": {
+  "name": "NEW YORK TIMES CO. v. UNITED STATES",
+  "decided": "1971-06-30",
+  "mv": 6,
+  "dv": 3,
+  "direction": "liberal",
+  "author": null,
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "Hugo L. Black",
+   "William O. Douglas",
+   "Potter Stewart",
+   "Thurgood Marshall",
+   "William J. Brennan, Jr.",
+   "Byron R. White"
+  ],
+  "dis": [
+   "John Marshall Harlan II",
+   "Warren E. Burger",
+   "Harry A. Blackmun"
+  ],
+  "issue": "first-amendment",
+  "file": "1970/1970-145.yaml",
+  "cite": {
+   "us": "403 U.S. 713",
+   "sct": "91 S. Ct. 2140",
+   "led": "29 L. Ed. 2d 822",
+   "lexis": "1971 U.S. LEXIS 100"
+  }
+ },
+ "furman": {
+  "name": "FURMAN v. GEORGIA",
+  "decided": "1972-06-29",
+  "mv": 5,
+  "dv": 4,
+  "direction": "liberal",
+  "author": null,
+  "precedent_altered": false,
+  "unconst": "state-law",
+  "maj": [
+   "William O. Douglas",
+   "Potter Stewart",
+   "Thurgood Marshall",
+   "William J. Brennan, Jr.",
+   "Byron R. White"
+  ],
+  "dis": [
+   "Warren E. Burger",
+   "Harry A. Blackmun",
+   "Lewis F. Powell, Jr.",
+   "William H. Rehnquist"
+  ],
+  "issue": "criminal-procedure",
+  "file": "1971/1971-170.yaml",
+  "cite": {
+   "us": "408 U.S. 238",
+   "sct": "92 S. Ct. 2726",
+   "led": "33 L. Ed. 2d 346",
+   "lexis": "1972 U.S. LEXIS 169"
+  }
+ },
+ "roe": {
+  "name": "ROE et al. v. WADE, DISTRICT ATTORNEY OF DALLAS COUNTY",
+  "decided": "1973-01-22",
+  "mv": 7,
+  "dv": 2,
+  "direction": "liberal",
+  "author": "Harry A. Blackmun",
+  "precedent_altered": false,
+  "unconst": "state-law",
+  "maj": [
+   "William O. Douglas",
+   "Potter Stewart",
+   "Thurgood Marshall",
+   "William J. Brennan, Jr.",
+   "Warren E. Burger",
+   "Harry A. Blackmun",
+   "Lewis F. Powell, Jr."
+  ],
+  "dis": [
+   "Byron R. White",
+   "William H. Rehnquist"
+  ],
+  "issue": "privacy",
+  "file": "1972/1972-048.yaml",
+  "cite": {
+   "us": "410 U.S. 113",
+   "sct": "93 S. Ct. 705",
+   "led": "35 L. Ed. 2d 147",
+   "lexis": "1973 U.S. LEXIS 159"
+  }
+ },
+ "usnixon": {
+  "name": "UNITED STATES v. NIXON, PRESIDENT OF THE UNITED STATES, et al.",
+  "decided": "1974-07-24",
+  "mv": 8,
+  "dv": 0,
+  "direction": "conservative",
+  "author": "Warren E. Burger",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "William O. Douglas",
+   "Potter Stewart",
+   "Thurgood Marshall",
+   "William J. Brennan, Jr.",
+   "Byron R. White",
+   "Warren E. Burger",
+   "Harry A. Blackmun",
+   "Lewis F. Powell, Jr."
+  ],
+  "dis": [],
+  "issue": "criminal-procedure",
+  "file": "1973/1973-172.yaml",
+  "cite": {
+   "us": "418 U.S. 683",
+   "sct": "94 S. Ct. 3090",
+   "led": "41 L. Ed. 2d 1039",
+   "lexis": "1974 U.S. LEXIS 93"
+  }
+ },
+ "buckley": {
+  "name": "BUCKLEY et al. v. VALEO, SECRETARY OF THE UNITED STATES SENATE, et al.",
+  "decided": "1976-01-30",
+  "mv": 7,
+  "dv": 1,
+  "direction": "liberal",
+  "author": null,
+  "precedent_altered": false,
+  "unconst": "federal-statute",
+  "maj": [
+   "Potter Stewart",
+   "Thurgood Marshall",
+   "William J. Brennan, Jr.",
+   "Byron R. White",
+   "Harry A. Blackmun",
+   "Lewis F. Powell, Jr.",
+   "William H. Rehnquist"
+  ],
+  "dis": [
+   "Warren E. Burger"
+  ],
+  "issue": "first-amendment",
+  "file": "1975/1975-033.yaml",
+  "cite": {
+   "us": "424 U.S. 1",
+   "sct": "96 S. Ct. 612",
+   "led": "46 L. Ed. 2d 659",
+   "lexis": "1976 U.S. LEXIS 16"
+  }
+ },
+ "gregg": {
+  "name": "GREGG v. GEORGIA",
+  "decided": "1976-07-02",
+  "mv": 7,
+  "dv": 2,
+  "direction": "conservative",
+  "author": "Potter Stewart",
+  "precedent_altered": true,
+  "unconst": "none",
+  "maj": [
+   "Potter Stewart",
+   "Byron R. White",
+   "Warren E. Burger",
+   "Harry A. Blackmun",
+   "Lewis F. Powell, Jr.",
+   "William H. Rehnquist",
+   "John Paul Stevens"
+  ],
+  "dis": [
+   "Thurgood Marshall",
+   "William J. Brennan, Jr."
+  ],
+  "issue": "criminal-procedure",
+  "file": "1975/1975-173.yaml",
+  "cite": {
+   "us": "428 U.S. 153",
+   "sct": "96 S. Ct. 2909",
+   "led": "49 L. Ed. 2d 859",
+   "lexis": "1976 U.S. LEXIS 82"
+  }
+ },
+ "bakke": {
+  "name": "REGENTS OF THE UNIVERSITY OF CALIFORNIA v. BAKKE",
+  "decided": "1978-06-26",
+  "mv": 5,
+  "dv": 4,
+  "direction": "conservative",
+  "author": "Lewis F. Powell, Jr.",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "Warren E. Burger",
+   "Potter Stewart",
+   "Lewis F. Powell, Jr.",
+   "William H. Rehnquist",
+   "John Paul Stevens"
+  ],
+  "dis": [
+   "William J. Brennan, Jr.",
+   "Byron R. White",
+   "Thurgood Marshall",
+   "Harry A. Blackmun"
+  ],
+  "issue": "civil-rights",
+  "file": "1977/1977-147.yaml",
+  "cite": {
+   "us": "438 U.S. 265",
+   "sct": "98 S. Ct. 2733",
+   "led": "57 L. Ed. 2d 750",
+   "lexis": "1978 U.S. LEXIS 5"
+  }
+ },
+ "chevron": {
+  "name": "CHEVRON U. S. A. INC. v. NATURAL RESOURCES DEFENSE COUNCIL, INC., et al.",
+  "decided": "1984-06-25",
+  "mv": 6,
+  "dv": 0,
+  "direction": "conservative",
+  "author": "John Paul Stevens",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "William J. Brennan, Jr.",
+   "Byron R. White",
+   "Warren E. Burger",
+   "Harry A. Blackmun",
+   "Lewis F. Powell, Jr.",
+   "John Paul Stevens"
+  ],
+  "dis": [],
+  "issue": "economic-activity",
+  "file": "1983/1983-134.yaml",
+  "cite": {
+   "us": "467 U.S. 837",
+   "sct": "104 S. Ct. 2778",
+   "led": "81 L. Ed. 2d 694",
+   "lexis": "1984 U.S. LEXIS 118"
+  }
+ },
+ "bowsher": {
+  "name": "BOWSHER, COMPTROLLER GENERAL OF THE UNITED STATES v. SYNAR, MEMBER OF CONGRESS, et al.",
+  "decided": "1986-07-07",
+  "mv": 7,
+  "dv": 2,
+  "direction": "unspecifiable",
+  "author": "Warren E. Burger",
+  "precedent_altered": false,
+  "unconst": "federal-statute",
+  "maj": [
+   "Thurgood Marshall",
+   "William J. Brennan, Jr.",
+   "Warren E. Burger",
+   "Lewis F. Powell, Jr.",
+   "William H. Rehnquist",
+   "John Paul Stevens",
+   "Sandra Day O'Connor"
+  ],
+  "dis": [
+   "Byron R. White",
+   "Harry A. Blackmun"
+  ],
+  "issue": "miscellaneous",
+  "file": "1985/1985-162.yaml",
+  "cite": {
+   "us": "478 U.S. 714",
+   "sct": "106 S. Ct. 3181",
+   "led": "92 L. Ed. 2d 583",
+   "lexis": "1986 U.S. LEXIS 141"
+  }
+ },
+ "texasjohnson": {
+  "name": "TEXAS v. JOHNSON",
+  "decided": "1989-06-21",
+  "mv": 5,
+  "dv": 4,
+  "direction": "liberal",
+  "author": "William J. Brennan, Jr.",
+  "precedent_altered": false,
+  "unconst": "state-law",
+  "maj": [
+   "Thurgood Marshall",
+   "William J. Brennan, Jr.",
+   "Harry A. Blackmun",
+   "Antonin Scalia",
+   "Anthony M. Kennedy"
+  ],
+  "dis": [
+   "Byron R. White",
+   "William H. Rehnquist",
+   "John Paul Stevens",
+   "Sandra Day O'Connor"
+  ],
+  "issue": "first-amendment",
+  "file": "1988/1988-124.yaml",
+  "cite": {
+   "us": "491 U.S. 397",
+   "sct": "109 S. Ct. 2533",
+   "led": "105 L. Ed. 2d 342",
+   "lexis": "1989 U.S. LEXIS 3115"
+  }
+ },
+ "casey": {
+  "name": "PLANNED PARENTHOOD OF SOUTHEASTERN PENNSYLVANIA, et al. v. ROBERT P. CASEY, et al., ETC.",
+  "decided": "1992-06-29",
+  "mv": 5,
+  "dv": 4,
+  "direction": "liberal",
+  "author": null,
+  "precedent_altered": true,
+  "unconst": "state-law",
+  "maj": [
+   "Harry A. Blackmun",
+   "John Paul Stevens",
+   "Sandra Day O'Connor",
+   "Anthony M. Kennedy",
+   "David H. Souter"
+  ],
+  "dis": [
+   "William H. Rehnquist",
+   "Byron R. White",
+   "Antonin Scalia",
+   "Clarence Thomas"
+  ],
+  "issue": "privacy",
+  "file": "1991/1991-117.yaml",
+  "cite": {
+   "us": "505 U.S. 833",
+   "sct": "112 S. Ct. 2791",
+   "led": "120 L. Ed. 2d 674",
+   "lexis": "1992 U.S. LEXIS 4751"
+  }
+ },
+ "lopez": {
+  "name": "UNITED STATES v. ALFONSO LOPEZ, JR.",
+  "decided": "1995-04-26",
+  "mv": 5,
+  "dv": 4,
+  "direction": "conservative",
+  "author": "William H. Rehnquist",
+  "precedent_altered": false,
+  "unconst": "federal-statute",
+  "maj": [
+   "William H. Rehnquist",
+   "Sandra Day O'Connor",
+   "Antonin Scalia",
+   "Anthony M. Kennedy",
+   "Clarence Thomas"
+  ],
+  "dis": [
+   "John Paul Stevens",
+   "David H. Souter",
+   "Ruth Bader Ginsburg",
+   "Stephen G. Breyer"
+  ],
+  "issue": "federalism",
+  "file": "1994/1994-051.yaml",
+  "cite": {
+   "us": "514 U.S. 549",
+   "sct": "115 S. Ct. 1624",
+   "led": "131 L. Ed. 2d 626",
+   "lexis": "1995 U.S. LEXIS 3039"
+  }
+ },
+ "clintonny": {
+  "name": "WILLIAM J. CLINTON, PRESIDENT OF THE UNITED STATES, et al. v. CITY OF NEW YORK, et al.",
+  "decided": "1998-06-25",
+  "mv": 6,
+  "dv": 3,
+  "direction": "unspecifiable",
+  "author": "John Paul Stevens",
+  "precedent_altered": false,
+  "unconst": "federal-statute",
+  "maj": [
+   "William H. Rehnquist",
+   "John Paul Stevens",
+   "Anthony M. Kennedy",
+   "David H. Souter",
+   "Clarence Thomas",
+   "Ruth Bader Ginsburg"
+  ],
+  "dis": [
+   "Sandra Day O'Connor",
+   "Antonin Scalia",
+   "Stephen G. Breyer"
+  ],
+  "issue": "miscellaneous",
+  "file": "1997/1997-095.yaml",
+  "cite": {
+   "us": "524 U.S. 417",
+   "sct": "118 S. Ct. 2091",
+   "led": "141 L. Ed. 2d 393",
+   "lexis": "1998 U.S. LEXIS 4215"
+  }
+ },
+ "bushgore": {
+  "name": "GEORGE W. BUSH AND RICHARD CHENEY v. ALBERT GORE, JR., et al.",
+  "decided": "2000-12-12",
+  "mv": 5,
+  "dv": 4,
+  "direction": "conservative",
+  "author": null,
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "William H. Rehnquist",
+   "Sandra Day O'Connor",
+   "Antonin Scalia",
+   "Anthony M. Kennedy",
+   "Clarence Thomas"
+  ],
+  "dis": [
+   "John Paul Stevens",
+   "David H. Souter",
+   "Ruth Bader Ginsburg",
+   "Stephen G. Breyer"
+  ],
+  "issue": "civil-rights",
+  "file": "2000/2000-009.yaml",
+  "cite": {
+   "us": "531 U.S. 98",
+   "sct": "121 S. Ct. 525",
+   "led": "148 L. Ed. 2d 388",
+   "lexis": "2000 U.S. LEXIS 8430"
+  }
+ },
+ "lawrence": {
+  "name": "JOHN GEDDES LAWRENCE AND TYRON GARNER v. TEXAS",
+  "decided": "2003-06-26",
+  "mv": 6,
+  "dv": 3,
+  "direction": "liberal",
+  "author": "Anthony M. Kennedy",
+  "precedent_altered": true,
+  "unconst": "state-law",
+  "maj": [
+   "John Paul Stevens",
+   "Sandra Day O'Connor",
+   "Anthony M. Kennedy",
+   "David H. Souter",
+   "Ruth Bader Ginsburg",
+   "Stephen G. Breyer"
+  ],
+  "dis": [
+   "William H. Rehnquist",
+   "Antonin Scalia",
+   "Clarence Thomas"
+  ],
+  "issue": "privacy",
+  "file": "2002/2002-083.yaml",
+  "cite": {
+   "us": "539 U.S. 558",
+   "sct": "123 S. Ct. 2472",
+   "led": "156 L. Ed. 2d 508",
+   "lexis": "2003 U.S. LEXIS 5013"
+  }
+ },
+ "kelo": {
+  "name": "SUSETTE KELO, et al. v. CITY OF NEW LONDON, CONNECTICUT, et al.",
+  "decided": "2005-06-23",
+  "mv": 5,
+  "dv": 4,
+  "direction": "liberal",
+  "author": "John Paul Stevens",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "John Paul Stevens",
+   "Anthony M. Kennedy",
+   "David H. Souter",
+   "Ruth Bader Ginsburg",
+   "Stephen G. Breyer"
+  ],
+  "dis": [
+   "William H. Rehnquist",
+   "Sandra Day O'Connor",
+   "Antonin Scalia",
+   "Clarence Thomas"
+  ],
+  "issue": "due-process",
+  "file": "2004/2004-069.yaml",
+  "cite": {
+   "us": "545 U.S. 469",
+   "sct": "125 S. Ct. 2655",
+   "led": "162 L. Ed. 2d 439",
+   "lexis": "2005 U.S. LEXIS 5011"
+  }
+ },
+ "heller": {
+  "name": "DISTRICT OF COLUMBIA v. HELLER",
+  "decided": "2008-06-26",
+  "mv": 5,
+  "dv": 4,
+  "direction": "conservative",
+  "author": "Antonin Scalia",
+  "precedent_altered": false,
+  "unconst": "local-ordinance",
+  "maj": [
+   "Antonin Scalia",
+   "Anthony M. Kennedy",
+   "Clarence Thomas",
+   "John G. Roberts, Jr.",
+   "Samuel A. Alito, Jr."
+  ],
+  "dis": [
+   "John Paul Stevens",
+   "David H. Souter",
+   "Ruth Bader Ginsburg",
+   "Stephen G. Breyer"
+  ],
+  "issue": "criminal-procedure",
+  "file": "2007/2007-071.yaml",
+  "cite": {
+   "us": "554 U.S. 570",
+   "sct": "128 S. Ct. 2783",
+   "led": "171 L. Ed. 2d 637",
+   "lexis": "2008 U.S. LEXIS 5268"
+  }
+ },
+ "citizensunited": {
+  "name": "CITIZENS UNITED v. FEDERAL ELECTION COMMISSION",
+  "decided": "2010-01-21",
+  "mv": 5,
+  "dv": 4,
+  "direction": "conservative",
+  "author": "Anthony M. Kennedy",
+  "precedent_altered": true,
+  "unconst": "federal-statute",
+  "maj": [
+   "John G. Roberts, Jr.",
+   "Antonin Scalia",
+   "Anthony M. Kennedy",
+   "Clarence Thomas",
+   "Samuel A. Alito, Jr."
+  ],
+  "dis": [
+   "John Paul Stevens",
+   "Ruth Bader Ginsburg",
+   "Stephen G. Breyer",
+   "Sonia Sotomayor"
+  ],
+  "issue": "first-amendment",
+  "file": "2009/2009-012.yaml",
+  "cite": {
+   "us": "558 U.S. 310",
+   "sct": "130 S. Ct. 876",
+   "led": "175 L. Ed. 2d 753",
+   "lexis": "2010 U.S. LEXIS 766"
+  }
+ },
+ "nfib": {
+  "name": "NATIONAL FEDERATION OF INDEPENDENT BUSINESS, et al., PETITIONERS v. KATHLEEN SEBELIUS, SECRETARY OF HEALTH AND HUMAN SERVICES, et al.",
+  "decided": "2012-06-28",
+  "mv": 5,
+  "dv": 4,
+  "direction": "liberal",
+  "author": "John G. Roberts, Jr.",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "John G. Roberts, Jr.",
+   "Ruth Bader Ginsburg",
+   "Stephen G. Breyer",
+   "Sonia Sotomayor",
+   "Elena Kagan"
+  ],
+  "dis": [
+   "Antonin Scalia",
+   "Anthony M. Kennedy",
+   "Clarence Thomas",
+   "Samuel A. Alito, Jr."
+  ],
+  "issue": "federalism",
+  "file": "2011/2011-077.yaml",
+  "cite": {
+   "us": "567 U.S. 519",
+   "sct": "132 S. Ct. 2566",
+   "led": "183 L. Ed. 2d 450",
+   "lexis": "2012 U.S. LEXIS 4876"
+  }
+ },
+ "shelby": {
+  "name": "SHELBY COUNTY v. HOLDER",
+  "decided": "2013-06-25",
+  "mv": 5,
+  "dv": 4,
+  "direction": "conservative",
+  "author": "John G. Roberts, Jr.",
+  "precedent_altered": false,
+  "unconst": "federal-statute",
+  "maj": [
+   "John G. Roberts, Jr.",
+   "Antonin Scalia",
+   "Anthony M. Kennedy",
+   "Clarence Thomas",
+   "Samuel A. Alito, Jr."
+  ],
+  "dis": [
+   "Ruth Bader Ginsburg",
+   "Stephen G. Breyer",
+   "Sonia Sotomayor",
+   "Elena Kagan"
+  ],
+  "issue": "civil-rights",
+  "file": "2012/2012-073.yaml",
+  "cite": {
+   "us": "570 U.S. 529",
+   "sct": "133 S. Ct. 2612",
+   "led": "186 L. Ed. 2d 651",
+   "lexis": "2013 U.S. LEXIS 4917"
+  }
+ },
+ "obergefell": {
+  "name": "OBERGEFELL v. HODGES",
+  "decided": "2015-06-26",
+  "mv": 5,
+  "dv": 4,
+  "direction": "liberal",
+  "author": "Anthony M. Kennedy",
+  "precedent_altered": true,
+  "unconst": "state-law",
+  "maj": [
+   "Anthony M. Kennedy",
+   "Ruth Bader Ginsburg",
+   "Stephen G. Breyer",
+   "Sonia Sotomayor",
+   "Elena Kagan"
+  ],
+  "dis": [
+   "John G. Roberts, Jr.",
+   "Antonin Scalia",
+   "Clarence Thomas",
+   "Samuel A. Alito, Jr."
+  ],
+  "issue": "due-process",
+  "file": "2014/2014-070.yaml",
+  "cite": {
+   "us": "576 U.S. 644",
+   "sct": "135 S. Ct. 2584",
+   "led": "192 L. Ed. 2d 609",
+   "lexis": "2015 U.S. LEXIS 4250"
+  }
+ },
+ "kingburwell": {
+  "name": "KING v. BURWELL",
+  "decided": "2015-06-25",
+  "mv": 6,
+  "dv": 3,
+  "direction": "liberal",
+  "author": "John G. Roberts, Jr.",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "John G. Roberts, Jr.",
+   "Anthony M. Kennedy",
+   "Ruth Bader Ginsburg",
+   "Stephen G. Breyer",
+   "Sonia Sotomayor",
+   "Elena Kagan"
+  ],
+  "dis": [
+   "Antonin Scalia",
+   "Clarence Thomas",
+   "Samuel A. Alito, Jr."
+  ],
+  "issue": "federal-taxation",
+  "file": "2014/2014-052.yaml",
+  "cite": {
+   "us": "576 U.S. 473",
+   "sct": "135 S. Ct. 2480",
+   "led": "192 L. Ed. 2d 483",
+   "lexis": "2015 U.S. LEXIS 4248"
+  }
+ },
+ "bostock": {
+  "name": "BOSTOCK v. CLAYTON COUNTY, GEORGIA",
+  "decided": "2020-06-15",
+  "mv": 6,
+  "dv": 3,
+  "direction": "liberal",
+  "author": "Neil M. Gorsuch",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "John G. Roberts, Jr.",
+   "Ruth Bader Ginsburg",
+   "Stephen G. Breyer",
+   "Sonia Sotomayor",
+   "Elena Kagan",
+   "Neil M. Gorsuch"
+  ],
+  "dis": [
+   "Clarence Thomas",
+   "Samuel A. Alito, Jr.",
+   "Brett M. Kavanaugh"
+  ],
+  "issue": "civil-rights",
+  "file": "2019/2019-004.yaml",
+  "cite": {
+   "sct": "140 S. Ct. 1731",
+   "led": "207 L. Ed. 2d 218",
+   "lexis": "2020 U.S. LEXIS 3252"
+  }
+ },
+ "dobbs": {
+  "name": "DOBBS v. JACKSON WOMEN\u2019S HEALTH ORGANIZATION",
+  "decided": "2022-06-24",
+  "mv": 6,
+  "dv": 3,
+  "direction": "conservative",
+  "author": "Samuel A. Alito, Jr.",
+  "precedent_altered": true,
+  "unconst": "none",
+  "maj": [
+   "John G. Roberts, Jr.",
+   "Clarence Thomas",
+   "Samuel A. Alito, Jr.",
+   "Neil M. Gorsuch",
+   "Brett M. Kavanaugh",
+   "Amy Coney Barrett"
+  ],
+  "dis": [
+   "Stephen G. Breyer",
+   "Sonia Sotomayor",
+   "Elena Kagan"
+  ],
+  "issue": "privacy",
+  "file": "2021/2021-019.yaml",
+  "cite": {
+   "sct": "142 S. Ct. 2228",
+   "led": "213 L. Ed. 2d 545",
+   "lexis": "2022 U.S. LEXIS 3057"
+  }
+ },
+ "bruen": {
+  "name": "NEW YORK STATE RIFLE & PISTOL ASSOCIATION INC. v. BRUEN",
+  "decided": "2022-06-23",
+  "mv": 6,
+  "dv": 3,
+  "direction": "conservative",
+  "author": "Clarence Thomas",
+  "precedent_altered": false,
+  "unconst": "state-law",
+  "maj": [
+   "John G. Roberts, Jr.",
+   "Clarence Thomas",
+   "Samuel A. Alito, Jr.",
+   "Neil M. Gorsuch",
+   "Brett M. Kavanaugh",
+   "Amy Coney Barrett"
+  ],
+  "dis": [
+   "Stephen G. Breyer",
+   "Sonia Sotomayor",
+   "Elena Kagan"
+  ],
+  "issue": "criminal-procedure",
+  "file": "2021/2021-013.yaml",
+  "cite": {
+   "sct": "141 S. Ct. 2111",
+   "led": "213 L. Ed. 2d 387",
+   "lexis": "2022 U.S. LEXIS 3055"
+  }
+ },
+ "bidennebraska": {
+  "name": "BIDEN v. NEBRASKA",
+  "decided": "2023-06-30",
+  "mv": 6,
+  "dv": 3,
+  "direction": "conservative",
+  "author": "John G. Roberts, Jr.",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "John G. Roberts, Jr.",
+   "Clarence Thomas",
+   "Samuel A. Alito, Jr.",
+   "Neil M. Gorsuch",
+   "Brett M. Kavanaugh",
+   "Amy Coney Barrett"
+  ],
+  "dis": [
+   "Sonia Sotomayor",
+   "Elena Kagan",
+   "Ketanji Brown Jackson"
+  ],
+  "issue": "economic-activity",
+  "file": "2022/2022-038.yaml",
+  "cite": {
+   "us": "600 U.S. 477",
+   "sct": "143 S. Ct. 2355",
+   "led": "216 L. Ed. 2d 1063",
+   "lexis": "2023 U.S. LEXIS 2793"
+  }
+ },
+ "sffa": {
+  "name": "STUDENTS FOR FAIR ADMISSIONS INC. v. PRESIDENT & FELLOWS OF HARVARD COLLEGE",
+  "decided": "2023-06-29",
+  "mv": 6,
+  "dv": 2,
+  "direction": "conservative",
+  "author": "John G. Roberts, Jr.",
+  "precedent_altered": true,
+  "unconst": "none",
+  "maj": [
+   "John G. Roberts, Jr.",
+   "Clarence Thomas",
+   "Samuel A. Alito, Jr.",
+   "Neil M. Gorsuch",
+   "Brett M. Kavanaugh",
+   "Amy Coney Barrett"
+  ],
+  "dis": [
+   "Sonia Sotomayor",
+   "Elena Kagan"
+  ],
+  "issue": "civil-rights",
+  "file": "2022/2022-009.yaml",
+  "cite": {
+   "us": "600 U.S. 181",
+   "sct": "143 S. Ct. 2141",
+   "led": "216 L. Ed. 2d 857",
+   "lexis": "2023 U.S. LEXIS 2791"
+  }
+ },
+ "loperbright": {
+  "name": "LOPER BRIGHT ENTERPRISES v. RAIMONDO",
+  "decided": "2024-06-28",
+  "mv": 6,
+  "dv": 2,
+  "direction": "conservative",
+  "author": "John G. Roberts, Jr.",
+  "precedent_altered": true,
+  "unconst": "none",
+  "maj": [
+   "John G. Roberts, Jr.",
+   "Clarence Thomas",
+   "Samuel A. Alito, Jr.",
+   "Neil M. Gorsuch",
+   "Brett M. Kavanaugh",
+   "Amy Coney Barrett"
+  ],
+  "dis": [
+   "Sonia Sotomayor",
+   "Elena Kagan"
+  ],
+  "issue": "economic-activity",
+  "file": "2023/2023-015.yaml",
+  "cite": {
+   "sct": "144 S. Ct. 2244",
+   "led": "219 L. Ed. 2d 832",
+   "lexis": "2024 U.S. LEXIS 2882"
+  }
+ },
+ "trumpus": {
+  "name": "TRUMP v. UNITED STATES",
+  "decided": "2024-07-01",
+  "mv": 6,
+  "dv": 3,
+  "direction": "liberal",
+  "author": "John G. Roberts, Jr.",
+  "precedent_altered": false,
+  "unconst": "none",
+  "maj": [
+   "John G. Roberts, Jr.",
+   "Clarence Thomas",
+   "Samuel A. Alito, Jr.",
+   "Neil M. Gorsuch",
+   "Brett M. Kavanaugh",
+   "Amy Coney Barrett"
+  ],
+  "dis": [
+   "Sonia Sotomayor",
+   "Elena Kagan",
+   "Ketanji Brown Jackson"
+  ],
+  "issue": "criminal-procedure",
+  "file": "2023/2023-061.yaml",
+  "cite": {
+   "sct": "144 S. Ct. 2312",
+   "led": "219 L. Ed. 2d 991",
+   "lexis": "2024 U.S. LEXIS 2886"
+  }
+ }
+}

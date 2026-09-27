@@ -187,3 +187,60 @@ blockquote footer a{color:var(--ink-2)}
 .hero>div{min-width:0}
 .hero .meta .chip{white-space:normal;max-width:100%;line-height:1.35}
 .flipnote{font-size:12px;color:var(--muted);margin:8px 0 0;max-width:640px}
+/* ---------- The Bench ---------- */
+:root{--dem-soft:#8fb0f2;--rep-soft:#f0918f;--nr:#44524b}
+.yearpick{display:flex;align-items:center;gap:12px;margin:10px 0 14px}
+.yearpick input{flex:1;accent-color:var(--accent)}
+.yearpick output{font-family:var(--mono);font-size:15px;min-width:3.2em}
+.seats{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.seat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:6px;align-content:start;text-decoration:none;color:inherit}
+.seat:hover{border-color:var(--muted)}
+.seat .mono{font-family:var(--display);font-size:26px;color:var(--ink-2);line-height:1}
+.seat .sn{font-family:var(--serif);font-size:15px;line-height:1.25}
+.seat .sa,.seat .sy{font-size:12px;color:var(--muted)}
+.chief,.now{font-family:var(--sans);font-size:10px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line);border-radius:6px;padding:0 5px;margin-left:6px;color:var(--ink-2);vertical-align:2px}
+.now{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 50%,transparent)}
+.ptag{display:inline-flex;align-items:center;gap:6px}
+.ptag i{width:8px;height:8px;border-radius:50%;flex:none}
+.ptag b{font-weight:500;color:var(--ink-2)}
+.lpill{justify-self:start;font-size:11.5px;font-weight:500;border-radius:999px;padding:2px 9px;border:1px solid var(--line);white-space:nowrap}
+.lpill i{font-style:normal;font-weight:400;opacity:.75}
+.l-lib{color:var(--dem);border-color:color-mix(in srgb,var(--dem) 50%,transparent);background:color-mix(in srgb,var(--dem) 14%,transparent)}
+.l-llib{color:var(--dem-soft);border-color:color-mix(in srgb,var(--dem-soft) 40%,transparent)}
+.l-mod{color:var(--ink-2);border-color:var(--muted)}
+.l-lcon{color:var(--rep-soft);border-color:color-mix(in srgb,var(--rep-soft) 40%,transparent)}
+.l-con{color:var(--rep);border-color:color-mix(in srgb,var(--rep) 50%,transparent);background:color-mix(in srgb,var(--rep) 14%,transparent)}
+.l-nr{color:var(--muted);border-style:dashed}
+.filters{display:grid;gap:8px;margin:6px 0 14px}
+.frow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.flab{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);min-width:92px}
+.fchip{font:inherit;font-size:12.5px;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:4px 11px;cursor:pointer}
+.fchip i{width:8px;height:8px;border-radius:50%}
+.fchip[aria-pressed="false"]{opacity:.45}
+.fchip[aria-pressed="true"]{border-color:var(--muted);color:var(--ink)}
+#jq{font:inherit;font-size:13px;background:var(--surface);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:7px 10px;width:min(100%,320px)}
+.jgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;align-items:start}
+.jcard{background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.jcard[open]{border-color:var(--muted);grid-column:1 / -1}
+.jcard summary{list-style:none;cursor:pointer;padding:12px 14px;display:grid;gap:5px}
+.jcard summary::-webkit-details-marker{display:none}
+.jcard .jn{font-family:var(--serif);font-size:16px}
+.jcard .jy{font-size:12px;color:var(--muted);font-family:var(--mono)}
+.jcard .ja{font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.jcard .jb{padding:0 14px 14px;display:grid;gap:8px;font-size:13.5px;color:var(--ink-2);max-width:80ch}
+.jcard .jb p{margin:0}
+.jcard .jb b{color:var(--ink);font-weight:500}
+.jcard .meta,.list .meta{font-size:12px;color:var(--muted);margin:0}
+.jcard a,.jname{color:var(--ink-2)}
+.drift{color:var(--proven)}
+.spark{display:grid;gap:2px;max-width:320px}
+.spark svg{width:100%;height:auto}
+.spark .st{font-size:8px;fill:var(--muted)}
+.spark span{font-size:11px;color:var(--muted)}
+.vote{display:grid;gap:8px;font-size:13px}
+.vote .names{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:4px}
+.jname{display:inline-flex;align-items:center;gap:5px;text-decoration:none;font-size:12.5px}
+.jname:hover{text-decoration:underline}
+.jname i{width:7px;height:7px;border-radius:50%}
+.method p{margin:8px 0 0}
+@media (max-width:600px){.seats{grid-template-columns:repeat(2,1fr)}.flab{min-width:100%}.jgrid{grid-template-columns:1fr}}

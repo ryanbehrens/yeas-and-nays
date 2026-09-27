@@ -1,0 +1,8 @@
+justices.json, cases.json
+  Derived from the JUDGMENT project (github.com/KaraZajac/JUDGMENT), a restructuring of the
+  Supreme Court Database (Spaeth, Epstein, Martin, Segal, Ruger & Benesh, Version 2025 Release 1
+  and Legacy Release 7, http://scdb.wustl.edu) and Federal Judicial Center biographical data.
+  License: CC BY-NC 4.0 (non-commercial use with attribution).
+martin_quinn.json
+  Martin-Quinn scores (Andrew D. Martin & Kevin M. Quinn, mqscores.wustl.edu), posterior means by
+  justice and term. Terms 1937-2019 from the 2020 release; 2020-2024 from the 2024 release.

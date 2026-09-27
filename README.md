@@ -8,6 +8,7 @@ Supreme Court rulings that moved the numbers.
 
 ## Pages
 - `index.html` — **The Ledger**, the home page (timeline, debt, map, laws).
+- `bench.html` — The Bench: all 116 Supreme Court justices (appointed by, party, lean) and 77 landmark rulings. Built by `python3 data/build_bench.py` from `data/court.py` and `data/raw/court/` (see SOURCES.txt there).
 - `presidents.html` — every president; `presidents/<name>.html` — deep dives for all 45 presidents.
 
 ## Adding president portraits
@@ -27,6 +28,7 @@ move them into `assets/presidents/`, then commit and push. Every president's car
 ## Rebuilding
 ```
 python3 data/build_presidents.py   # regenerates the president pages from data/presidents_data.py
+python3 data/build_bench.py        # regenerates bench.html and data/court_items.json (run before data/build.py)
 python3 data/build.py   # regenerates app/data.js from the data files
 sh app/build.sh         # combines app.html + data.js into index.html
 ```

@@ -43,7 +43,7 @@ def fmt_date(iso):
 ICON = open(os.path.join(ROOT, "assets", "icon-inline.svg")).read()
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Merriweather:ital,wght@0,900;1,700&display=swap">'
 
-def head(title, desc, up):
+def head(title, desc, up, current="presidents"):
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -62,8 +62,8 @@ def head(title, desc, up):
     <a class="logo" href="{up}index.html" aria-label="Yeas and Nays home">{ICON}<span class="wm">Yeas<em>and</em>Nays</span></a>
     <nav class="sections" aria-label="Sections">
       <a href="{up}index.html">The Ledger</a>
-      <a href="{up}presidents.html" aria-current="page">Presidents</a>
-      <span title="Coming soon: the Supreme Court">The Bench <i>Soon</i></span>
+      <a href="{up}presidents.html"{' aria-current="page"' if current == "presidents" else ""}>Presidents</a>
+      <a href="{up}bench.html"{' aria-current="page"' if current == "bench" else ""}>The Bench</a>
       <span title="Coming soon: discussion and posts">The Floor <i>Soon</i></span>
     </nav>
   </header>
@@ -335,10 +335,11 @@ s.onclick=function(){s.textContent=s.textContent==="Oldest first"?"Newest first"
     t.append("</body>\n</html>\n")
     return "".join(t)
 
-os.makedirs(os.path.join(ROOT, "presidents"), exist_ok=True)
-for slug, p in PRESIDENTS.items():
-    open(os.path.join(ROOT, "presidents", f"{slug}.html"), "w").write(page(slug, p))
-open(os.path.join(ROOT, "presidents.html"), "w").write(index())
-old = os.path.join(ROOT, "presidents", "index.html")
-if os.path.exists(old): os.remove(old)
-print("built", ", ".join(PRESIDENTS), "+ index")
+if __name__ == "__main__":
+    os.makedirs(os.path.join(ROOT, "presidents"), exist_ok=True)
+    for slug, p in PRESIDENTS.items():
+        open(os.path.join(ROOT, "presidents", f"{slug}.html"), "w").write(page(slug, p))
+    open(os.path.join(ROOT, "presidents.html"), "w").write(index())
+    old = os.path.join(ROOT, "presidents", "index.html")
+    if os.path.exists(old): os.remove(old)
+    print("built", ", ".join(PRESIDENTS), "+ index")

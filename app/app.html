@@ -333,7 +333,7 @@ footer a{color:var(--ink-2)}
     <nav class="sections" aria-label="Sections">
       <a href="#" aria-current="page">The Ledger</a>
       <a href="presidents.html">Presidents</a>
-      <span title="Coming soon: the Supreme Court, its justices and rulings">The Bench <i>Soon</i></span>
+      <a href="bench.html">The Bench</a>
       <span title="Coming soon: discussion and posts">The Floor <i>Soon</i></span>
     </nav>
   </header>
@@ -426,7 +426,7 @@ footer a{color:var(--ink-2)}
   <footer>
     <div class="about-h">About the data</div>
     <details><summary>Sources</summary><p>Debt: U.S. Treasury, Historical Debt Outstanding (fiscal years, 1790–2025). Deficit/surplus 1901–2025 and net interest 1940–2025: White House Office of Management and Budget historical tables via FRED. Deficits before 1901 are estimated from the yearly change in debt and marked "est." GDP: MeasuringWorth (1790–1929) and BEA fiscal-year GDP via FRED (1930–2025). Inflation: MeasuringWorth consumer price index (1774–2025). Federal minimum wage: U.S. Department of Labor. State minimum wages: U.S. Department of Labor, as of July 1, 2026. Congress party control: Office of the House Historian and U.S. Senate Historical Office. Presidential votes by state: 270toWin (1900–2012); 1789–1896 and 2016–2024 compiled from official electoral records.</p></details>
-    <details><summary>How the buckets work</summary><p>Laws and rulings are sorted by what they did, not by which party passed them. <b style="color:var(--dem)">Liberal-leaning</b> means it expanded federal spending, the government's role in the economy, progressive taxation or looser money. <b style="color:var(--rep)">Conservative-leaning</b> means it cut taxes or spending, limited the government's economic role or tightened money. <b style="color:var(--mix)">Mixed</b> covers tariffs, wartime finance and deals that did both. Party and vote splits are shown separately, so a tax cut signed by a Democrat still reads as a tax cut. This is an early classification; a vote-based check using every recorded roll call (Voteview) is planned.</p></details>
+    <details><summary>How the buckets work</summary><p>Laws and rulings are sorted by what they did, not by which party passed them. <b style="color:var(--dem)">Liberal-leaning</b> means it expanded federal spending, the government's role in the economy, progressive taxation or looser money. <b style="color:var(--rep)">Conservative-leaning</b> means it cut taxes or spending, limited the government's economic role or tightened money. <b style="color:var(--mix)">Mixed</b> covers tariffs, wartime finance and deals that did both. For court rulings about rights, liberal-leaning means wider civil rights and liberties or more protection for people accused of crimes, and conservative-leaning the reverse, including gun rights; rulings about how government is structured count as mixed. Party and vote splits are shown separately, so a tax cut signed by a Democrat still reads as a tax cut. This is an early classification; a vote-based check using every recorded roll call (Voteview) is planned.</p></details>
     <details><summary>Who passed it</summary><p>Each law is credited to the party that held both the House and the Senate when it passed. When control was split, it goes to the signing president's party. Laws with bipartisan votes, veto overrides and constitutional amendments count as passed by both parties. Earlier parties count with the party that followed them: Democratic-Republicans and Jacksonians with the Democrats; Federalists, National Republicans and Whigs with the Republicans. This is about party, not ideology: for what a law did, see "What it did."</p></details>
     <details><summary>Party colors</summary><p>Democrats are blue and Republicans red in every era; earlier parties such as the Federalists, Democratic-Republicans and Whigs have their own colors. The parties' positions changed over time, most of all during the realignment era of 1896–1932, marked by the gray band on the timeline. Tap the band to read how.</p></details>
     <details><summary>Maps and early years</summary><p>Map shapes use today's state borders. Before 1789 there was no president and no federal debt figure; the Continental Congress's war debts were taken over by the new government in 1790.</p></details>
@@ -461,7 +461,8 @@ let CSS_CACHE = {};
 const css = n => CSS_CACHE[n] || (CSS_CACHE[n] = getComputedStyle(document.documentElement).getPropertyValue(n).trim());
 
 /* ---------- state ---------- */
-const CATS = {tax:"Taxes & tariffs", spend:"Spending & programs", budget:"Budget rules & debt limit", money:"Money & banking", wage:"Wages", war:"War", crisis:"Crises & rescues"};
+const CATS = {tax:"Taxes & tariffs", spend:"Spending & programs", budget:"Budget rules & debt limit", money:"Money & banking", wage:"Wages", war:"War", crisis:"Crises & rescues",
+  rights:"Civil rights & equality", speech:"Speech, press & religion", justice:"Crime & punishment", privacy:"Privacy, marriage & abortion", power:"Government power", elections:"Elections & democracy"};
 const TYPES = {law:"Laws", ruling:"Court rulings", event:"Events"};
 const BUCKETS = {lib:"Liberal-leaning", con:"Conservative-leaning", mix:"Mixed"};
 const BUCKET_VAR = {lib:"--dem", con:"--rep", mix:"--mix"};
@@ -1186,7 +1187,7 @@ function openItem(it, fromList){
   if (it.type === "law") kv.push(`<dt>President</dt><dd>${it.president || "—"}</dd><dt>How</dt><dd>${it.how || "Signed"}</dd>`);
   if (it.type === "amendment") kv.push(`<dt>How</dt><dd>${it.how}</dd>`);
   if (c && it.type !== "ruling") kv.push(`<dt>Congress</dt><dd>${ord(c.n)} (${c.start.slice(0,4)}–${c.end.slice(0,4)})</dd><dt>House</dt><dd>${c.house} majority, ${c.houseSeats.replace("-","–")}</dd><dt>Senate</dt><dd>${c.senate} majority, ${c.senateSeats.replace("-","–")}</dd>`);
-  if (it.type === "ruling") kv.push(`<dt>Decision</dt><dd>${it.split}</dd><dt>Majority opinion</dt><dd>${it.author}</dd><dt>President at the time</dt><dd>${it.president}</dd>`);
+  if (it.type === "ruling") kv.push(`<dt>Decision</dt><dd>${it.split}</dd><dt>Majority opinion</dt><dd>${it.author}</dd><dt>President at the time</dt><dd>${it.president}</dd>` + (it.bench ? `<dt>The Bench</dt><dd><a href="bench.html#r-${it.bench}">Who voted which way, and who appointed them →</a></dd>` : ""));
   if (it.vote) kv.push(`<dt>House vote</dt><dd class="tnum">${it.vote.house}</dd><dt>Senate vote</dt><dd class="tnum">${it.vote.senate}</dd>`);
   if (it.pattern) kv.push(`<dt>Vote pattern</dt><dd>${it.pattern}</dd>`);
   const pi = passInfo(it);

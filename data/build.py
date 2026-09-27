@@ -83,6 +83,20 @@ for y, parts in POST2012.items():
     elections[y] = {st: p for p, sts in parts.items() for st in sts}
 print("unknown party names:", unknown)
 
+def merged_rulings():
+    """Ledger rulings plus The Bench's landmark rulings (data/court_items.json, written by build_bench.py).
+    Where both have a ruling, the Ledger's topic and wording are kept and the Bench's vote count and link are used."""
+    path = os.path.join(os.path.dirname(__file__), "court_items.json")
+    if not os.path.exists(path): return RULINGS
+    bench = json.load(open(path)); by_date = {b["date"]: b for b in bench}; out = []; used = set()
+    for r in RULINGS:
+        b = by_date.get(r["date"])
+        if b: r = dict(r, split=b["split"], author=b["author"], bench=b["id"]); used.add(b["id"])
+        out.append(r)
+    for b in bench:
+        if b["id"] not in used: out.append(dict(b, bench=b["id"]))
+    return out
+
 def items(lst, typ):
     out = []
     for x in lst:
@@ -129,7 +143,7 @@ data = dict(
     statehood=STATEHOOD, original13=ORIGINAL13, stateNames=NAMES, fips=FIPS,
     fedMinWage=[dict(date=d, rate=r) for d, r in FED_MINWAGE],
     stateMinWage=STATE_MINWAGE_2026, stateMinWageNotes=STATE_MINWAGE_NOTES,
-    items=sorted(items(LAWS, "law") + items(RULINGS, "ruling") + items(EVENTS, "event"), key=lambda x: x["date"]),
+    items=sorted(items(LAWS, "law") + items(merged_rulings(), "ruling") + items(EVENTS, "event"), key=lambda x: x["date"]),
 )
 os.makedirs(os.path.join(os.path.dirname(__file__), "..", "app"), exist_ok=True)
 atlas = json.load(open(os.path.join(RAW, "package/states-albers-10m.json")))
