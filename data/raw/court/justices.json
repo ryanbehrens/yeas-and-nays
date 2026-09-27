@@ -15,7 +15,14 @@
   "lib": 0.692,
   "cases": 15,
   "first_term": 1791,
-  "last_term": 1795
+  "last_term": 1795,
+  "record": {
+   "cases": 15,
+   "majority_share": 1.0,
+   "dissents": 0,
+   "opinions_written": 4,
+   "terms": 5
+  }
  },
  {
   "slug": "william-cushing",
@@ -33,7 +40,14 @@
   "lib": 0.479,
   "cases": 289,
   "first_term": 1791,
-  "last_term": 1810
+  "last_term": 1810,
+  "record": {
+   "cases": 289,
+   "majority_share": 0.983,
+   "dissents": 4,
+   "opinions_written": 20,
+   "terms": 19
+  }
  },
  {
   "slug": "james-wilson",
@@ -51,7 +65,14 @@
   "lib": 0.659,
   "cases": 46,
   "first_term": 1791,
-  "last_term": 1798
+  "last_term": 1798,
+  "record": {
+   "cases": 46,
+   "majority_share": 0.977,
+   "dissents": 1,
+   "opinions_written": 7,
+   "terms": 8
+  }
  },
  {
   "slug": "john-blair-jr",
@@ -69,7 +90,14 @@
   "lib": 0.615,
   "cases": 17,
   "first_term": 1791,
-  "last_term": 1795
+  "last_term": 1795,
+  "record": {
+   "cases": 17,
+   "majority_share": 0.923,
+   "dissents": 1,
+   "opinions_written": 4,
+   "terms": 5
+  }
  },
  {
   "slug": "james-iredell",
@@ -87,7 +115,14 @@
   "lib": 0.51,
   "cases": 54,
   "first_term": 1791,
-  "last_term": 1799
+  "last_term": 1799,
+  "record": {
+   "cases": 54,
+   "majority_share": 0.904,
+   "dissents": 5,
+   "opinions_written": 12,
+   "terms": 9
+  }
  },
  {
   "slug": "thomas-johnson",
@@ -105,7 +140,14 @@
   "lib": 0.5,
   "cases": 5,
   "first_term": 1792,
-  "last_term": 1793
+  "last_term": 1793,
+  "record": {
+   "cases": 5,
+   "majority_share": 0.75,
+   "dissents": 1,
+   "opinions_written": 1,
+   "terms": 2
+  }
  },
  {
   "slug": "william-paterson",
@@ -123,7 +165,14 @@
   "lib": 0.435,
   "cases": 144,
   "first_term": 1794,
-  "last_term": 1806
+  "last_term": 1806,
+  "record": {
+   "cases": 144,
+   "majority_share": 0.992,
+   "dissents": 1,
+   "opinions_written": 17,
+   "terms": 12
+  }
  },
  {
   "slug": "john-rutledge",
@@ -141,7 +190,14 @@
   "lib": 0.0,
   "cases": 2,
   "first_term": 1795,
-  "last_term": 1795
+  "last_term": 1795,
+  "record": {
+   "cases": 2,
+   "majority_share": 1.0,
+   "dissents": 0,
+   "opinions_written": 1,
+   "terms": 1
+  }
  },
  {
   "slug": "samuel-chase",
@@ -159,7 +215,14 @@
   "lib": 0.493,
   "cases": 272,
   "first_term": 1796,
-  "last_term": 1810
+  "last_term": 1810,
+  "record": {
+   "cases": 272,
+   "majority_share": 0.99,
+   "dissents": 2,
+   "opinions_written": 13,
+   "terms": 14
+  }
  },
  {
   "slug": "oliver-ellsworth",
@@ -177,7 +240,14 @@
   "lib": 0.543,
   "cases": 43,
   "first_term": 1796,
-  "last_term": 1800
+  "last_term": 1800,
+  "record": {
+   "cases": 43,
+   "majority_share": 1.0,
+   "dissents": 0,
+   "opinions_written": 12,
+   "terms": 5
+  }
  },
  {
   "slug": "bushrod-washington",
@@ -195,7 +265,14 @@
   "lib": 0.506,
   "cases": 948,
   "first_term": 1798,
-  "last_term": 1829
+  "last_term": 1829,
+  "record": {
+   "cases": 948,
+   "majority_share": 0.998,
+   "dissents": 2,
+   "opinions_written": 79,
+   "terms": 30
+  }
  },
  {
   "slug": "alfred-moore",
@@ -213,7 +290,14 @@
   "lib": 0.316,
   "cases": 29,
   "first_term": 1800,
-  "last_term": 1803
+  "last_term": 1803,
+  "record": {
+   "cases": 29,
+   "majority_share": 1.0,
+   "dissents": 0,
+   "opinions_written": 1,
+   "terms": 3
+  }
  },
  {
   "slug": "john-marshall",
@@ -231,7 +315,14 @@
   "lib": 0.508,
   "cases": 1229,
   "first_term": 1801,
-  "last_term": 1835
+  "last_term": 1835,
+  "record": {
+   "cases": 1229,
+   "majority_share": 0.991,
+   "dissents": 11,
+   "opinions_written": 549,
+   "terms": 33
+  }
  },
  {
   "slug": "william-johnson-jr",
@@ -249,7 +340,14 @@
   "lib": 0.499,
   "cases": 1150,
   "first_term": 1804,
-  "last_term": 1834
+  "last_term": 1834,
+  "record": {
+   "cases": 1150,
+   "majority_share": 0.962,
+   "dissents": 38,
+   "opinions_written": 170,
+   "terms": 30
+  }
  },
  {
   "slug": "henry-brockholst-livingston",
@@ -267,7 +365,14 @@
   "lib": 0.533,
   "cases": 594,
   "first_term": 1807,
-  "last_term": 1823
+  "last_term": 1823,
+  "record": {
+   "cases": 594,
+   "majority_share": 0.98,
+   "dissents": 11,
+   "opinions_written": 48,
+   "terms": 16
+  }
  },
  {
   "slug": "thomas-todd",
@@ -285,7 +390,14 @@
   "lib": 0.544,
   "cases": 618,
   "first_term": 1807,
-  "last_term": 1825
+  "last_term": 1825,
+  "record": {
+   "cases": 618,
+   "majority_share": 1.0,
+   "dissents": 0,
+   "opinions_written": 14,
+   "terms": 18
+  }
  },
  {
   "slug": "gabriel-duvall",
@@ -303,7 +415,14 @@
   "lib": 0.534,
   "cases": 965,
   "first_term": 1812,
-  "last_term": 1834
+  "last_term": 1834,
+  "record": {
+   "cases": 965,
+   "majority_share": 0.995,
+   "dissents": 5,
+   "opinions_written": 16,
+   "terms": 23
+  }
  },
  {
   "slug": "joseph-story",
@@ -321,7 +440,14 @@
   "lib": 0.521,
   "cases": 1408,
   "first_term": 1812,
-  "last_term": 1845
+  "last_term": 1845,
+  "record": {
+   "cases": 1408,
+   "majority_share": 0.985,
+   "dissents": 21,
+   "opinions_written": 285,
+   "terms": 34
+  }
  },
  {
   "slug": "smith-thompson",
@@ -339,7 +465,14 @@
   "lib": 0.499,
   "cases": 860,
   "first_term": 1824,
-  "last_term": 1843
+  "last_term": 1843,
+  "record": {
+   "cases": 860,
+   "majority_share": 0.984,
+   "dissents": 13,
+   "opinions_written": 100,
+   "terms": 20
+  }
  },
  {
   "slug": "robert-trimble",
@@ -357,7 +490,14 @@
   "lib": 0.439,
   "cases": 102,
   "first_term": 1827,
-  "last_term": 1828
+  "last_term": 1828,
+  "record": {
+   "cases": 102,
+   "majority_share": 1.0,
+   "dissents": 0,
+   "opinions_written": 15,
+   "terms": 2
+  }
  },
  {
   "slug": "john-mclean",
@@ -375,7 +515,14 @@
   "lib": 0.482,
   "cases": 1823,
   "first_term": 1830,
-  "last_term": 1860
+  "last_term": 1860,
+  "record": {
+   "cases": 1823,
+   "majority_share": 0.957,
+   "dissents": 76,
+   "opinions_written": 304,
+   "terms": 31
+  }
  },
  {
   "slug": "henry-baldwin",
@@ -393,7 +540,14 @@
   "lib": 0.488,
   "cases": 652,
   "first_term": 1830,
-  "last_term": 1844
+  "last_term": 1844,
+  "record": {
+   "cases": 652,
+   "majority_share": 0.936,
+   "dissents": 39,
+   "opinions_written": 59,
+   "terms": 15
+  }
  },
  {
   "slug": "james-moore-wayne",
@@ -411,7 +565,14 @@
   "lib": 0.509,
   "cases": 2036,
   "first_term": 1835,
-  "last_term": 1866
+  "last_term": 1866,
+  "record": {
+   "cases": 2036,
+   "majority_share": 0.977,
+   "dissents": 45,
+   "opinions_written": 158,
+   "terms": 32
+  }
  },
  {
   "slug": "roger-brooke-taney",
@@ -429,7 +590,14 @@
   "lib": 0.481,
   "cases": 1672,
   "first_term": 1837,
-  "last_term": 1865
+  "last_term": 1865,
+  "record": {
+   "cases": 1672,
+   "majority_share": 0.976,
+   "dissents": 39,
+   "opinions_written": 300,
+   "terms": 29
+  }
  },
  {
   "slug": "philip-pendleton-barbour",
@@ -447,7 +615,14 @@
   "lib": 0.461,
   "cases": 177,
   "first_term": 1837,
-  "last_term": 1841
+  "last_term": 1841,
+  "record": {
+   "cases": 177,
+   "majority_share": 0.989,
+   "dissents": 2,
+   "opinions_written": 21,
+   "terms": 5
+  }
  },
  {
   "slug": "john-catron",
@@ -465,7 +640,14 @@
   "lib": 0.48,
   "cases": 1710,
   "first_term": 1838,
-  "last_term": 1865
+  "last_term": 1865,
+  "record": {
+   "cases": 1710,
+   "majority_share": 0.965,
+   "dissents": 53,
+   "opinions_written": 206,
+   "terms": 28
+  }
  },
  {
   "slug": "john-mckinley",
@@ -483,7 +665,14 @@
   "lib": 0.468,
   "cases": 762,
   "first_term": 1838,
-  "last_term": 1851
+  "last_term": 1851,
+  "record": {
+   "cases": 762,
+   "majority_share": 0.975,
+   "dissents": 14,
+   "opinions_written": 24,
+   "terms": 14
+  }
  },
  {
   "slug": "peter-vivian-daniel",
@@ -501,7 +690,14 @@
   "lib": 0.456,
   "cases": 1220,
   "first_term": 1842,
-  "last_term": 1859
+  "last_term": 1859,
+  "record": {
+   "cases": 1220,
+   "majority_share": 0.921,
+   "dissents": 76,
+   "opinions_written": 147,
+   "terms": 18
+  }
  },
  {
   "slug": "samuel-nelson",
@@ -519,7 +715,14 @@
   "lib": 0.508,
   "cases": 2384,
   "first_term": 1845,
-  "last_term": 1872
+  "last_term": 1872,
+  "record": {
+   "cases": 2384,
+   "majority_share": 0.977,
+   "dissents": 47,
+   "opinions_written": 350,
+   "terms": 28
+  }
  },
  {
   "slug": "levi-woodbury",
@@ -537,7 +740,14 @@
   "lib": 0.475,
   "cases": 328,
   "first_term": 1846,
-  "last_term": 1850
+  "last_term": 1850,
+  "record": {
+   "cases": 328,
+   "majority_share": 0.957,
+   "dissents": 14,
+   "opinions_written": 55,
+   "terms": 5
+  }
  },
  {
   "slug": "robert-cooper-grier",
@@ -555,7 +765,14 @@
   "lib": 0.501,
   "cases": 1847,
   "first_term": 1847,
-  "last_term": 1869
+  "last_term": 1869,
+  "record": {
+   "cases": 1847,
+   "majority_share": 0.961,
+   "dissents": 70,
+   "opinions_written": 224,
+   "terms": 23
+  }
  },
  {
   "slug": "benjamin-robbins-curtis",
@@ -573,7 +790,14 @@
   "lib": 0.491,
   "cases": 465,
   "first_term": 1851,
-  "last_term": 1856
+  "last_term": 1856,
+  "record": {
+   "cases": 465,
+   "majority_share": 0.971,
+   "dissents": 13,
+   "opinions_written": 64,
+   "terms": 6
+  }
  },
  {
   "slug": "john-archibald-campbell",
@@ -591,7 +815,14 @@
   "lib": 0.473,
   "cases": 633,
   "first_term": 1853,
-  "last_term": 1860
+  "last_term": 1860,
+  "record": {
+   "cases": 633,
+   "majority_share": 0.954,
+   "dissents": 28,
+   "opinions_written": 113,
+   "terms": 8
+  }
  },
  {
   "slug": "nathan-clifford",
@@ -609,7 +840,14 @@
   "lib": 0.535,
   "cases": 3588,
   "first_term": 1857,
-  "last_term": 1880
+  "last_term": 1880,
+  "record": {
+   "cases": 3588,
+   "majority_share": 0.96,
+   "dissents": 134,
+   "opinions_written": 483,
+   "terms": 24
+  }
  },
  {
   "slug": "noah-haynes-swayne",
@@ -627,7 +865,14 @@
   "lib": 0.551,
   "cases": 3138,
   "first_term": 1861,
-  "last_term": 1880
+  "last_term": 1880,
+  "record": {
+   "cases": 3138,
+   "majority_share": 0.977,
+   "dissents": 71,
+   "opinions_written": 361,
+   "terms": 20
+  }
  },
  {
   "slug": "samuel-freeman-miller",
@@ -645,7 +890,14 @@
   "lib": 0.537,
   "cases": 5684,
   "first_term": 1862,
-  "last_term": 1890
+  "last_term": 1890,
+  "record": {
+   "cases": 5684,
+   "majority_share": 0.97,
+   "dissents": 167,
+   "opinions_written": 705,
+   "terms": 29
+  }
  },
  {
   "slug": "david-davis",
@@ -663,7 +915,14 @@
   "lib": 0.539,
   "cases": 2119,
   "first_term": 1862,
-  "last_term": 1876
+  "last_term": 1876,
+  "record": {
+   "cases": 2119,
+   "majority_share": 0.966,
+   "dissents": 70,
+   "opinions_written": 211,
+   "terms": 15
+  }
  },
  {
   "slug": "stephen-johnson-field",
@@ -681,7 +940,14 @@
   "lib": 0.521,
   "cases": 7558,
   "first_term": 1863,
-  "last_term": 1897
+  "last_term": 1897,
+  "record": {
+   "cases": 7558,
+   "majority_share": 0.969,
+   "dissents": 230,
+   "opinions_written": 665,
+   "terms": 35
+  }
  },
  {
   "slug": "salmon-portland-chase",
@@ -699,7 +965,14 @@
   "lib": 0.539,
   "cases": 1235,
   "first_term": 1864,
-  "last_term": 1872
+  "last_term": 1872,
+  "record": {
+   "cases": 1235,
+   "majority_share": 0.962,
+   "dissents": 42,
+   "opinions_written": 231,
+   "terms": 9
+  }
  },
  {
   "slug": "william-strong",
@@ -717,7 +990,14 @@
   "lib": 0.542,
   "cases": 2295,
   "first_term": 1868,
-  "last_term": 1880
+  "last_term": 1880,
+  "record": {
+   "cases": 2295,
+   "majority_share": 0.968,
+   "dissents": 73,
+   "opinions_written": 276,
+   "terms": 13
+  }
  },
  {
   "slug": "joseph-p-bradley",
@@ -735,7 +1015,14 @@
   "lib": 0.536,
   "cases": 5337,
   "first_term": 1868,
-  "last_term": 1891
+  "last_term": 1891,
+  "record": {
+   "cases": 5337,
+   "majority_share": 0.974,
+   "dissents": 136,
+   "opinions_written": 485,
+   "terms": 24
+  }
  },
  {
   "slug": "ward-hunt",
@@ -753,7 +1040,14 @@
   "lib": 0.556,
   "cases": 2085,
   "first_term": 1871,
-  "last_term": 1881
+  "last_term": 1881,
+  "record": {
+   "cases": 2085,
+   "majority_share": 0.987,
+   "dissents": 21,
+   "opinions_written": 154,
+   "terms": 11
+  }
  },
  {
   "slug": "morrison-remick-waite",
@@ -771,7 +1065,14 @@
   "lib": 0.531,
   "cases": 3551,
   "first_term": 1873,
-  "last_term": 1888
+  "last_term": 1888,
+  "record": {
+   "cases": 3551,
+   "majority_share": 0.984,
+   "dissents": 54,
+   "opinions_written": 1021,
+   "terms": 16
+  }
  },
  {
   "slug": "john-marshall-harlan",
@@ -789,7 +1090,14 @@
   "lib": 0.514,
   "cases": 7958,
   "first_term": 1876,
-  "last_term": 1910
+  "last_term": 1910,
+  "record": {
+   "cases": 7958,
+   "majority_share": 0.95,
+   "dissents": 376,
+   "opinions_written": 903,
+   "terms": 35
+  }
  },
  {
   "slug": "william-burnham-woods",
@@ -807,7 +1115,14 @@
   "lib": 0.52,
   "cases": 1743,
   "first_term": 1876,
-  "last_term": 1888
+  "last_term": 1888,
+  "record": {
+   "cases": 1743,
+   "majority_share": 0.995,
+   "dissents": 8,
+   "opinions_written": 163,
+   "terms": 9
+  }
  },
  {
   "slug": "stanley-matthews",
@@ -825,7 +1140,14 @@
   "lib": 0.521,
   "cases": 2098,
   "first_term": 1876,
-  "last_term": 1888
+  "last_term": 1888,
+  "record": {
+   "cases": 2098,
+   "majority_share": 0.991,
+   "dissents": 17,
+   "opinions_written": 246,
+   "terms": 9
+  }
  },
  {
   "slug": "horace-gray",
@@ -843,7 +1165,14 @@
   "lib": 0.512,
   "cases": 5271,
   "first_term": 1876,
-  "last_term": 1901
+  "last_term": 1901,
+  "record": {
+   "cases": 5271,
+   "majority_share": 0.983,
+   "dissents": 82,
+   "opinions_written": 465,
+   "terms": 22
+  }
  },
  {
   "slug": "samuel-m-blatchford",
@@ -861,7 +1190,14 @@
   "lib": 0.518,
   "cases": 3149,
   "first_term": 1876,
-  "last_term": 1893
+  "last_term": 1893,
+  "record": {
+   "cases": 3149,
+   "majority_share": 0.998,
+   "dissents": 7,
+   "opinions_written": 427,
+   "terms": 14
+  }
  },
  {
   "slug": "lucius-quintus-cincinnatus-lamar",
@@ -879,7 +1215,14 @@
   "lib": 0.533,
   "cases": 1390,
   "first_term": 1887,
-  "last_term": 1892
+  "last_term": 1892,
+  "record": {
+   "cases": 1390,
+   "majority_share": 0.99,
+   "dissents": 12,
+   "opinions_written": 105,
+   "terms": 6
+  }
  },
  {
   "slug": "melville-weston-fuller",
@@ -897,7 +1240,14 @@
   "lib": 0.497,
   "cases": 4944,
   "first_term": 1888,
-  "last_term": 1909
+  "last_term": 1909,
+  "record": {
+   "cases": 4944,
+   "majority_share": 0.971,
+   "dissents": 138,
+   "opinions_written": 889,
+   "terms": 22
+  }
  },
  {
   "slug": "david-josiah-brewer",
@@ -915,7 +1265,14 @@
   "lib": 0.481,
   "cases": 4560,
   "first_term": 1889,
-  "last_term": 1909
+  "last_term": 1909,
+  "record": {
+   "cases": 4560,
+   "majority_share": 0.95,
+   "dissents": 218,
+   "opinions_written": 618,
+   "terms": 21
+  }
  },
  {
   "slug": "henry-billings-brown",
@@ -933,7 +1290,14 @@
   "lib": 0.481,
   "cases": 3591,
   "first_term": 1890,
-  "last_term": 1905
+  "last_term": 1905,
+  "record": {
+   "cases": 3591,
+   "majority_share": 0.961,
+   "dissents": 136,
+   "opinions_written": 506,
+   "terms": 16
+  }
  },
  {
   "slug": "george-shiras-jr",
@@ -951,7 +1315,14 @@
   "lib": 0.49,
   "cases": 2395,
   "first_term": 1892,
-  "last_term": 1902
+  "last_term": 1902,
+  "record": {
+   "cases": 2395,
+   "majority_share": 0.973,
+   "dissents": 62,
+   "opinions_written": 270,
+   "terms": 11
+  }
  },
  {
   "slug": "howell-edmunds-jackson",
@@ -969,7 +1340,14 @@
   "lib": 0.488,
   "cases": 702,
   "first_term": 1892,
-  "last_term": 1894
+  "last_term": 1894,
+  "record": {
+   "cases": 702,
+   "majority_share": 0.969,
+   "dissents": 13,
+   "opinions_written": 51,
+   "terms": 3
+  }
  },
  {
   "slug": "edward-douglass-white",
@@ -987,7 +1365,14 @@
   "lib": 0.49,
   "cases": 5952,
   "first_term": 1893,
-  "last_term": 1920
+  "last_term": 1920,
+  "record": {
+   "cases": 5952,
+   "majority_share": 0.962,
+   "dissents": 218,
+   "opinions_written": 804,
+   "terms": 28
+  }
  },
  {
   "slug": "rufus-wheeler-peckham",
@@ -1005,7 +1390,14 @@
   "lib": 0.464,
   "cases": 2774,
   "first_term": 1895,
-  "last_term": 1908
+  "last_term": 1908,
+  "record": {
+   "cases": 2774,
+   "majority_share": 0.944,
+   "dissents": 147,
+   "opinions_written": 327,
+   "terms": 14
+  }
  },
  {
   "slug": "joseph-mckenna",
@@ -1023,7 +1415,14 @@
   "lib": 0.503,
   "cases": 5745,
   "first_term": 1895,
-  "last_term": 1924
+  "last_term": 1924,
+  "record": {
+   "cases": 5745,
+   "majority_share": 0.959,
+   "dissents": 233,
+   "opinions_written": 715,
+   "terms": 29
+  }
  },
  {
   "slug": "oliver-wendell-holmes-jr",
@@ -1041,7 +1440,14 @@
   "lib": 0.512,
   "cases": 6070,
   "first_term": 1895,
-  "last_term": 1931
+  "last_term": 1931,
+  "record": {
+   "cases": 6070,
+   "majority_share": 0.97,
+   "dissents": 176,
+   "opinions_written": 994,
+   "terms": 31
+  }
  },
  {
   "slug": "william-rufus-day",
@@ -1059,7 +1465,14 @@
   "lib": 0.503,
   "cases": 4234,
   "first_term": 1895,
-  "last_term": 1922
+  "last_term": 1922,
+  "record": {
+   "cases": 4234,
+   "majority_share": 0.978,
+   "dissents": 85,
+   "opinions_written": 479,
+   "terms": 22
+  }
  },
  {
   "slug": "william-henry-moody",
@@ -1077,7 +1490,14 @@
   "lib": 0.453,
   "cases": 710,
   "first_term": 1906,
-  "last_term": 1910
+  "last_term": 1910,
+  "record": {
+   "cases": 710,
+   "majority_share": 0.969,
+   "dissents": 15,
+   "opinions_written": 65,
+   "terms": 5
+  }
  },
  {
   "slug": "horace-harmon-lurton",
@@ -1095,7 +1515,14 @@
   "lib": 0.484,
   "cases": 1138,
   "first_term": 1909,
-  "last_term": 1913
+  "last_term": 1913,
+  "record": {
+   "cases": 1138,
+   "majority_share": 0.98,
+   "dissents": 18,
+   "opinions_written": 100,
+   "terms": 5
+  }
  },
  {
   "slug": "charles-evans-hughes",
@@ -1113,7 +1540,14 @@
   "lib": 0.505,
   "cases": 1501,
   "first_term": 1910,
-  "last_term": 1915
+  "last_term": 1915,
+  "record": {
+   "cases": 1501,
+   "majority_share": 0.977,
+   "dissents": 34,
+   "opinions_written": 158,
+   "terms": 6
+  }
  },
  {
   "slug": "willis-van-devanter",
@@ -1131,7 +1565,14 @@
   "lib": 0.509,
   "cases": 5412,
   "first_term": 1910,
-  "last_term": 1936
+  "last_term": 1936,
+  "record": {
+   "cases": 5412,
+   "majority_share": 0.98,
+   "dissents": 107,
+   "opinions_written": 383,
+   "terms": 27
+  }
  },
  {
   "slug": "joseph-rucker-lamar",
@@ -1149,7 +1590,14 @@
   "lib": 0.482,
   "cases": 1293,
   "first_term": 1910,
-  "last_term": 1915
+  "last_term": 1915,
+  "record": {
+   "cases": 1293,
+   "majority_share": 0.982,
+   "dissents": 22,
+   "opinions_written": 121,
+   "terms": 6
+  }
  },
  {
   "slug": "mahlon-pitney",
@@ -1167,7 +1615,14 @@
   "lib": 0.531,
   "cases": 2513,
   "first_term": 1911,
-  "last_term": 1922
+  "last_term": 1922,
+  "record": {
+   "cases": 2513,
+   "majority_share": 0.957,
+   "dissents": 105,
+   "opinions_written": 280,
+   "terms": 12
+  }
  },
  {
   "slug": "james-clark-mcreynolds",
@@ -1185,7 +1640,14 @@
   "lib": 0.506,
   "cases": 4990,
   "first_term": 1914,
-  "last_term": 1940
+  "last_term": 1940,
+  "record": {
+   "cases": 4990,
+   "majority_share": 0.937,
+   "dissents": 295,
+   "opinions_written": 644,
+   "terms": 27
+  }
  },
  {
   "slug": "louis-dembitz-brandeis",
@@ -1203,7 +1665,14 @@
   "lib": 0.561,
   "cases": 4222,
   "first_term": 1915,
-  "last_term": 1938
+  "last_term": 1938,
+  "record": {
+   "cases": 4222,
+   "majority_share": 0.947,
+   "dissents": 212,
+   "opinions_written": 559,
+   "terms": 24
+  }
  },
  {
   "slug": "john-hessin-clarke",
@@ -1221,7 +1690,14 @@
   "lib": 0.576,
   "cases": 1251,
   "first_term": 1916,
-  "last_term": 1921
+  "last_term": 1921,
+  "record": {
+   "cases": 1251,
+   "majority_share": 0.921,
+   "dissents": 96,
+   "opinions_written": 154,
+   "terms": 6
+  }
  },
  {
   "slug": "william-howard-taft",
@@ -1239,7 +1715,14 @@
   "lib": 0.503,
   "cases": 1618,
   "first_term": 1921,
-  "last_term": 1929
+  "last_term": 1929,
+  "record": {
+   "cases": 1618,
+   "majority_share": 0.989,
+   "dissents": 18,
+   "opinions_written": 262,
+   "terms": 9
+  }
  },
  {
   "slug": "george-sutherland",
@@ -1257,7 +1740,14 @@
   "lib": 0.504,
   "cases": 2750,
   "first_term": 1922,
-  "last_term": 1937
+  "last_term": 1937,
+  "record": {
+   "cases": 2750,
+   "majority_share": 0.968,
+   "dissents": 85,
+   "opinions_written": 332,
+   "terms": 16
+  }
  },
  {
   "slug": "pierce-butler",
@@ -1275,7 +1765,14 @@
   "lib": 0.504,
   "cases": 2970,
   "first_term": 1922,
-  "last_term": 1939
+  "last_term": 1939,
+  "record": {
+   "cases": 2970,
+   "majority_share": 0.954,
+   "dissents": 134,
+   "opinions_written": 399,
+   "terms": 18
+  }
  },
  {
   "slug": "edward-terry-sanford",
@@ -1293,7 +1790,14 @@
   "lib": 0.497,
   "cases": 1381,
   "first_term": 1922,
-  "last_term": 1929
+  "last_term": 1929,
+  "record": {
+   "cases": 1381,
+   "majority_share": 0.984,
+   "dissents": 22,
+   "opinions_written": 142,
+   "terms": 8
+  }
  },
  {
   "slug": "harlan-fiske-stone",
@@ -1311,7 +1815,14 @@
   "lib": 0.578,
   "cases": 3543,
   "first_term": 1924,
-  "last_term": 1945
+  "last_term": 1945,
+  "record": {
+   "cases": 3543,
+   "majority_share": 0.934,
+   "dissents": 218,
+   "opinions_written": 614,
+   "terms": 22
+  }
  },
  {
   "slug": "charles-evans-hughes-75",
@@ -1329,7 +1840,14 @@
   "lib": 0.579,
   "cases": 1895,
   "first_term": 1929,
-  "last_term": 1940
+  "last_term": 1940,
+  "record": {
+   "cases": 1895,
+   "majority_share": 0.967,
+   "dissents": 59,
+   "opinions_written": 289,
+   "terms": 12
+  }
  },
  {
   "slug": "owen-josephus-roberts",
@@ -1347,7 +1865,14 @@
   "lib": 0.542,
   "cases": 2443,
   "first_term": 1929,
-  "last_term": 1944
+  "last_term": 1944,
+  "record": {
+   "cases": 2443,
+   "majority_share": 0.904,
+   "dissents": 218,
+   "opinions_written": 430,
+   "terms": 16
+  }
  },
  {
   "slug": "benjamin-nathan-cardozo",
@@ -1365,7 +1890,14 @@
   "lib": 0.608,
   "cases": 1084,
   "first_term": 1931,
-  "last_term": 1937
+  "last_term": 1937,
+  "record": {
+   "cases": 1084,
+   "majority_share": 0.93,
+   "dissents": 64,
+   "opinions_written": 172,
+   "terms": 7
+  }
  },
  {
   "slug": "hugo-black",
@@ -1383,7 +1915,14 @@
   "lib": 0.713,
   "cases": 4727,
   "first_term": 1937,
-  "last_term": 1970
+  "last_term": 1970,
+  "record": {
+   "cases": 4727,
+   "majority_share": 0.803,
+   "dissents": 886,
+   "opinions_written": 1147,
+   "terms": 34
+  }
  },
  {
   "slug": "stanley-reed",
@@ -1401,7 +1940,14 @@
   "lib": 0.548,
   "cases": 2516,
   "first_term": 1937,
-  "last_term": 1956
+  "last_term": 1956,
+  "record": {
+   "cases": 2516,
+   "majority_share": 0.887,
+   "dissents": 264,
+   "opinions_written": 393,
+   "terms": 20
+  }
  },
  {
   "slug": "felix-frankfurter",
@@ -1419,7 +1965,14 @@
   "lib": 0.531,
   "cases": 3116,
   "first_term": 1938,
-  "last_term": 1961
+  "last_term": 1961,
+  "record": {
+   "cases": 3116,
+   "majority_share": 0.817,
+   "dissents": 487,
+   "opinions_written": 814,
+   "terms": 24
+  }
  },
  {
   "slug": "william-o-douglas",
@@ -1437,7 +1990,14 @@
   "lib": 0.763,
   "cases": 5154,
   "first_term": 1938,
-  "last_term": 1975
+  "last_term": 1975,
+  "record": {
+   "cases": 5154,
+   "majority_share": 0.749,
+   "dissents": 1194,
+   "opinions_written": 1524,
+   "terms": 38
+  }
  },
  {
   "slug": "frank-murphy",
@@ -1455,7 +2015,14 @@
   "lib": 0.72,
   "cases": 1423,
   "first_term": 1939,
-  "last_term": 1948
+  "last_term": 1948,
+  "record": {
+   "cases": 1423,
+   "majority_share": 0.857,
+   "dissents": 187,
+   "opinions_written": 233,
+   "terms": 10
+  }
  },
  {
   "slug": "james-francis-byrnes",
@@ -1473,7 +2040,14 @@
   "lib": 0.6,
   "cases": 167,
   "first_term": 1941,
-  "last_term": 1942
+  "last_term": 1942,
+  "record": {
+   "cases": 167,
+   "majority_share": 0.926,
+   "dissents": 12,
+   "opinions_written": 18,
+   "terms": 2
+  }
  },
  {
   "slug": "robert-h-jackson",
@@ -1491,7 +2065,14 @@
   "lib": 0.475,
   "cases": 1680,
   "first_term": 1941,
-  "last_term": 1953
+  "last_term": 1953,
+  "record": {
+   "cases": 1680,
+   "majority_share": 0.824,
+   "dissents": 241,
+   "opinions_written": 352,
+   "terms": 13
+  }
  },
  {
   "slug": "wiley-rutledge",
@@ -1509,7 +2090,14 @@
   "lib": 0.711,
   "cases": 931,
   "first_term": 1942,
-  "last_term": 1948
+  "last_term": 1948,
+  "record": {
+   "cases": 931,
+   "majority_share": 0.828,
+   "dissents": 150,
+   "opinions_written": 190,
+   "terms": 7
+  }
  },
  {
   "slug": "harold-burton",
@@ -1527,7 +2115,14 @@
   "lib": 0.465,
   "cases": 1527,
   "first_term": 1945,
-  "last_term": 1958
+  "last_term": 1958,
+  "record": {
+   "cases": 1527,
+   "majority_share": 0.834,
+   "dissents": 246,
+   "opinions_written": 206,
+   "terms": 14
+  }
  },
  {
   "slug": "fred-vinson",
@@ -1545,7 +2140,14 @@
   "lib": 0.451,
   "cases": 812,
   "first_term": 1946,
-  "last_term": 1952
+  "last_term": 1952,
+  "record": {
+   "cases": 812,
+   "majority_share": 0.888,
+   "dissents": 87,
+   "opinions_written": 99,
+   "terms": 7
+  }
  },
  {
   "slug": "tom-clark",
@@ -1563,7 +2165,14 @@
   "lib": 0.542,
   "cases": 2292,
   "first_term": 1949,
-  "last_term": 1966
+  "last_term": 1966,
+  "record": {
+   "cases": 2292,
+   "majority_share": 0.871,
+   "dissents": 271,
+   "opinions_written": 426,
+   "terms": 18
+  }
  },
  {
   "slug": "sherman-minton",
@@ -1581,7 +2190,14 @@
   "lib": 0.46,
   "cases": 717,
   "first_term": 1949,
-  "last_term": 1956
+  "last_term": 1956,
+  "record": {
+   "cases": 717,
+   "majority_share": 0.865,
+   "dissents": 89,
+   "opinions_written": 109,
+   "terms": 8
+  }
  },
  {
   "slug": "earl-warren",
@@ -1599,7 +2215,14 @@
   "lib": 0.746,
   "cases": 2205,
   "first_term": 1953,
-  "last_term": 1968
+  "last_term": 1968,
+  "record": {
+   "cases": 2205,
+   "majority_share": 0.89,
+   "dissents": 225,
+   "opinions_written": 269,
+   "terms": 16
+  }
  },
  {
   "slug": "john-marshall-harlan-ii",
@@ -1617,7 +2240,14 @@
   "lib": 0.433,
   "cases": 2351,
   "first_term": 1954,
-  "last_term": 1970
+  "last_term": 1970,
+  "record": {
+   "cases": 2351,
+   "majority_share": 0.72,
+   "dissents": 591,
+   "opinions_written": 845,
+   "terms": 17
+  }
  },
  {
   "slug": "william-brennan",
@@ -1635,7 +2265,14 @@
   "lib": 0.713,
   "cases": 5327,
   "first_term": 1956,
-  "last_term": 1989
+  "last_term": 1989,
+  "record": {
+   "cases": 5327,
+   "majority_share": 0.788,
+   "dissents": 1063,
+   "opinions_written": 1221,
+   "terms": 34
+  }
  },
  {
   "slug": "charles-whittaker",
@@ -1653,7 +2290,14 @@
   "lib": 0.435,
   "cases": 691,
   "first_term": 1956,
-  "last_term": 1961
+  "last_term": 1961,
+  "record": {
+   "cases": 691,
+   "majority_share": 0.784,
+   "dissents": 139,
+   "opinions_written": 117,
+   "terms": 6
+  }
  },
  {
   "slug": "potter-stewart",
@@ -1671,7 +2315,14 @@
   "lib": 0.508,
   "cases": 3592,
   "first_term": 1958,
-  "last_term": 1980
+  "last_term": 1980,
+  "record": {
+   "cases": 3592,
+   "majority_share": 0.838,
+   "dissents": 554,
+   "opinions_written": 760,
+   "terms": 23
+  }
  },
  {
   "slug": "byron-white",
@@ -1689,7 +2340,14 @@
   "lib": 0.489,
   "cases": 4946,
   "first_term": 1961,
-  "last_term": 1992
+  "last_term": 1992,
+  "record": {
+   "cases": 4946,
+   "majority_share": 0.878,
+   "dissents": 570,
+   "opinions_written": 1050,
+   "terms": 32
+  }
  },
  {
   "slug": "arthur-goldberg",
@@ -1707,7 +2365,14 @@
   "lib": 0.761,
   "cases": 475,
   "first_term": 1962,
-  "last_term": 1964
+  "last_term": 1964,
+  "record": {
+   "cases": 475,
+   "majority_share": 0.904,
+   "dissents": 39,
+   "opinions_written": 99,
+   "terms": 3
+  }
  },
  {
   "slug": "abe-fortas",
@@ -1725,7 +2390,14 @@
   "lib": 0.724,
   "cases": 581,
   "first_term": 1965,
-  "last_term": 1968
+  "last_term": 1968,
+  "record": {
+   "cases": 581,
+   "majority_share": 0.886,
+   "dissents": 56,
+   "opinions_written": 106,
+   "terms": 4
+  }
  },
  {
   "slug": "thurgood-marshall",
@@ -1743,7 +2415,14 @@
   "lib": 0.72,
   "cases": 3881,
   "first_term": 1967,
-  "last_term": 1990
+  "last_term": 1990,
+  "record": {
+   "cases": 3881,
+   "majority_share": 0.72,
+   "dissents": 968,
+   "opinions_written": 821,
+   "terms": 24
+  }
  },
  {
   "slug": "warren-burger",
@@ -1761,7 +2440,14 @@
   "lib": 0.342,
   "cases": 2809,
   "first_term": 1969,
-  "last_term": 1985
+  "last_term": 1985,
+  "record": {
+   "cases": 2809,
+   "majority_share": 0.863,
+   "dissents": 358,
+   "opinions_written": 516,
+   "terms": 17
+  }
  },
  {
   "slug": "harry-blackmun",
@@ -1779,7 +2465,14 @@
   "lib": 0.519,
   "cases": 3771,
   "first_term": 1969,
-  "last_term": 1993
+  "last_term": 1993,
+  "record": {
+   "cases": 3771,
+   "majority_share": 0.828,
+   "dissents": 599,
+   "opinions_written": 855,
+   "terms": 25
+  }
  },
  {
   "slug": "lewis-powell",
@@ -1797,7 +2490,14 @@
   "lib": 0.392,
   "cases": 2652,
   "first_term": 1971,
-  "last_term": 1986
+  "last_term": 1986,
+  "record": {
+   "cases": 2652,
+   "majority_share": 0.9,
+   "dissents": 243,
+   "opinions_written": 607,
+   "terms": 16
+  }
  },
  {
   "slug": "william-rehnquist",
@@ -1815,7 +2515,14 @@
   "lib": 0.3,
   "cases": 4535,
   "first_term": 1971,
-  "last_term": 2004
+  "last_term": 2004,
+  "record": {
+   "cases": 4535,
+   "majority_share": 0.826,
+   "dissents": 754,
+   "opinions_written": 905,
+   "terms": 34
+  }
  },
  {
   "slug": "john-paul-stevens",
@@ -1833,7 +2540,14 @@
   "lib": 0.605,
   "cases": 4268,
   "first_term": 1975,
-  "last_term": 2009
+  "last_term": 2009,
+  "record": {
+   "cases": 4268,
+   "majority_share": 0.737,
+   "dissents": 1054,
+   "opinions_written": 1514,
+   "terms": 35
+  }
  },
  {
   "slug": "sandra-day-oconnor",
@@ -1851,7 +2565,14 @@
   "lib": 0.387,
   "cases": 2914,
   "first_term": 1981,
-  "last_term": 2005
+  "last_term": 2005,
+  "record": {
+   "cases": 2914,
+   "majority_share": 0.876,
+   "dissents": 354,
+   "opinions_written": 646,
+   "terms": 25
+  }
  },
  {
   "slug": "antonin-scalia",
@@ -1869,7 +2590,14 @@
   "lib": 0.352,
   "cases": 2861,
   "first_term": 1986,
-  "last_term": 2015
+  "last_term": 2015,
+  "record": {
+   "cases": 2861,
+   "majority_share": 0.832,
+   "dissents": 473,
+   "opinions_written": 864,
+   "terms": 30
+  }
  },
  {
   "slug": "anthony-kennedy",
@@ -1887,7 +2615,14 @@
   "lib": 0.418,
   "cases": 2883,
   "first_term": 1987,
-  "last_term": 2017
+  "last_term": 2017,
+  "record": {
+   "cases": 2883,
+   "majority_share": 0.917,
+   "dissents": 230,
+   "opinions_written": 547,
+   "terms": 31
+  }
  },
  {
   "slug": "david-souter",
@@ -1905,7 +2640,14 @@
   "lib": 0.572,
   "cases": 1753,
   "first_term": 1990,
-  "last_term": 2008
+  "last_term": 2008,
+  "record": {
+   "cases": 1753,
+   "majority_share": 0.833,
+   "dissents": 284,
+   "opinions_written": 364,
+   "terms": 19
+  }
  },
  {
   "slug": "clarence-thomas",
@@ -1923,7 +2665,14 @@
   "lib": 0.324,
   "cases": 2846,
   "first_term": 1991,
-  "last_term": 2025
+  "last_term": 2025,
+  "record": {
+   "cases": 2846,
+   "majority_share": 0.802,
+   "dissents": 551,
+   "opinions_written": 853,
+   "terms": 35
+  }
  },
  {
   "slug": "ruth-bader-ginsburg",
@@ -1941,7 +2690,14 @@
   "lib": 0.604,
   "cases": 2231,
   "first_term": 1993,
-  "last_term": 2019
+  "last_term": 2019,
+  "record": {
+   "cases": 2231,
+   "majority_share": 0.8,
+   "dissents": 439,
+   "opinions_written": 473,
+   "terms": 27
+  }
  },
  {
   "slug": "stephen-breyer",
@@ -1959,7 +2715,14 @@
   "lib": 0.571,
   "cases": 2263,
   "first_term": 1994,
-  "last_term": 2021
+  "last_term": 2021,
+  "record": {
+   "cases": 2263,
+   "majority_share": 0.809,
+   "dissents": 419,
+   "opinions_written": 575,
+   "terms": 28
+  }
  },
  {
   "slug": "john-roberts",
@@ -1977,7 +2740,14 @@
   "lib": 0.424,
   "cases": 1539,
   "first_term": 2005,
-  "last_term": 2025
+  "last_term": 2025,
+  "record": {
+   "cases": 1539,
+   "majority_share": 0.908,
+   "dissents": 138,
+   "opinions_written": 241,
+   "terms": 21
+  }
  },
  {
   "slug": "samuel-alito",
@@ -1995,7 +2765,14 @@
   "lib": 0.344,
   "cases": 1513,
   "first_term": 2005,
-  "last_term": 2025
+  "last_term": 2025,
+  "record": {
+   "cases": 1513,
+   "majority_share": 0.822,
+   "dissents": 259,
+   "opinions_written": 391,
+   "terms": 21
+  }
  },
  {
   "slug": "sonia-sotomayor",
@@ -2013,7 +2790,14 @@
   "lib": 0.653,
   "cases": 1220,
   "first_term": 2009,
-  "last_term": 2025
+  "last_term": 2025,
+  "record": {
+   "cases": 1220,
+   "majority_share": 0.778,
+   "dissents": 263,
+   "opinions_written": 320,
+   "terms": 17
+  }
  },
  {
   "slug": "elena-kagan",
@@ -2031,7 +2815,14 @@
   "lib": 0.628,
   "cases": 1128,
   "first_term": 2009,
-  "last_term": 2025
+  "last_term": 2025,
+  "record": {
+   "cases": 1128,
+   "majority_share": 0.817,
+   "dissents": 195,
+   "opinions_written": 179,
+   "terms": 17
+  }
  },
  {
   "slug": "neil-gorsuch",
@@ -2049,7 +2840,14 @@
   "lib": 0.416,
   "cases": 632,
   "first_term": 2016,
-  "last_term": 2025
+  "last_term": 2025,
+  "record": {
+   "cases": 632,
+   "majority_share": 0.817,
+   "dissents": 105,
+   "opinions_written": 172,
+   "terms": 10
+  }
  },
  {
   "slug": "brett-kavanaugh",
@@ -2067,7 +2865,14 @@
   "lib": 0.418,
   "cases": 512,
   "first_term": 2018,
-  "last_term": 2025
+  "last_term": 2025,
+  "record": {
+   "cases": 512,
+   "majority_share": 0.94,
+   "dissents": 30,
+   "opinions_written": 112,
+   "terms": 8
+  }
  },
  {
   "slug": "amy-coney-barrett",
@@ -2085,7 +2890,14 @@
   "lib": 0.414,
   "cases": 377,
   "first_term": 2020,
-  "last_term": 2025
+  "last_term": 2025,
+  "record": {
+   "cases": 377,
+   "majority_share": 0.914,
+   "dissents": 31,
+   "opinions_written": 77,
+   "terms": 6
+  }
  },
  {
   "slug": "ketanji-brown-jackson",
@@ -2103,6 +2915,13 @@
   "lib": 0.705,
   "cases": 247,
   "first_term": 2022,
-  "last_term": 2025
+  "last_term": 2025,
+  "record": {
+   "cases": 247,
+   "majority_share": 0.742,
+   "dissents": 61,
+   "opinions_written": 88,
+   "terms": 4
+  }
  }
 ]

@@ -6,3 +6,6 @@ justices.json, cases.json
 martin_quinn.json
   Martin-Quinn scores (Andrew D. Martin & Kevin M. Quinn, mqscores.wustl.edu), posterior means by
   justice and term. Terms 1937-2019 from the 2020 release; 2020-2024 from the 2024 release.
+terms.json
+  Cases decided per Supreme Court term (1791-2024) by decision type, and by decision direction, counted from
+  every case record in the Supreme Court Database via the JUDGMENT project.

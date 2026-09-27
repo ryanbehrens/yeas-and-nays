@@ -16,6 +16,8 @@ TODAY = "2026-09-26"
 J = json.load(open(os.path.join(RAW, "justices.json")))
 MQ = json.load(open(os.path.join(RAW, "martin_quinn.json")))
 CASES = json.load(open(os.path.join(RAW, "cases.json")))
+TERMS = json.load(open(os.path.join(RAW, "terms.json")))
+REC = {x["name"]: x.get("record") or {} for x in J}
 
 PRES_FIX = {"Ulysses Grant": "Ulysses S. Grant", "William H. Taft": "William Howard Taft"}
 PRES_PARTY = {n: p for n, p, *_ in ALL_PRES}
@@ -63,6 +65,7 @@ for p in people.values():
         p["lean"] = "nr"; p["method"] = "none"
     p["known"] = ex.get("known", "")
     p["current"] = any(s["ended"] is None for s in p["stints"])
+    p["record"] = REC.get(p["name"], {})
     p["chief"] = any(s["position"] == "chief" for s in p["stints"])
     p["id"] = p["name"].lower().replace(".", "").replace(",", "").replace("'", "").replace(" ", "-")
     p["first"] = p["stints"][0]["oath"]; p["last"] = None if p["current"] else last
@@ -85,6 +88,18 @@ for y in years:
         p = people[r["name"]]; row["lean"][p["lean"]] = row["lean"].get(p["lean"], 0) + 1
         ab = PARTY_ABBR[r["party"]]; row["party"][ab] = row["party"].get(ab, 0) + 1
     balance.append(row)
+
+# ---------- caseload per term ----------
+ARGUED = ("opinion-of-the-court", "judgment-of-the-court", "per-curiam-argued", "seriatim")
+caseload = []
+for y in sorted(TERMS["types"], key=int):
+    t = TERMS["types"][y]; d = TERMS["direction"].get(y, {})
+    row = dict(y=int(y), argued=sum(t.get(k, 0) for k in ARGUED), summary=t.get("per-curiam-no-argument", 0),
+               other=t.get("equally-divided", 0) + t.get("decree", 0) + t.get("None", 0))
+    if int(y) >= 1946: row["lib"] = d.get("liberal", 0); row["con"] = d.get("conservative", 0)
+    caseload.append(row)
+TOTAL_CASES = sum(r["argued"] + r["summary"] + r["other"] for r in caseload)
+TOTAL_ARGUED = sum(r["argued"] for r in caseload)
 
 # ---------- rulings ----------
 US_FIX = {"bostock": "590 U.S. 644", "dobbs": "597 U.S. 215", "bruen": "597 U.S. 1", "loperbright": "603 U.S. 369", "trumpus": "603 U.S. 593"}
@@ -122,7 +137,7 @@ json.dump([dict(id=r["id"], title=r["title"], date=r["date"], split=r["split"], 
 def portrait_url(name):
     return None
 
-PAGE = dict(people=sorted(people.values(), key=lambda p: p["first"]), balance=balance, rulings=rulings, topics=TOPICS, leans=LEAN_NAMES, today=TODAY)
+PAGE = dict(caseload=caseload, total_cases=TOTAL_CASES, total_argued=TOTAL_ARGUED, people=sorted(people.values(), key=lambda p: p["first"]), balance=balance, rulings=rulings, topics=TOPICS, leans=LEAN_NAMES, today=TODAY)
 
 import seo
 BDESC = "All 116 Supreme Court justices: who appointed them, Republican or Democrat, and how they voted, plus 77 landmark rulings from Marbury v. Madison to Dobbs, sorted by what they did."
@@ -135,7 +150,7 @@ t.append("""  <nav class="crumbs">The Bench</nav>
     <div><div class="eyebrow">The Supreme Court</div><h1>The Bench</h1>
     <p class="sum">All 116 justices: who appointed them, whether that president was a Republican or a Democrat, and how each one actually voted. Plus the landmark rulings that shaped the country, sorted by what they did.</p></div>
   </section>
-  <nav class="jump" aria-label="Jump to section"><a href="#court">The Court on a date</a><a href="#balance">Balance over time</a><a href="#justices">Every justice</a><a href="#rulings">Landmark rulings</a><a href="#method">How this works</a></nav>
+  <nav class="jump" aria-label="Jump to section"><a href="#court">The Court on a date</a><a href="#balance">Balance over time</a><a href="#caseload">Caseload</a><a href="#justices">Every justice</a><a href="#rulings">Landmark rulings</a><a href="#method">How this works</a></nav>
 
   <section id="court" class="block" style="border-top:0">
     <h2 id="courtTitle">The Court today</h2>
@@ -150,6 +165,15 @@ t.append("""  <nav class="crumbs">The Bench</nav>
     <div class="card"><h3>How the justices leaned</h3><div class="chart" id="chLean"></div><div class="legend" id="legLean"></div>
       <p class="note">From 1937 on, lean comes from Martin-Quinn voting scores; before that it is a labeled historians' assessment, and before 1865 most justices are not rated.</p></div>
     <div class="card" style="margin-top:14px"><h3>Who appointed them</h3><div class="chart" id="chParty"></div><div class="legend" id="legParty"></div></div>
+  </section>
+
+  <section id="caseload" class="block">
+    <h2>How many cases the Court decides</h2>
+    <p class="lede" id="clSum"></p>
+    <div class="card"><h3>Decisions each term</h3><div class="chart" id="chCases"></div><div class="legend" id="legCases"></div>
+      <p class="note">A term runs from October to the following summer and is named for the year it starts. "After argument" is the Court's main (plenary) docket: cases briefed, argued and decided with a full opinion. "Summary" decisions are unsigned rulings issued without oral argument. "Other" covers 4–4 ties, which leave the lower court's ruling in place, and decrees. The Court also turns down several thousand requests to hear cases each year; those are not counted here.</p></div>
+    <div class="card" style="margin-top:14px"><h3>Which way the decisions went, 1946 to today</h3><div class="chart" id="chDir"></div><div class="legend"><span><i class="sw" style="background:var(--dem)"></i>Liberal outcome</span><span><i class="sw" style="background:var(--rep)"></i>Conservative outcome</span></div>
+      <p class="note">Share of each term's decisions coded liberal or conservative by the Supreme Court Database, which judges the outcome relative to the parties in each case (for example, a ruling for a criminal defendant or a civil rights claimant counts as liberal). Its coding is standard in political science but sometimes differs from how the public sees a case. Decisions with no clear direction are left out.</p></div>
   </section>
 
   <section id="justices" class="block">

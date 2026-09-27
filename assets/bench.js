@@ -69,7 +69,44 @@
   }
   const leanColor = k => css(LEAN_VAR[k]) || css("--line");
   const partyColor = k => { const c = PARTY_COLOR[k]; return c.startsWith("var(") ? css(c.slice(4, -1)) : c; };
+  function caseChart(){
+    const el = $("#chCases"), W = Math.max(300, el.clientWidth || 600), H = 170, M = {l: 34, r: 6, t: 8, b: 20};
+    const svg = d3.select(el).html("").append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("role", "img").attr("aria-label", "Supreme Court decisions per term");
+    const C = B.caseload, keys = [["argued", "--accent"], ["summary", "--int"], ["other", "--muted"]];
+    const x = d3.scaleBand().domain(C.map(d => d.y)).range([M.l, W - M.r]).paddingInner(.08);
+    const y = d3.scaleLinear().domain([0, d3.max(C, d => d.argued + d.summary + d.other)]).nice(4).range([H - M.b, M.t]);
+    y.ticks(4).forEach(t => { svg.append("line").attr("x1", M.l).attr("x2", W - M.r).attr("y1", y(t)).attr("y2", y(t)).attr("stroke", css("--line"));
+      svg.append("text").attr("x", M.l - 5).attr("y", y(t) + 3.5).attr("text-anchor", "end").text(t); });
+    C.forEach(d => { let acc = 0; keys.forEach(([k, v]) => { const n = d[k]; if (!n) return;
+      svg.append("rect").attr("x", x(d.y)).attr("width", x.bandwidth()).attr("y", y(acc + n)).attr("height", y(acc) - y(acc + n)).attr("fill", css(v)); acc += n; }); });
+    d3.range(1800, 2026, W < 600 ? 50 : 25).forEach(yr => x(yr) != null && svg.append("text").attr("x", x(yr) + x.bandwidth() / 2).attr("y", H - 5).attr("text-anchor", "middle").text(yr));
+    const hl = svg.append("rect").attr("y", M.t).attr("height", H - M.t - M.b).attr("fill", "none").attr("stroke", css("--ink")).style("opacity", 0);
+    svg.append("rect").attr("x", M.l).attr("y", M.t).attr("width", W - M.l - M.r).attr("height", H - M.t - M.b).attr("fill", "transparent")
+      .on("mousemove", ev => { const [mx] = d3.pointer(ev); const d = C[Math.max(0, Math.min(C.length - 1, Math.floor((mx - M.l) / x.step())))];
+        hl.attr("x", x(d.y) - 1).attr("width", x.bandwidth() + 2).style("opacity", .8);
+        showTip(ev, `<b>${d.y} term</b><br>After argument: ${d.argued}<br>Summary: ${d.summary}<br>Other: ${d.other}<br>Total: ${d.argued + d.summary + d.other}`); })
+      .on("mouseleave", () => { hl.style("opacity", 0); hideTip(); });
+  }
+  function dirChart(){
+    const el = $("#chDir"), W = Math.max(300, el.clientWidth || 600), H = 150, M = {l: 34, r: 6, t: 8, b: 20};
+    const C = B.caseload.filter(d => d.y >= 1946 && (d.lib + d.con) > 0).map(d => ({y: d.y, s: d.lib / (d.lib + d.con) * 100, n: d.lib + d.con}));
+    const svg = d3.select(el).html("").append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("role", "img").attr("aria-label", "Share of decisions with a liberal outcome");
+    const x = d3.scaleLinear().domain([1946, d3.max(C, d => d.y)]).range([M.l, W - M.r]), y = d3.scaleLinear().domain([0, 100]).range([H - M.b, M.t]);
+    svg.append("rect").attr("x", M.l).attr("width", W - M.l - M.r).attr("y", M.t).attr("height", H - M.t - M.b).attr("fill", css("--rep")).attr("fill-opacity", .5);
+    svg.append("path").attr("d", d3.area().x(d => x(d.y)).y0(y(0)).y1(d => y(d.s)).curve(d3.curveStep)(C)).attr("fill", css("--dem")).attr("fill-opacity", .75);
+    [0, 50, 100].forEach(t => { svg.append("line").attr("x1", M.l).attr("x2", W - M.r).attr("y1", y(t)).attr("y2", y(t)).attr("stroke", t === 50 ? css("--ink") : css("--line")).attr("stroke-dasharray", t === 50 ? "4 3" : null);
+      svg.append("text").attr("x", M.l - 5).attr("y", y(t) + 3.5).attr("text-anchor", "end").text(t + "%"); });
+    d3.range(1950, 2025, 10).forEach(yr => svg.append("text").attr("x", x(yr)).attr("y", H - 5).attr("text-anchor", "middle").text(yr));
+    svg.append("rect").attr("x", M.l).attr("y", M.t).attr("width", W - M.l - M.r).attr("height", H - M.t - M.b).attr("fill", "transparent")
+      .on("mousemove", ev => { const [mx] = d3.pointer(ev); const yr = Math.round(x.invert(mx)); const d = C.find(c => c.y === yr); if (!d) return hideTip();
+        showTip(ev, `<b>${d.y} term</b><br>Liberal outcome: ${d.s.toFixed(0)}%<br>Conservative: ${(100 - d.s).toFixed(0)}%<br>${d.n} decisions with a direction`); })
+      .on("mouseleave", hideTip);
+  }
+  (function(){ const C = B.caseload, last = C[C.length - 1], peak = C.reduce((a, b) => (b.argued > a.argued ? b : a));
+    $("#clSum").innerHTML = `The Court has decided <b>${B.total_cases.toLocaleString()}</b> cases since 1791, <b>${B.total_argued.toLocaleString()}</b> of them after argument with a full opinion. The busiest term was ${peak.y}, with ${peak.argued} argued decisions; in the ${last.y} term${last.y >= 2025 ? " (from provisional records, before the database's official release)" : ""} it decided ${last.argued}.`;
+    $("#legCases").innerHTML = [["After argument (plenary)", "--accent"], ["Summary, no argument", "--int"], ["Other (4–4 ties, decrees)", "--muted"]].map(([l, v]) => `<span><i class="sw" style="background:var(${v})"></i>${l}</span>`).join(""); })();
   function drawCharts(){
+    caseChart(); dirChart();
     stacked($("#chLean"), "lean", LEAN_ORDER, leanColor, "Justices by lean, each year");
     stacked($("#chParty"), "party", PARTY_ORDER, partyColor, "Justices by appointing president's party, each year");
   }
@@ -104,6 +141,7 @@
         ${p.drift ? `<p class="drift">${esc(p.drift)}</p>` : ""}
         ${p.method === "score" ? spark(p) : ""}
         ${p.known ? `<p>${esc(p.known)}</p>` : ""}
+        ${p.record && p.record.cases ? `<p class="rec"><span><b>${p.record.cases.toLocaleString()}</b> cases voted in</span><span><b>${Math.round(p.record.majority_share * 100)}%</b> in the majority</span><span><b>${(p.record.dissents || 0).toLocaleString()}</b> dissents</span><span><b>${(p.record.opinions_written || 0).toLocaleString()}</b> opinions written</span></p>` : ""}
         ${p.stints.filter(s => s.conf).map(s => `<p class="meta">Senate confirmation vote: ${esc(s.conf)}</p>`).join("")}
         <p class="meta">${p.stints.map(s => `${s.position === "chief" ? "Chief justice" : "Associate justice"}, sworn in ${fmt(s.oath)}${s.ended ? `; ${s.end_reason || "left"} ${fmt(s.ended)}` : ""}`).join(". ")}.</p>
         ${B.rulings.some(r => r.author === p.name) ? `<p class="meta">Wrote: ${B.rulings.filter(r => r.author === p.name).map(r => `<a href="#r-${r.id}" data-r="${r.id}">${esc(r.title)}</a>`).join(", ")}</p>` : ""}
