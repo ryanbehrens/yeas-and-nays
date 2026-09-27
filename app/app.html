@@ -51,6 +51,11 @@
   --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
 }
 
+/* extra chart series: prices and interest rates */
+:root{--cpi:#e07fb0; --mort:#3db8c9; --t10:#b3c2d6}
+.rangebox{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-2)}
+.rangebox input{width:62px;font:inherit;font-size:12.5px;padding:4px 6px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-variant-numeric:tabular-nums}
+.rangebox input:focus{outline:2px solid var(--accent);outline-offset:1px}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.5;padding:0 20px 150px;}
@@ -395,16 +400,18 @@ footer a{color:var(--ink-2)}
       </section>
       <section class="card" id="chartCard">
         <div class="card-h">
-          <h2>Debt, deficits and interest over time</h2>
+          <h2>Debt, prices and interest rates over time</h2>
           <div class="controls">
             <div class="seg" id="zoomSeg" role="group" aria-label="Chart range">
               <button id="z-follow" data-zoom="follow" aria-pressed="true">Follow</button>
               <button id="z-full" data-zoom="full" aria-pressed="false">Full history</button>
+              <button id="z-range" data-zoom="range" aria-pressed="false">Custom</button>
             </div>
+            <div class="rangebox" id="rangeBox"><label for="rFrom">From</label><input id="rFrom" type="number" inputmode="numeric" min="1776" max="2025" value="1900"><label for="rTo">to</label><input id="rTo" type="number" inputmode="numeric" min="1777" max="2026" value="2025"></div>
           </div>
         </div>
         <div class="frow" id="seriesChips" style="margin-bottom:8px"></div>
-        <div class="chart-wrap" id="chartWrap"><svg id="chart" aria-label="Chart of national debt, annual deficit and interest"></svg><div class="tooltip" id="tip"></div></div>
+        <div class="chart-wrap" id="chartWrap"><svg id="chart" aria-label="Chart of national debt, annual deficit, interest, consumer prices and interest rates"></svg><div class="tooltip" id="tip"></div></div>
         <div class="hint" style="margin-top:6px">Scroll or drag on the chart to move through time. Dots along the top are laws, rulings and events; click one to read what it did.</div>
       </section>
     </div>
@@ -437,7 +444,7 @@ footer a{color:var(--ink-2)}
 
   <footer>
     <div class="about-h">About the data</div>
-    <details><summary>Sources</summary><p>Debt: U.S. Treasury, Historical Debt Outstanding (fiscal years, 1790–2025). Deficit/surplus 1901–2025 and net interest 1940–2025: White House Office of Management and Budget historical tables via FRED. Deficits before 1901 are estimated from the yearly change in debt and marked "est." GDP: MeasuringWorth (1790–1929) and BEA fiscal-year GDP via FRED (1930–2025). Inflation: MeasuringWorth consumer price index (1774–2025). Federal minimum wage: U.S. Department of Labor. State minimum wages: U.S. Department of Labor, as of July 1, 2026. Congress party control: Office of the House Historian and U.S. Senate Historical Office. Presidential votes by state: 270toWin (1900–2012); 1789–1896 and 2016–2024 compiled from official electoral records.</p></details>
+    <details><summary>Sources</summary><p>Debt: U.S. Treasury, Historical Debt Outstanding (fiscal years, 1790–2025). Deficit/surplus 1901–2025 and net interest 1940–2025: White House Office of Management and Budget historical tables via FRED. Deficits before 1901 are estimated from the yearly change in debt and marked "est." GDP: MeasuringWorth (1790–1929) and BEA fiscal-year GDP via FRED (1930–2025). Inflation and the CPI line: MeasuringWorth consumer price index (1774–2025), on the Bureau of Labor Statistics scale where 1982–84 = 100; the official BLS index begins in 1913, and earlier years are historical estimates. 30-year mortgage rate: Freddie Mac Primary Mortgage Market Survey, yearly averages (the survey began in April 1971). 10-year Treasury yield: Federal Reserve (FRED series GS10), yearly averages from 1953; for 1871–1952 the line shows the long-term U.S. government bond yield compiled by Robert Shiller, the standard stand-in before the 10-year note existed. Federal minimum wage: U.S. Department of Labor. State minimum wages: U.S. Department of Labor, as of July 1, 2026. Congress party control: Office of the House Historian and U.S. Senate Historical Office. Presidential votes by state: 270toWin (1900–2012); 1789–1896 and 2016–2024 compiled from official electoral records.</p></details>
     <details><summary>How the buckets work</summary><p>Laws and rulings are sorted by what they did, not by which party passed them. <b style="color:var(--dem)">Liberal-leaning</b> means it expanded federal spending, the government's role in the economy, progressive taxation or looser money. <b style="color:var(--rep)">Conservative-leaning</b> means it cut taxes or spending, limited the government's economic role or tightened money. <b style="color:var(--mix)">Mixed</b> covers tariffs, wartime finance and deals that did both. For court rulings about rights, liberal-leaning means wider civil rights and liberties or more protection for people accused of crimes, and conservative-leaning the reverse, including gun rights; rulings about how government is structured count as mixed. Party and vote splits are shown separately, so a tax cut signed by a Democrat still reads as a tax cut. This is an early classification; a vote-based check using every recorded roll call (Voteview) is planned.</p></details>
     <details><summary>Who passed it</summary><p>Each law is credited to the party that held both the House and the Senate when it passed. When control was split, it goes to the signing president's party. Laws with bipartisan votes, veto overrides and constitutional amendments count as passed by both parties. Earlier parties count with the party that followed them: Democratic-Republicans and Jacksonians with the Democrats; Federalists, National Republicans and Whigs with the Republicans. This is about party, not ideology: for what a law did, see "What it did."</p></details>
     <details><summary>Party colors</summary><p>Democrats are blue and Republicans red in every era; earlier parties such as the Federalists, Democratic-Republicans and Whigs have their own colors. The parties' positions changed over time, most of all during the realignment era of 1896–1932, marked by the gray band on the timeline. Tap the band to read how.</p></details>
@@ -486,7 +493,7 @@ const TILES = {debt:"National debt", deficit:"Deficit / surplus", interest:"Inte
 const PANELS = {blocksCard:"Debt blocks", chartCard:"Chart", mapCard:"Map", feedCard:"How we got here"};
 const S = {
   t: 1776.5, view: "nominal", zoom: "follow", mapMode: "vote", playing: false, speed: 1,
-  series: {debt: true, deficit: true, interest: true},
+  series: {debt: true, deficit: true, interest: true, cpi: true, mort: true, t10: true}, range: [1900, 2025],
   types: new Set(Object.keys(TYPES)), buckets: new Set(Object.keys(BUCKETS)), passed: new Set(["lib","con","both"]), cats: new Set(Object.keys(CATS)),
   tiles: new Set(Object.keys(TILES)), panels: new Set(Object.keys(PANELS)), feedLimit: 6, selState: null, adjusted: false, style: "bars"
 };
@@ -760,7 +767,8 @@ function updateBlocks(){
   for (const r of ROWS){
     const v = d ? r.get(d, y) : null;
     const row = document.getElementById("br-"+r.id);
-    row.hidden = !(r.id === "debt" ? S.series.debt : r.id === "def" ? S.series.deficit : S.series.interest);
+    const anyMoney = S.series.debt || S.series.deficit || S.series.interest;
+    row.hidden = anyMoney && !(r.id === "debt" ? S.series.debt : r.id === "def" ? S.series.deficit : S.series.interest);
     const isSur = r.id === "def" && v != null && v < 0;
     row.querySelector("b").textContent = r.id === "def" ? (isSur ? "Surplus" : "Deficit") : r.label;
     document.getElementById("bv-"+r.id).textContent = v == null ? "—" : fmtV(Math.abs(v));
@@ -868,9 +876,16 @@ window.addEventListener("resize", () => { if (S.style === "bars") { altEl.innerH
 /* ---------- chart ---------- */
 const svg = d3.select("#chart"), tip = document.getElementById("tip");
 const M = {l: 64, r: 14, t: 12};
-const PAN = [{id:"debt", title:"National debt", h:150, v:"--debt"}, {id:"deficit", title:"Deficit (below line) / surplus (above)", h:110, v:"--def"}, {id:"interest", title:"Net interest paid", h:80, v:"--int"}];
+const PAN = [{id:"debt", title:"National debt", h:150, v:"--debt"}, {id:"deficit", title:"Deficit (below line) / surplus (above)", h:110, v:"--def"}, {id:"interest", title:"Net interest paid", h:80, v:"--int"},
+  {id:"cpi", title:"Consumer prices (CPI, 1982–84 = 100)", h:96, v:"--cpi"}, {id:"rates", title:"Interest rates: 30-year mortgage and 10-year Treasury", h:100, v:"--mort"}];
+const SERIES = [{k:"debt", l:"Debt", v:"--debt"}, {k:"deficit", l:"Deficit / surplus", v:"--def"}, {k:"interest", l:"Interest", v:"--int"},
+  {k:"cpi", l:"Prices (CPI)", v:"--cpi"}, {k:"mort", l:"Mortgage rate", v:"--mort"}, {k:"t10", l:"10-year Treasury", v:"--t10"}];
+const panelOn = id => id === "rates" ? (S.series.mort || S.series.t10) : S.series[id];
+const isMoney = id => id === "debt" || id === "deficit" || id === "interest";
+const fmtPct = v => d3.format(".2~f")(v) + "%";
+const fmtCPI = v => v < 10 ? d3.format(".2~f")(v) : v < 100 ? d3.format(".1f")(v) : d3.format(".0f")(v);
 const GAP = 30;
-let W = 700, yEase = {debt:null, deficit:null, interest:null};
+let W = 700, yEase = {};
 const gRoot = svg.append("g");
 const lane = gRoot.append("g");
 const panels = {};
@@ -879,7 +894,7 @@ PAN.forEach(p => {
   panels[p.id] = {g, grid:g.append("g").attr("class","grid"), mark:g.append("g"), axis:g.append("g").attr("class","axis"), title:g.append("text").attr("class","ptitle").attr("x",0).attr("y",-8)};
   panels[p.id].title.text(p.title);
 });
-function panelTitles(narrow){ PAN.forEach(p => panels[p.id].title.text(narrow ? ({debt:"National debt", deficit:"Deficit / surplus", interest:"Net interest"})[p.id] : p.title)); }
+function panelTitles(narrow){ PAN.forEach(p => panels[p.id].title.text(narrow ? ({debt:"National debt", deficit:"Deficit / surplus", interest:"Net interest", cpi:"Prices (CPI, 1982–84 = 100)", rates:"Mortgage and 10-year rates"})[p.id] : p.title)); }
 const xAxisG = gRoot.append("g").attr("class","axis");
 const cursor = gRoot.append("g");
 cursor.append("line").attr("class","cl").attr("stroke", "currentColor").attr("stroke-width", 1.5).style("color","var(--ink)");
@@ -890,10 +905,14 @@ function seriesVal(id, y){
   const d = econ.get(y); if (!d) return null;
   if (id === "debt") return d.debt != null ? conv(d.debt, y) : null;
   if (id === "deficit") return d.deficit != null ? conv(d.deficit, y) : null;
+  if (id === "cpi") return d.cpi != null ? d.cpi : null;
+  if (id === "mort" || id === "t10") return d[id] != null ? d[id] : null;
+  if (id === "rates"){ const v = [S.series.mort ? d.mort : null, S.series.t10 ? d.t10 : null].filter(x => x != null); return v.length ? Math.max(...v) : null; }
   return d.interest != null ? conv(d.interest, y) : null;
 }
 function xDomain(){
   if (S.zoom === "full") return [1776, 2026];
+  if (S.zoom === "range") return S.range;
   const span = 60; let a = S.t - span/2, b = S.t + span/2;
   if (a < 1776){ b += 1776 - a; a = 1776; } if (b > 2026){ a -= b - 2026; b = 2026; }
   return [a, b];
@@ -904,19 +923,20 @@ function drawChart(){
   W = document.getElementById("chartWrap").clientWidth || 700;
   if (drawChart.narrow !== (W < 560)){ drawChart.narrow = W < 560; panelTitles(drawChart.narrow); }
   const iw = W - M.l - M.r;
-  const shown = PAN.filter(p => S.series[p.id]);
+  const shown = PAN.filter(p => panelOn(p.id));
   let yOff = M.t + 34;
   const [a, b] = xDomain();
   const x = d3.scaleLinear().domain([a, b]).range([0, iw]);
   const yrs = d3.range(Math.max(1776, Math.floor(a) - 1), Math.min(2025, Math.ceil(b)) + 1);
   const textC = css("--muted");
-  PAN.forEach(p => panels[p.id].g.style("display", S.series[p.id] ? null : "none"));
+  PAN.forEach(p => panels[p.id].g.style("display", panelOn(p.id) ? null : "none"));
   let lastBottom = yOff;
   shown.forEach(p => {
     const P = panels[p.id]; P.g.attr("transform", `translate(${M.l},${yOff})`);
     const vals = yrs.map(y => ({y, v: seriesVal(p.id, y)})).filter(o => o.v != null);
     let lo = 0, hi = 0;
     vals.forEach(o => { hi = Math.max(hi, o.v); lo = Math.min(lo, o.v); });
+    if (p.id === "cpi" && vals.length){ lo = d3.min(vals, o => o.v) * .85; if (hi - lo < 1) hi = lo + 1; }   // prices: zoom to the range shown
     if (hi === 0 && lo === 0) hi = 1;
     // ease the scale so the chart "collapses" smoothly instead of jumping
     const tgt = [lo, hi]; const cur = yEase[p.id] || tgt;
@@ -928,7 +948,8 @@ function drawChart(){
     const ticks = yS.ticks(3);
     const tk = vals.length ? ticks : [];
     P.grid.selectAll("line").data(vals.length ? ticks : [0]).join("line").attr("x1",0).attr("x2",iw).attr("y1",yS).attr("y2",yS).attr("stroke", t => t === 0 ? css("--muted") : null);
-    P.axis.selectAll("text").data(tk).join("text").attr("x",-8).attr("y", t => yS(t)+3.5).attr("text-anchor","end").text(t => t === 0 ? "0" : (p.id === "deficit" ? (t > 0 ? "+" : "−") : "") + fmtVShort(Math.abs(t)));
+    const tfmt = p.id === "cpi" ? fmtCPI : p.id === "rates" ? (t => d3.format("~f")(t) + "%") : (t => (p.id === "deficit" ? (t > 0 ? "+" : "−") : "") + fmtVShort(Math.abs(t)));
+    P.axis.selectAll("text").data(tk).join("text").attr("x",-8).attr("y", t => yS(t)+3.5).attr("text-anchor","end").text(t => t === 0 ? "0" : tfmt(t));
     const col = css(p.v);
     if (p.id === "debt"){
       const area = d3.area().x(o => x(o.y)).y0(yS(0)).y1(o => yS(o.v)).curve(d3.curveMonotoneX);
@@ -941,6 +962,21 @@ function drawChart(){
         .attr("x", o => x(o.y) - bw/2).attr("width", bw)
         .attr("y", o => Math.min(yS(0), yS(o.v))).attr("height", o => Math.max(0.5, Math.abs(yS(o.v) - yS(0))))
         .attr("rx", Math.min(2, bw/2)).attr("fill", o => o.v >= 0 ? css("--debt") : col).attr("fill-opacity", o => econ.get(o.y).deficitEst ? .45 : .9);
+    } else if (p.id === "cpi"){
+      const line = d3.line().x(o => x(o.y)).y(o => yS(o.v)).curve(d3.curveMonotoneX);
+      P.mark.selectAll("path.l").data([vals]).join("path").attr("class","l").attr("d", line).attr("fill","none").attr("stroke", col).attr("stroke-width", 2);
+      // milestones: prices double and triple the 1982–84 level
+      const ms = [100, 200, 300].filter(m => m >= yEase[p.id][0] && m <= yEase[p.id][1] * 1.02);
+      P.mark.selectAll("g.ms").data(ms).join(en => { const g = en.append("g").attr("class","ms"); g.append("line"); g.append("text"); return g; })
+        .call(g => g.select("line").attr("x1",0).attr("x2",iw).attr("y1", m => yS(m)).attr("y2", m => yS(m)).attr("stroke", col).attr("stroke-opacity", .45).attr("stroke-dasharray","2 4"))
+        .call(g => g.select("text").attr("x", 4).attr("y", m => yS(m) - 4).attr("fill", col).style("font-size","10.5px").text(m => m === 100 ? "100 (1983)" : m === 200 ? "200 (2006)" : "300 (2023)"));
+    } else if (p.id === "rates"){
+      const ls = [["mort", css("--mort"), null], ["t10", css("--t10"), "5 3"]].filter(([k]) => S.series[k]);
+      P.mark.selectAll("path.r").data(ls, l => l[0]).join("path").attr("class","r")
+        .attr("d", ([k]) => d3.line().defined(o => o.v != null).x(o => x(o.y)).y(o => yS(o.v)).curve(d3.curveMonotoneX)(yrs.map(y => ({y, v: seriesVal(k, y)}))))
+        .attr("fill","none").attr("stroke", l => l[1]).attr("stroke-width", 2).attr("stroke-dasharray", l => l[2]);
+      P.mark.selectAll("path.a,path.l").remove();
+      P.mark.selectAll("text.nodata").data(vals.length ? [] : [1]).join("text").attr("class","nodata").attr("x", iw/2).attr("y", p.h/2).attr("text-anchor","middle").attr("fill", textC).style("font-size","12px").text(S.series.t10 ? "Bond yields are tracked from 1871" : "Mortgage rates are tracked from 1971");
     } else {
       const line = d3.line().x(o => x(o.y)).y(o => yS(o.v)).curve(d3.curveMonotoneX);
       const area = d3.area().x(o => x(o.y)).y0(yS(0)).y1(o => yS(o.v)).curve(d3.curveMonotoneX);
@@ -950,16 +986,27 @@ function drawChart(){
     }
     // value label at cursor
     const cy = yearOf(S.t), cv = seriesVal(p.id, cy);
-    P.mark.selectAll("g.cv").data(cv != null && S.t >= a && S.t <= b ? [cv] : []).join(en => { const g = en.append("g").attr("class","cv"); g.append("circle").attr("r",4.5); g.append("text").style("font-size","11.5px").style("font-weight","600"); return g; })
+    if (p.id === "rates"){
+      const pts = [["mort", "Mortgage "], ["t10", "10-yr "]].filter(([k]) => S.series[k] && seriesVal(k, cy) != null && S.t >= a && S.t <= b).map(([k, l]) => ({k, l, v: seriesVal(k, cy)}));
+      pts.sort((u, w) => w.v - u.v);
+      const right = x(cy) > iw - 110;
+      P.mark.selectAll("g.cv").remove();
+      P.mark.selectAll("g.cvr").data(pts, o => o.k).join(en => { const g = en.append("g").attr("class","cvr"); g.append("circle").attr("r",4.5); g.append("text").style("font-size","11.5px").style("font-weight","600").attr("paint-order","stroke").attr("stroke-width",4).attr("stroke-linejoin","round"); return g; })
+        .attr("transform", o => `translate(${x(cy)},${yS(o.v)})`)
+        .call(g => g.select("circle").attr("fill", o => css("--" + o.k)).attr("stroke", css("--surface")).attr("stroke-width", 2))
+        .call(g => g.select("text").attr("stroke", css("--surface")).attr("x", right ? -8 : 8).attr("text-anchor", right ? "end" : "start").attr("y", (o, i) => i === 0 ? -7 : 15).attr("fill", css("--ink")).text(o => o.l + fmtPct(o.v)));
+      yOff += p.h + GAP; lastBottom = yOff - GAP; return;
+    }
+    P.mark.selectAll("g.cv").data(cv != null && S.t >= a && S.t <= b ? [cv] : []).join(en => { const g = en.append("g").attr("class","cv"); g.append("circle").attr("r",4.5); g.append("text").style("font-size","11.5px").style("font-weight","600").attr("paint-order","stroke").attr("stroke-width",4).attr("stroke-linejoin","round"); return g; })
       .attr("transform", v => `translate(${x(cy)},${yS(v)})`)
       .call(g => g.select("circle").attr("fill", p.id === "deficit" && cv >= 0 ? css("--debt") : col).attr("stroke", css("--surface")).attr("stroke-width", 2))
-      .call(g => g.select("text").attr("x", x(cy) > iw - 110 ? -8 : 8).attr("text-anchor", x(cy) > iw - 110 ? "end" : "start").attr("y", v => p.id === "deficit" ? (v < 0 ? (yS(0) - yS(v)) - 6 : (yS(0) - yS(v)) + 15) : -7).attr("fill", css("--ink")).text(v => (p.id === "deficit" ? (v >= 0 ? "Surplus " : "Deficit ") : "") + fmtVShort(Math.abs(v))));
+      .call(g => g.select("text").attr("stroke", css("--surface")).attr("x", x(cy) > iw - 110 ? -8 : 8).attr("text-anchor", x(cy) > iw - 110 ? "end" : "start").attr("y", v => p.id === "deficit" ? (v < 0 ? (yS(0) - yS(v)) - 6 : (yS(0) - yS(v)) + 15) : -7).attr("fill", css("--ink")).text(v => p.id === "cpi" ? "CPI " + fmtCPI(v) : (p.id === "deficit" ? (v >= 0 ? "Surplus " : "Deficit ") : "") + fmtVShort(Math.abs(v))));
     yOff += p.h + GAP; lastBottom = yOff - GAP;
   });
   const H = lastBottom + 26;
   svg.attr("viewBox", `0 0 ${W} ${H}`).attr("height", H);
   // x axis
-  const step = (b - a) > 150 ? 25 : (b - a) > 60 ? 10 : 10;
+  const step = (b - a) > 150 ? 25 : (b - a) > 40 ? 10 : (b - a) > 16 ? 5 : (b - a) > 8 ? 2 : 1;
   const xt = d3.range(Math.ceil(a/step)*step, b + 0.01, step);
   xAxisG.attr("transform", `translate(${M.l},${lastBottom})`);
   xAxisG.selectAll("text").data(xt).join("text").attr("x", x).attr("y", 16).attr("text-anchor","middle").text(d => d);
@@ -1004,6 +1051,10 @@ hit.on("mousemove", ev => {
   if (S.series.debt) rows.push(row("--debt", "Debt", d.debt != null ? fmtVShort(conv(d.debt, yy)) : "—"));
   if (S.series.deficit) rows.push(row("--def", d.deficit > 0 ? "Surplus" : "Deficit", d.deficit != null ? fmtVShort(Math.abs(conv(d.deficit, yy))) + (d.deficitEst ? " est." : "") : "—"));
   if (S.series.interest) rows.push(row("--int", "Interest", d.interest != null ? fmtVShort(conv(d.interest, yy)) : "—"));
+  if (S.series.cpi && d.cpi != null){ const pv = econ.get(yy - 1); const inf = pv && pv.cpi ? (d.cpi / pv.cpi - 1) * 100 : null;
+    rows.push(row("--cpi", "Prices (CPI)", fmtCPI(d.cpi) + (inf != null ? ` <span style="color:var(--muted)">(${inf >= 0 ? "+" : "−"}${Math.abs(inf).toFixed(1)}% that year)</span>` : ""))); }
+  if (S.series.mort) rows.push(row("--mort", "30-yr mortgage", d.mort != null ? fmtPct(d.mort) : "—"));
+  if (S.series.t10) rows.push(row("--t10", d.t10est ? "Long-term bond" : "10-yr Treasury", d.t10 != null ? fmtPct(d.t10) : "—"));
   showTip(ev, `<b>${yy}</b>${rows.join("")}<div style="color:var(--muted);margin-top:4px">Click to jump here</div>`);
 }).on("mouseleave", hideTip).on("click", ev => {
   if (chartDragged) return;
@@ -1023,7 +1074,7 @@ document.getElementById("chartWrap").addEventListener("wheel", ev => {
 
 /* series chips */
 const seriesChips = document.getElementById("seriesChips");
-seriesChips.innerHTML = PAN.map(p => `<button class="fchip" id="sc-${p.id}" data-s="${p.id}" aria-pressed="true"><span class="dot" style="background:var(${p.v})"></span>${p.id === "debt" ? "Debt" : p.id === "deficit" ? "Deficit / surplus" : "Interest"}</button>`).join("");
+seriesChips.innerHTML = SERIES.map(p => `<button class="fchip" id="sc-${p.k}" data-s="${p.k}" aria-pressed="true"><span class="dot" style="background:var(${p.v})"></span>${p.l}</button>`).join("");
 seriesChips.addEventListener("click", e => { const b = e.target.closest("[data-s]"); if (!b) return; const k = b.dataset.s;
   if (S.series[k] && Object.values(S.series).filter(Boolean).length === 1) return;
   S.series[k] = !S.series[k]; b.setAttribute("aria-pressed", S.series[k]); yEase = {}; chartAnim = true; render(true); });
@@ -1443,7 +1494,17 @@ function applyPanels(){ setTimeout(() => typeof syncJump === "function" && syncJ
 /* ---------- view & zoom ---------- */
 function setView(v){ S.view = v; document.querySelectorAll("#viewSeg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.view === v)); for (const k in disp) disp[k] = null; yEase = {}; chartAnim = true; savePrefs(); render(true); }
 document.getElementById("viewSeg").addEventListener("click", e => { const b = e.target.closest("[data-view]"); if (b) setView(b.dataset.view); });
-document.getElementById("zoomSeg").addEventListener("click", e => { const b = e.target.closest("[data-zoom]"); if (!b) return; S.zoom = b.dataset.zoom; document.querySelectorAll("#zoomSeg button").forEach(x => x.setAttribute("aria-pressed", x === b)); yEase = {}; chartAnim = true; });
+function setZoom(z){ S.zoom = z; document.querySelectorAll("#zoomSeg button").forEach(x => x.setAttribute("aria-pressed", x.dataset.zoom === z)); yEase = {}; chartAnim = true; }
+document.getElementById("zoomSeg").addEventListener("click", e => { const b = e.target.closest("[data-zoom]"); if (!b) return; setZoom(b.dataset.zoom);
+  if (b.dataset.zoom === "range" && (S.t < S.range[0] || S.t > S.range[1])) setT(S.range[1] - 0.5); });
+function readRange(ev){
+  const f = document.getElementById("rFrom"), t = document.getElementById("rTo");
+  let a = Math.round(+f.value), b = Math.round(+t.value);
+  if (!a || !b || a < 1776 || b > 2026 || b - a < 3){ if (ev && ev.type === "change"){ a = Math.max(1776, Math.min(2022, a || 1776)); b = Math.max(a + 3, Math.min(2026, b || 2025)); f.value = a; t.value = b; } else return; }
+  S.range = [a, b]; setZoom("range");
+  if (S.t < a || S.t > b) setT(Math.min(b, Math.max(a, S.t)));
+}
+["rFrom", "rTo"].forEach(id => { const el = document.getElementById(id); el.addEventListener("input", readRange); el.addEventListener("change", readRange); });
 
 /* ---------- mobile helpers ---------- */
 const filtBtn = document.getElementById("filtBtn");

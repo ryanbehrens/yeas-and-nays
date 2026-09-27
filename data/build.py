@@ -17,6 +17,27 @@ gdp = csv("gdp_dollars.csv")
 cpi = csv("cpi.csv")
 pop = csv("population.csv")
 
+# Interest rates (annual averages, percent)
+def _rates():
+    import csv as _c, collections
+    R = os.path.join(RAW, "rates")
+    mort = {int(a): float(b) for a, b in (l.strip().split(",") for l in open(os.path.join(R, "annual_published.csv")) if l.strip())}
+    for l in open(os.path.join(R, "mortg_monthly_1971_2016.txt")):   # 1971: April-December only (the survey began in April)
+        y, v = l.split(":")
+        if int(y) == 1971: v = [float(x) for x in v.split()][:9]; mort[1971] = sum(v) / len(v)
+    sh, g = collections.defaultdict(list), collections.defaultdict(list)
+    for r in _c.DictReader(open(os.path.join(R, "shiller_sp500_datahub.csv"))):
+        v = float(r["Long Interest Rate"] or 0)
+        if v > 0: sh[int(r["Date"][:4])].append(v)
+    for r in _c.DictReader(open(os.path.join(R, "gs10_monthly_datahub.csv"))): g[int(r["Date"][:4])].append(float(r["Rate"]))
+    t10 = {}
+    for y, v in sh.items():
+        if y <= 1953 and len(v) == 12: t10[y] = (sum(v) / 12, y < 1953)
+    for y, v in g.items():
+        if y >= 1954 and len(v) == 12: t10[y] = (sum(v) / 12, False)
+    return mort, t10
+mortgage, treasury10 = _rates()
+
 years = list(range(1776, 2026))
 econ = []
 for y in years:
@@ -30,6 +51,10 @@ for y in years:
         # Before 1901: estimated from the year-over-year change in debt (surplus = debt paid down)
         d["deficit"] = round(-(debt[y] - debt[y - 1])); d["deficitEst"] = True
     if y in interest: d["interest"] = round(interest[y])
+    if y in mortgage: d["mort"] = round(mortgage[y], 2)
+    if y in treasury10:
+        d["t10"] = round(treasury10[y][0], 2)
+        if treasury10[y][1]: d["t10est"] = True   # before 1953: long-term government bond yield (Shiller), not the 10-year note
     econ.append(d)
 
 # Congresses

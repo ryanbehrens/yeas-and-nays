@@ -25,6 +25,7 @@ move them into `assets/presidents/`, then commit and push. Every president's car
   - `data/political.py` presidents, Congress, elections, statehood, minimum wage
   - `data/laws.py` landmark laws, court rulings and events
   - `data/raw/` downloaded source data (Treasury, OMB/FRED, MeasuringWorth, DOL, 270toWin, Vaghul & Zipperer)
+  - `data/raw/rates/` 30-year mortgage (Freddie Mac) and 10-year Treasury (FRED GS10; Shiller long-term bond yield before 1953), see SOURCES.txt
 
 ## Rebuilding
 ```

@@ -1,0 +1,9 @@
+Interest-rate data for the Ledger chart (fetched Sept 27, 2026)
+
+annual_published.csv  30-year fixed mortgage rate, yearly averages 1972-2025, Freddie Mac Primary Mortgage Market Survey
+                      (as published via FRED MORTGAGE30US; checked against two independent tables, and against the monthly
+                      series below to within 0.05 points).
+mortg_monthly_1971_2016.txt  FRED series MORTG (Freddie Mac contract rate, monthly, April 1971 - Sept 2016). Used for 1971 (April-December average).
+gs10_monthly_datahub.csv     FRED series GS10, 10-year Treasury constant maturity, monthly 1953-04 onward (datahub.io mirror, github.com/datasets/bond-yields-us-10y).
+shiller_sp500_datahub.csv    Robert Shiller's monthly market data (datahub.io mirror, github.com/datasets/s-and-p-500); the "Long Interest Rate"
+                             column is used for 1871-1952 (long-term U.S. government bond yields), and matches GS10 exactly from 1953 on.
