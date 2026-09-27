@@ -154,6 +154,8 @@ def page(slug, p):
     party_var = side(p["party"])
     flipped = p["terms"][0][0] < "1897"
     if flipped and party_var != "--mix": party_var = "--dem" if party_var == "--rep" else "--rep"  # site-wide ideology adjustment
+    transition = "1897" <= p["terms"][0][0] < "1933"
+    flipnote_t = ('<p class="flipnote">This presidency falls in the 1896–1932 transition, when both parties had progressive and conservative wings; the site uses today\'s colors from 1897 on, but they are the least certain in these years.</p>' if transition else "")
     flipnote = ('<p class="flipnote">Party colors follow the site\'s ideology adjustment: before 1897, Democrats were generally the more conservative party, so they are shown in red and Republicans in blue.</p>' if flipped else "")
     term_txt = " and ".join(f'{s[:4]}–{(en or "")[:4] if en else "present"}' for s, en in p["terms"])
 
@@ -164,7 +166,7 @@ def page(slug, p):
     <div>
       <div class="eyebrow">{e(p["number"])} president of the United States · {e(term_txt)}</div>
       <h1>{e(p["name"])}</h1>
-      <div class="meta"><span class="chip"><span class="dot" style="background:var({party_var})"></span>{e(p["party"])}</span><span class="chip">Vice president: {e(p["vp"])}</span><span class="chip">{e(p["left"])}</span></div>{flipnote}
+      <div class="meta"><span class="chip"><span class="dot" style="background:var({party_var})"></span>{e(p["party"])}</span><span class="chip">Vice president: {e(p["vp"])}</span><span class="chip">{e(p["left"])}</span></div>{flipnote}{flipnote_t}
       <p class="sum">{e(p["summary"])}</p>
     </div>
   </section>

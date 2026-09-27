@@ -381,10 +381,10 @@ footer a{color:var(--ink-2)}
   <div class="grid">
     <div class="col">
       <section class="card" id="blocksCard">
-        <div class="card-h"><h2 id="owedTitle">What we owe, in blocks</h2>
+        <div class="card-h"><h2 id="owedTitle">What we owe, side by side</h2>
           <div class="seg" id="styleSeg" role="group" aria-label="Chart style">
-            <button id="st-blocks" data-style="blocks" aria-pressed="true">Blocks</button>
-            <button id="st-bars" data-style="bars" aria-pressed="false">Bars</button>
+            <button id="st-blocks" data-style="blocks" aria-pressed="false">Blocks</button>
+            <button id="st-bars" data-style="bars" aria-pressed="true">Bars</button>
             <button id="st-ring" data-style="ring" aria-pressed="false">Ring</button>
             <button id="st-person" data-style="person" aria-pressed="false">Per person</button>
           </div>
@@ -440,7 +440,7 @@ footer a{color:var(--ink-2)}
     <details><summary>Sources</summary><p>Debt: U.S. Treasury, Historical Debt Outstanding (fiscal years, 1790–2025). Deficit/surplus 1901–2025 and net interest 1940–2025: White House Office of Management and Budget historical tables via FRED. Deficits before 1901 are estimated from the yearly change in debt and marked "est." GDP: MeasuringWorth (1790–1929) and BEA fiscal-year GDP via FRED (1930–2025). Inflation: MeasuringWorth consumer price index (1774–2025). Federal minimum wage: U.S. Department of Labor. State minimum wages: U.S. Department of Labor, as of July 1, 2026. Congress party control: Office of the House Historian and U.S. Senate Historical Office. Presidential votes by state: 270toWin (1900–2012); 1789–1896 and 2016–2024 compiled from official electoral records.</p></details>
     <details><summary>How the buckets work</summary><p>Laws and rulings are sorted by what they did, not by which party passed them. <b style="color:var(--dem)">Liberal-leaning</b> means it expanded federal spending, the government's role in the economy, progressive taxation or looser money. <b style="color:var(--rep)">Conservative-leaning</b> means it cut taxes or spending, limited the government's economic role or tightened money. <b style="color:var(--mix)">Mixed</b> covers tariffs, wartime finance and deals that did both. Party and vote splits are shown separately, so a tax cut signed by a Democrat still reads as a tax cut. This is an early classification; a vote-based check using every recorded roll call (Voteview) is planned.</p></details>
     <details><summary>Who passed it</summary><p>Each law is credited to the party that held both the House and the Senate when it passed. When control was split, it goes to the signing president's party. Laws with bipartisan votes, veto overrides and constitutional amendments count as passed by both sides. Earlier parties are grouped with their successors: Federalists and Whigs with the Republicans, Democratic-Republicans and Jacksonians with the Democrats. With the ideology adjustment on (the default), the Republican side counts as liberal and the Democratic side as conservative before 1897, and the reverse from 1897 on.</p></details>
-    <details><summary>Party colors</summary><p>By default, Democrats are shown red and Republicans blue before 1897, because the parties' positions were roughly the reverse of today's; from 1897 on, Republicans are red and Democrats blue. Use "Unadjust ideology" on the map to see true party colors in every era.</p></details>
+    <details><summary>Party colors</summary><p>By default, Democrats are shown red and Republicans blue before 1897, because the parties' positions were roughly the reverse of today's; from 1897 on, Republicans are red and Democrats blue. The gray band on the timeline (1896–1932) marks the decades when the parties were trading places and both had progressive and conservative wings. Use "Unadjust ideology" on the map to see true party colors in every era.</p></details>
     <details><summary>Maps and early years</summary><p>Map shapes use today's state borders. Before 1789 there was no president and no federal debt figure; the Continental Congress's war debts were taken over by the new government in 1790.</p></details>
   </footer>
 </div>
@@ -488,12 +488,12 @@ const S = {
   t: 1776.5, view: "nominal", zoom: "follow", mapMode: "vote", playing: false, speed: 1,
   series: {debt: true, deficit: true, interest: true},
   types: new Set(Object.keys(TYPES)), buckets: new Set(Object.keys(BUCKETS)), passed: new Set(["lib","con","both"]), cats: new Set(Object.keys(CATS)),
-  tiles: new Set(Object.keys(TILES)), panels: new Set(Object.keys(PANELS)), feedLimit: 6, selState: null, adjusted: true, style: "blocks"
+  tiles: new Set(Object.keys(TILES)), panels: new Set(Object.keys(PANELS)), feedLimit: 6, selState: null, adjusted: true, style: "bars"
 };
 try { const p = JSON.parse(localStorage.getItem("ledger-prefs") || "null");
-  if (p) { if (p.tiles) S.tiles = new Set(p.tiles); if (p.panels) S.panels = new Set(p.panels); if (p.view) S.view = p.view; if (typeof p.adjusted === "boolean") S.adjusted = p.adjusted; if (p.style) S.style = p.style; }
+  if (p) { if (p.tiles) S.tiles = new Set(p.tiles); if (p.panels) S.panels = new Set(p.panels); if (p.view) S.view = p.view; if (typeof p.adjusted === "boolean") S.adjusted = p.adjusted; if (p.style2) S.style = p.style2; }
 } catch(e) {}
-function savePrefs(){ try { localStorage.setItem("ledger-prefs", JSON.stringify({tiles:[...S.tiles], panels:[...S.panels], view:S.view, adjusted:S.adjusted, style:S.style})); } catch(e) {} }
+function savePrefs(){ try { localStorage.setItem("ledger-prefs", JSON.stringify({tiles:[...S.tiles], panels:[...S.panels], view:S.view, adjusted:S.adjusted, style2:S.style})); } catch(e) {} }
 
 /* ---------- helpers ---------- */
 const yearOf = t => Math.min(2025, Math.floor(t));
@@ -540,10 +540,15 @@ const fmtVShort = v => S.view === "gdp" ? d3.format(".3~g")(v) + "%" : moneyShor
 
 function presidentAt(iso){ return D.presidents.find(p => p.start <= iso && (!p.end || iso < p.end)) || null; }
 function congressAt(iso){ return D.congresses.find(c => c.start <= iso && iso < c.end) || null; }
-const FLIP_T = 1897, REALIGN_END = 1928;
+const FLIP_T = 1897, REALIGN_START = 1896, REALIGN_END = 1933;  // gray transition band on the scrubber: 1896 through 1932
 const flipped = t => S.adjusted && t < FLIP_T;
 // Color for a party code (D, R, SD, W...) at time t, following the ideology adjustment
+// With the ideology adjustment on, earlier parties take the color of the side they're grouped with
+// (Federalists, National Republicans, Whigs and the Adams/Clay factions with the Republicans;
+// Democratic-Republicans and the Jackson/Crawford factions with the Democrats). Unadjusted, they keep their own colors.
+const LINEAGE = {F:"R", NR:"R", W:"R", ADAMS:"R", CLAY:"R", DR:"D", JAX:"D", CRAW:"D"};
 function partyColor(code, t){
+  if (S.adjusted && LINEAGE[code]) code = LINEAGE[code];
   if (code === "D") return css(flipped(t) ? "--rep" : "--dem");
   if (code === "R") return css(flipped(t) ? "--dem" : "--rep");
   if (code === "SD" && flipped(t)) return css("--rep-soft");
@@ -552,7 +557,14 @@ function partyColor(code, t){
 function partyVarAt(name, t){ const v = partyVar(name); if (!flipped(t)) return v; return v === "--dem" ? "--rep" : v === "--rep" ? "--dem" : v; }
 // Presidents with a deep-dive page
 const PRES_PAGES = {"Jimmy Carter":"carter", "Ronald Reagan":"reagan", "Richard Nixon":"nixon", "Bill Clinton":"clinton", "George W. Bush":"gwbush", "Barack Obama":"obama", "Donald Trump":"trump", "Joe Biden":"biden", "Dwight D. Eisenhower":"eisenhower", "Harry S. Truman":"truman", "Franklin D. Roosevelt":"fdr", "Herbert Hoover":"hoover", "Calvin Coolidge":"coolidge", "Warren G. Harding":"harding", "Woodrow Wilson":"wilson", "Theodore Roosevelt":"troosevelt", "William Howard Taft":"taft", "William McKinley":"mckinley", "Benjamin Harrison":"bharrison", "Grover Cleveland":"cleveland", "Chester A. Arthur":"arthur", "James A. Garfield":"garfield", "Rutherford B. Hayes":"hayes", "Ulysses S. Grant":"grant", "Andrew Johnson":"ajohnson", "Abraham Lincoln":"lincoln", "James Buchanan":"buchanan", "Franklin Pierce":"pierce", "Millard Fillmore":"fillmore", "Zachary Taylor":"taylor", "James K. Polk":"polk", "John Tyler":"tyler", "William Henry Harrison":"whharrison", "Martin Van Buren":"vanburen", "Andrew Jackson":"jackson", "John Quincy Adams":"jqadams", "James Monroe":"monroe", "James Madison":"madison", "Thomas Jefferson":"jefferson", "John Adams":"jadams", "George Washington":"washington", "George H. W. Bush":"ghwbush", "Gerald Ford":"ford", "Lyndon B. Johnson":"lbj", "John F. Kennedy":"jfk"};
-function partyVar(name){ if (!name) return "--mix"; if ((/^Democratic/.test(name) && !/^Democratic-Republican/.test(name)) || /^Jacksonian/.test(name)) return "--dem"; if (/^Republican/.test(name)) return "--rep"; return "--mix"; }
+// Same grouping as "Who passed it" and the presidents pages: Federalists, National Republicans and Whigs with the Republicans;
+// Democratic-Republicans, Jacksonians and National Union Democrats with the Democrats. Gray only for no party or a break with it.
+function partyVar(name){ if (!name) return "--mix";
+  if (/^(Unaffiliated|Whig \(expelled)/.test(name)) return "--mix";
+  if (/^Democratic-Republican/.test(name) || /^Jacksonian/.test(name)) return "--dem";
+  if (/^(Republican|Federalist|National Republican|Whig)/.test(name)) return "--rep";
+  if (/Democrat/.test(name)) return "--dem";
+  return "--mix"; }
 function minWageAt(iso){ let r = null; for (const w of D.fedMinWage) if (w.date <= iso) r = w.rate; return r; }
 function electionFor(t){ // most recent presidential election decided by time t (elections held ~Nov)
   let best = null; for (const y of Object.keys(D.elections).map(Number)) if (y + 0.85 <= t) best = y; return best; }
@@ -1322,15 +1334,16 @@ function updateRealignNote(){
   rNote.hidden = !show;
   if (!show) return;
   document.getElementById("realignText").innerHTML = S.adjusted
-    ? (S.t < FLIP_T ? "<b>Party colors switch in 1897.</b> Until then, Democrats are shown red and Republicans blue. Why?" : "<b>Party colors switched in 1897.</b> The parties traded positions gradually, through about 1928. Why?")
-    : "<b>Showing true party colors.</b> The parties traded positions between about 1897 and 1928. Why?";
+    ? (S.t < FLIP_T ? "<b>Party colors switch in 1897.</b> Until then, Democrats are shown red and Republicans blue. Why?" : "<b>Party colors switched in 1897.</b> The parties traded positions gradually through 1932 (the gray band). Why?")
+    : "<b>Showing true party colors.</b> The parties traded positions between about 1896 and 1932 (the gray band). Why?";
 }
 function openRealign(){
   openDrawer("Party colors", `<h3>Why the party colors switch in 1897</h3>
     <p>For most of the 1800s the Democratic and Republican parties stood for roughly the opposite of what they stand for today. So that red and blue mean the same thing across the whole timeline, this site shows <b style="color:var(--rep)">Democrats in red</b> and <b style="color:var(--dem)">Republicans in blue</b> before 1897, and switches to today's colors from 1897 on.</p>
     <div><div class="sect">Before the switch</div><p><b>Democrats</b> generally favored a small federal government, states' rights, low tariffs and hard money, and after Reconstruction they dominated the white South. <b>Republicans</b> favored a strong national government: national banks, high protective tariffs, federal support for railroads and settlement, Reconstruction and the civil-rights amendments.</p></div>
     <div><div class="sect">The turning point, 1896–1897</div><p>In 1896 William Jennings Bryan took over the Democratic Party with a populist platform: using government to help farmers and workers against banks and railroads. Republicans under William McKinley became the party of business and the gold standard. McKinley took office in March 1897.</p></div>
-    <div><div class="sect">A gradual change, 1897–1928 and beyond</div><p>The switch took decades. The Progressive Era, Woodrow Wilson's income tax and Federal Reserve (1913) and Al Smith's 1928 campaign moved Democrats step by step toward an active federal government, and Franklin Roosevelt's New Deal (1933–1936) completed the economic side. The shift on civil rights, and the South moving to the Republicans, continued into the 1960s–1990s. The single 1897 cutoff is a simplification to keep the colors readable.</p></div>
+    <div><div class="sect">A mixed era, 1896–1932 (the gray band)</div><p>The switch took decades, and in between both parties had progressive and conservative wings. Theodore Roosevelt's Republicans broke up trusts and regulated food and drugs, and he ran as a Progressive in 1912, while the Democrats' base included the conservative, segregationist South. At the same time, Bryan's and Wilson's Democrats pushed the income tax, the Federal Reserve and labor laws, and the Republicans of the 1920s under Harding, Coolidge and Treasury Secretary Andrew Mellon cut taxes and raised tariffs. Even the 1932 Democratic platform promised to cut federal spending by a quarter. The colors in this band are the least certain on the timeline.</p></div>
+    <div><div class="sect">After 1932</div><p>Franklin Roosevelt's New Deal (1933–1936) completed the economic side of the switch. The shift on civil rights, and the South moving to the Republicans, continued into the 1960s–1990s. The single 1897 cutoff is a simplification to keep the colors readable.</p></div>
     <div class="bucket-note">One more note: red for Republicans and blue for Democrats only became the standard in 2000. Before that, news maps used the colors inconsistently.</div>
     <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="drawerIdeo">${S.adjusted ? "Unadjust ideology: show true party colors" : "Adjust ideology: swap colors before 1897"}</button><button class="btn" data-jump="1896.9">Jump to the 1896 election</button></div>`);
   document.getElementById("drawerIdeo").addEventListener("click", toggleIdeo);
@@ -1345,6 +1358,10 @@ function drawTrack(){
   tx.range([8, TW - 8]);
   const TH = document.getElementById("track").clientHeight || 66;
   track.attr("viewBox", `0 0 ${TW} ${TH}`);
+  // Transition era: the parties were trading positions, so the ideology colors are least certain here
+  track.selectAll("rect.transbox").data([1]).join(en => en.insert("rect", ":first-child").attr("class","transbox"))
+    .attr("x", tx(REALIGN_START)).attr("width", tx(REALIGN_END) - tx(REALIGN_START)).attr("y", 2).attr("height", 44).attr("rx", 4)
+    .attr("fill", css("--muted")).attr("fill-opacity", .22).attr("stroke", css("--muted")).attr("stroke-opacity", .5).attr("stroke-dasharray", "3 3").style("pointer-events", "none");
   const bands = D.presidents.map(p => ({a: dateToT(p.start), b: p.end ? dateToT(p.end) : 2026, p}));
   track.selectAll("rect.band").data(bands).join("rect").attr("class","band").attr("x", d => tx(d.a)).attr("width", d => Math.max(0.5, tx(d.b) - tx(d.a) - 1)).attr("y", 30).attr("height", 10).attr("rx", 2)
     .attr("fill", d => css(partyVarAt(d.p.party, d.a))).attr("fill-opacity", .55).append("title").text(d => `${d.p.name} (${d.p.party})`);
@@ -1353,8 +1370,8 @@ function drawTrack(){
   track.selectAll("rect.tick").data(vis, d => d.id).join("rect").attr("class","tick").attr("x", d => tx(d.tt) - 1).attr("width", 2).attr("y", d => d.type === "event" ? 18 : 12).attr("height", d => d.type === "event" ? 8 : 14).attr("rx", 1).attr("fill", d => itemColor(d));
   const rg = track.selectAll("g.realign").data([1]).join(en => { const g = en.append("g").attr("class","realign");
       g.append("title"); g.append("rect").attr("class","rb"); g.append("circle").attr("class","ric"); g.append("text").attr("class","rit"); return g; });
-  rg.select("title").text("Party realignment, 1897–1928: click to learn why the party colors switch");
-  rg.select(".rb").attr("x", tx(FLIP_T)).attr("width", tx(REALIGN_END) - tx(FLIP_T)).attr("y", 27).attr("height", 2.5).attr("rx", 1.25)
+  rg.select("title").text("Party realignment, 1896–1932 (gray band): click to learn why the party colors switch");
+  rg.select(".rb").attr("x", tx(REALIGN_START)).attr("width", tx(REALIGN_END) - tx(REALIGN_START)).attr("y", 27).attr("height", 2.5).attr("rx", 1.25)
     .attr("fill", css("--ink-2")).attr("opacity", .55);
   rg.select(".ric").attr("cx", tx(FLIP_T)).attr("cy", 6).attr("r", 6.5).attr("fill", css("--ink")).attr("stroke", css("--surface")).attr("stroke-width", 1.5);
   rg.select(".rit").attr("x", tx(FLIP_T)).attr("y", 9.5).attr("text-anchor","middle").style("font-size","9px").style("font-weight","700").attr("fill", css("--surface")).text("⇄");
