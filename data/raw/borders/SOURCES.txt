@@ -1,0 +1,6 @@
+borders.topo.json (and assets/borders.js)
+  State and territory boundaries from 1783 to 2000 with start and end dates:
+  John H. Long, et al., Atlas of Historical County Boundaries, Dr. William M. Scholl Center for American
+  History and Culture, The Newberry Library, Chicago (2010). https://publications.newberry.org/ahcb/
+  Converted to TopoJSON by Lincoln Mullen (github.com/lmullen/historical-us-boundaries, MIT License),
+  then simplified and trimmed for the web. Borders have not changed since 2000.

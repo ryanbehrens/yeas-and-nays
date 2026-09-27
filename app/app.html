@@ -199,6 +199,16 @@ button{cursor:pointer}
 #map path.st.ghost{fill:var(--ghost)!important;stroke:var(--line);stroke-dasharray:3 3;cursor:default}
 #map path.st.sel{stroke:var(--ink);stroke-width:2.2}
 #map path.st.joined{animation:pulse 1.1s ease-out}
+#map.histon path.st{fill:transparent!important;stroke:transparent}
+#map.histon path.st.ghost{fill:transparent!important;stroke:none;pointer-events:none}
+#map.histon path.st:hover,#map.histon path.st.sel{stroke:var(--ink)}
+#map path.hp{stroke:var(--surface);stroke-width:1;transition:fill .45s}
+#map path.hp.terr{fill:color-mix(in srgb,var(--accent) 14%,var(--surface-2));stroke:var(--muted);stroke-width:.8;stroke-dasharray:4 3;cursor:pointer}
+#map path.hp.unorg{fill:var(--surface-2);stroke:var(--line);stroke-width:.8;stroke-dasharray:2 3;cursor:pointer}
+#map path.hp.other{fill:url(#hatch);stroke:var(--muted);stroke-width:.8;stroke-dasharray:1 3;cursor:pointer}
+#map path.hp.terr:hover,#map path.hp.unorg:hover,#map path.hp.other:hover{stroke:var(--ink);stroke-dasharray:none}
+#map .tl{font-family:var(--sans);font-size:11.5px;fill:var(--ink-2);text-anchor:middle;pointer-events:none;paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-linejoin:round;letter-spacing:.02em}
+.lg-terr{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:6px;border:1px dashed var(--muted);background:color-mix(in srgb,var(--accent) 14%,var(--surface-2))}
 #map .wl{font-family:var(--sans);font-size:15px;font-weight:600;text-anchor:middle;pointer-events:none;paint-order:stroke;stroke-width:3px;stroke-linejoin:round}
 .lg-sw{display:inline-block;width:14px;height:10px;border-radius:2px}
 @keyframes pulse{0%{opacity:.2}40%{opacity:1}}
@@ -430,7 +440,7 @@ footer a{color:var(--ink-2)}
     <details><summary>How the buckets work</summary><p>Laws and rulings are sorted by what they did, not by which party passed them. <b style="color:var(--dem)">Liberal-leaning</b> means it expanded federal spending, the government's role in the economy, progressive taxation or looser money. <b style="color:var(--rep)">Conservative-leaning</b> means it cut taxes or spending, limited the government's economic role or tightened money. <b style="color:var(--mix)">Mixed</b> covers tariffs, wartime finance and deals that did both. For court rulings about rights, liberal-leaning means wider civil rights and liberties or more protection for people accused of crimes, and conservative-leaning the reverse, including gun rights; rulings about how government is structured count as mixed. Party and vote splits are shown separately, so a tax cut signed by a Democrat still reads as a tax cut. This is an early classification; a vote-based check using every recorded roll call (Voteview) is planned.</p></details>
     <details><summary>Who passed it</summary><p>Each law is credited to the party that held both the House and the Senate when it passed. When control was split, it goes to the signing president's party. Laws with bipartisan votes, veto overrides and constitutional amendments count as passed by both parties. Earlier parties count with the party that followed them: Democratic-Republicans and Jacksonians with the Democrats; Federalists, National Republicans and Whigs with the Republicans. This is about party, not ideology: for what a law did, see "What it did."</p></details>
     <details><summary>Party colors</summary><p>Democrats are blue and Republicans red in every era; earlier parties such as the Federalists, Democratic-Republicans and Whigs have their own colors. The parties' positions changed over time, most of all during the realignment era of 1896–1932, marked by the gray band on the timeline. Tap the band to read how.</p></details>
-    <details><summary>Maps and early years</summary><p>Map shapes use today's state borders. Before 1789 there was no president and no federal debt figure; the Continental Congress's war debts were taken over by the new government in 1790.</p></details>
+    <details><summary>Maps and early years</summary><p>From September 1783 on, the map shows state and territory borders as they were on each date, from the Newberry Library's <i>Atlas of Historical County Boundaries</i>; land the United States did not yet hold is left blank. Tap a territory to read what changed. Before 1789 there was no president and no federal debt figure; the Continental Congress's war debts were taken over by the new government in 1790.</p></details>
       <!--EXPLORE-->
   </footer>
 </div>
@@ -452,6 +462,7 @@ footer a{color:var(--ink-2)}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script src="assets/borders.js" async></script>
 <script src="data.js"></script>
 <script>
 (function(){
@@ -1020,6 +1031,38 @@ seriesChips.addEventListener("click", e => { const b = e.target.closest("[data-s
 const mapSvg = d3.select("#map");
 const features = topojson.feature(ATLAS, ATLAS.objects.states).features;
 const path = d3.geoPath();
+// Historical borders (Newberry Library atlas): drawn under the modern states, which stay on top for clicks
+const histG = mapSvg.append("g").attr("class","hist"), histLabelG = mapSvg.append("g");
+mapSvg.append("defs").html('<pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="var(--surface-2)"/><line x1="0" y1="0" x2="0" y2="6" stroke="var(--line)" stroke-width="2"/></pattern>');
+const histProj = d3.geoAlbersUsa().scale(1300).translate([487.5, 305]), histPath = d3.geoPath(histProj);
+let HIST = null;
+const nToISO = n => n.slice(0,4) + "-" + n.slice(4,6) + "-" + n.slice(6,8);
+window.bordersReady = () => {
+  if (HIST || !window.BORDERS) return;
+  HIST = topojson.feature(BORDERS, BORDERS.objects.states).features.map(f => { const p = f.properties;
+    p.ab = p.id === "dc" ? "DC" : p.id.slice(0,2).toUpperCase(); p.isState = p.ty === "State" || p.ty === "District of Columbia";
+    p.sd = nToISO(p.s); p.ed = p.e === "20001231" ? "9999-12-31" : nToISO(p.e); f.d = histPath(f) || ""; f.area = f.d ? histPath.area(f) : 0; f.c = f.d ? histPath.centroid(f) : [0,0]; return f; });
+  if (window._ledgerStarted) updateMap();
+};
+if (window.BORDERS) window.bordersReady();
+function histAt(iso){ return HIST && iso >= "1783-09-03" ? HIST.filter(f => f.properties.sd <= iso && iso <= f.properties.ed && f.d) : null; }
+const TERR_CLS = f => f.properties.isState ? "hp state" : f.properties.ty === "Territory" ? "hp terr" : f.properties.ty === "Unorganized Territory" ? "hp unorg" : "hp other";
+function openTerritory(f){ const p = f.properties;
+  openDrawer("Borders", `<h3>${p.n}</h3><p class="bucket-note">${p.ty} · ${fmtDate(p.sd)}${p.ed < "9999" ? " to " + fmtDate(p.ed) : " to today"}</p><p>${p.ch || ""}</p>
+    <p class="hint">Borders: John H. Long et al., <i>Atlas of Historical County Boundaries</i>, The Newberry Library (2010).</p>`); }
+function drawHist(iso){
+  const cur = histAt(iso);
+  mapSvg.classed("histon", !!cur);
+  histG.selectAll("path").data(cur || [], f => f.properties.id + f.properties.s).join("path").attr("d", f => f.d).attr("class", TERR_CLS)
+    .attr("fill", f => f.properties.isState ? stateColor(f.properties.ab) : null)
+    .on("click", (e, f) => { if (!f.properties.isState) openTerritory(f); })
+    .each(function(f){ let t = this.querySelector("title"); if (!t){ t = document.createElementNS("http://www.w3.org/2000/svg", "title"); this.appendChild(t); }
+      t.textContent = f.properties.n + (f.properties.isState ? "" : ` (${f.properties.ty.toLowerCase()}, ${f.properties.sd.slice(0,4)}–${f.properties.ed < "9999" ? f.properties.ed.slice(0,4) : "today"}). Tap for what changed.`); });
+  const labs = (cur || []).filter(f => !f.properties.isState && f.area > 2500);
+  histLabelG.selectAll("text").data(labs, f => f.properties.id + f.properties.s).join("text").attr("class","tl")
+    .attr("x", f => f.c[0]).attr("y", f => f.c[1]).text(f => f.properties.n.replace(" Territory", " Terr.").replace("Unorganized", "Unorg."));
+  return cur;
+}
 const mapG = mapSvg.append("g");
 const stPaths = mapG.selectAll("path").data(features).join("path").attr("class","st").attr("d", path)
   .attr("id", f => "st-" + D.fips[f.id]).on("click", (e, f) => { const ab = D.fips[f.id]; if (!ab || isGhost(ab)) return; openState(ab); })
@@ -1070,6 +1113,8 @@ function updateMap(){
     el.select("title").text(ghost ? `${D.stateNames[ab]} (joins ${D.statehood[ab] ? D.statehood[ab].slice(0,4) : ""})` : D.stateNames[ab] + (mw != null ? ` · $${mw.toFixed(2)}/hr` : ""));
   });
   prevStates = now; updateRealignNote();
+  const hist = drawHist(iso);
+  const nTerr = hist ? hist.filter(f => !f.properties.isState).length : 0;
   const legend = document.getElementById("mapLegend"), foot = document.getElementById("mapFoot"), title = document.getElementById("mapTitle");
   const n = statesAt(iso).length || 13;
   drawWageLabels(iso);
@@ -1087,13 +1132,14 @@ function updateMap(){
     return;
   }
   const ey = electionFor(S.t);
-  title.textContent = ey ? `The ${n} states · ${ey} election` : `The ${n} states`;
+  title.textContent = (ey ? `The ${n} states · ${ey} election` : `The ${n} states`);
   if (!ey){ legend.innerHTML = `<span><span class="dot" style="background:var(--neutral-state)"></span>${S.t < 1787 ? "The 13 original states" : "Ratified the Constitution"}</span><span><span class="dot" style="background:var(--ghost);outline:1px dashed var(--muted)"></span>Future states</span>`;
-    foot.textContent = "The first presidential election was held in early 1789. Press play or drag the timeline to watch the country grow."; return; }
+    foot.textContent = "The first presidential election was held in early 1789. Press play or drag the timeline to watch the country grow." + (hist ? " Borders are as they were on this date." : ""); return; }
   const counts = {}; Object.values(D.elections[ey]).forEach(p => counts[p] = (counts[p]||0) + 1);
   legend.innerHTML = Object.entries(counts).sort((a,b) => b[1]-a[1]).map(([p,c]) => `<span><span class="dot" style="background:${partyColor(p, ey)}"></span>${D.parties[p].name} ${c}</span>`).join("")
-    + (n < 50 ? `<span><span class="dot" style="background:var(--ghost);outline:1px dashed var(--muted)"></span>Not yet a state</span>` : "");
-  foot.innerHTML = `Won by <b>${D.winners[ey]}</b>. Blue is Democratic and red is Republican in every era; other parties have their own colors.` + (ey < REALIGN_END ? ` The parties' positions were different then; see the note above the map.` : "");
+    + (hist ? (nTerr ? `<span><i class="lg-terr"></i>Territory or unorganized land (${nTerr})</span>` : "") : (n < 50 ? `<span><span class="dot" style="background:var(--ghost);outline:1px dashed var(--muted)"></span>Not yet a state</span>` : ""));
+  foot.innerHTML = `Won by <b>${D.winners[ey]}</b>. Blue is Democratic and red is Republican in every era; other parties have their own colors.` + (ey < REALIGN_END ? ` The parties' positions were different then; see the note above the map.` : "")
+    + (hist ? ` Borders are as they were on this date; tap a territory to see what changed. <span class="hint">Borders: Newberry Library, Atlas of Historical County Boundaries.</span>` : "");
 }
 document.getElementById("mapSeg").addEventListener("click", e => { const b = e.target.closest("[data-map]"); if (!b) return; S.mapMode = b.dataset.map; document.querySelectorAll("#mapSeg button").forEach(x => x.setAttribute("aria-pressed", x === b)); updateMap(); });
 
@@ -1448,5 +1494,6 @@ try { matchMedia("(prefers-color-scheme: dark)").addEventListener("change", them
 new MutationObserver(themeChanged).observe(document.documentElement, {attributes:true, attributeFilter:["data-theme"]});
 document.querySelectorAll("#viewSeg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.view === S.view));
 syncIdeo(); renderFilters(); syncFiltBtn(); syncJump(); applyPanels(); drawTrack(); render(true); requestAnimationFrame(loop);
+window._ledgerStarted = true; if (HIST) updateMap();
 })();
 </script>

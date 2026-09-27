@@ -38,5 +38,8 @@ sh app/build.sh         # combines app.html + data.js into index.html
 The GitHub repository is connected to Vercel. Every push to `main` deploys to the live site;
 pushes to other branches get their own preview link.
 
+## Historical borders
+The home map draws state and territory borders as they were on each date from 1783 on (`assets/borders.js`, from the Newberry Library's Atlas of Historical County Boundaries; see `data/raw/borders/SOURCES.txt`).
+
 ## Search engines
 Every page has a title, description, canonical link, share preview (assets/og/) and structured data, set in `data/seo.py`. After deploying, submit `https://yeas-and-nays.vercel.app/sitemap.xml` in Google Search Console and Bing Webmaster Tools. If the site moves to a custom domain, change `SITE` in `data/seo.py` and rebuild.
