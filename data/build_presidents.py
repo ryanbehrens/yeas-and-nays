@@ -134,6 +134,8 @@ def page(slug, p):
         sd = dt.date.fromisoformat(s); sy = sd.year if sd.month >= 7 else sd.year - 1
         if sd.year <= 1842: sy = sd.year  # budget year = calendar year until 1842; Treasury figures are dated January 1
         ed = dt.date.fromisoformat(en); ey = ed.year - 1 if ed.month < 7 else ed.year
+        if ed.year <= 1842: ey = ed.year  # January 1 figures
+        sy = max(sy, 1790); ey = max(ey, sy)
         return sy, min(ey, LAST)
     ratio_txt = []; infl_txt = []; cost = []
     for i, (s, en) in enumerate(p["terms"]):
@@ -183,14 +185,14 @@ def page(slug, p):
       u_cap = U.get("cap", "Monthly rates; the chart shows yearly averages.")
       u_sub = f'{U["start_label"]}: {U["start"]}% → {U["end_label"]}: {U["end"]}%' + (f' · {U["start2_label"]}: {U["start2"]}% → {U["end2_label"]}: {U["end2"]}%' if "start2" in U else "")
       u_val = f'{U.get("end2", U["end"])}%'
-    infl_val = f'{infl_txt[0][2]:.1f}%'
-    infl_sub = " · ".join(f'{sy}–{ey}: {avg:.1f}% a year' for sy, ey, avg, _ in infl_txt)
+    infl_val = f'{infl_txt[0][2]:.1f}%' if infl_txt else "—"
+    infl_sub = " · ".join(f'{sy}–{ey}: {avg:.1f}% a year' for sy, ey, avg, _ in infl_txt) or "Too short a time in office to measure"
     t.append(f"""  <section id="numbers" class="block" style="border-top:0;padding-top:4px">
   <div class="tiles">
     <a class="tile" href="#economy"><div class="lab"><span class="dot" style="background:var(--debt)"></span>{debt_lab}</div><div class="val">{a_num}<small>{a_unit}</small></div><div class="sub">{e(debt_sub)}</div></a>
     <a class="tile" href="#economy"><div class="lab">Debt-to-GDP, latest</div><div class="val">{ratio_val}</div><div class="sub">{e(ratio_sub)}</div></a>
     <a class="tile" href="#economy"><div class="lab"><span class="dot" style="background:var(--int)"></span>Unemployment</div><div class="val">{u_val}</div><div class="sub">{e(u_sub)}</div></a>
-    <a class="tile" href="#economy"><div class="lab"><span class="dot" style="background:var(--def)"></span>Average inflation</div><div class="val">{infl_val}<small>a year</small></div><div class="sub">{e(infl_sub)}</div></a>
+    <a class="tile" href="#economy"><div class="lab"><span class="dot" style="background:var(--def)"></span>Average inflation</div><div class="val">{infl_val}{"<small>a year</small>" if infl_txt else ""}</div><div class="sub">{e(infl_sub)}</div></a>
     <a class="tile" href="#orders"><div class="lab">Executive orders</div><div class="val">{eo_total:,}</div><div class="sub">About {eo_total / yrs_in_office:.0f} a year in office</div></a>
     <a class="tile" href="#pardons"><div class="lab">Pardons &amp; commutations</div><div class="val">{f"{pard + comm + group_n:,}" if p["clem_total"] else "—"}</div><div class="sub">{f"{pard:,} pardons · {comm:,} commutations" if p["clem_total"] else "Not recorded before 1900"}{f" · about {group_n:,} by group proclamation" if group_n else ""}{f" ({e(p['clem_scope'])})" if p.get("clem_scope") else ""}</div></a>
     <a class="tile" href="#legal"><div class="lab">Impeached</div><div class="val">{e(p["impeached_short"])}</div><div class="sub">{e(legal["Impeached"]["v"])} · Convicted of a crime: {e(legal.get("Convicted", {}).get("v", "No"))}</div></a>
@@ -297,7 +299,7 @@ def index():
     t.append("""  <nav class="crumbs">Presidents</nav>
   <section class="hero" style="grid-template-columns:1fr;padding-bottom:6px">
     <div><div class="eyebrow">The presidents</div><h1>Every president, held to the same standard</h1>
-    <p class="sum">Pick a president to see what happened to the debt, jobs and prices on their watch, every executive order and pardon, their legal record, and the controversies, each one labeled by what was actually proven. Deep dives are being added a few at a time.</p></div>
+    <p class="sum">Pick a president to see what happened to the debt, jobs and prices on their watch, every executive order and pardon, their legal record, and the controversies, each one labeled by what was actually proven.</p></div>
   </section>
 """)
     num = 0; cards = []; done_slug = set(); done_names = set()
@@ -318,14 +320,14 @@ def index():
         else:
             cards.append(f'<div class="pcard soon" aria-disabled="true"><div class="pic">{portrait(PORTRAIT_SLUG.get(name, "none"), name, placeholder=False, up="")}<span class="num">#{num}</span><span class="bar" style="background:var({var})"></span></div><div class="info"><b>{e(name)}</b><span>{e(yrs)} · {e(party.split(" /")[0].split(" (")[0])}</span><span>Coming soon</span></div></div>')
     n_live = sum('class="pcard live"' in c for c in cards)
-    t.append(f"""  <div class="ptools"><p>{n_live} of {len(cards)} presidents have a deep dive so far. Colored bars show party, using the site's ideology adjustment: before 1897, Democrats (and Democratic-Republicans) are red and Republicans (and Federalists and Whigs) blue. Gray means no party or a break with it.</p>
-    <div class="ptbtns"><button type="button" class="pbtn" id="pf" aria-pressed="false">Deep dives only</button><button type="button" class="pbtn" id="ps">Oldest first</button></div></div>
+    t.append(f"""  <div class="ptools"><p>{"Every president has a deep dive." if n_live == len(cards) else f"{n_live} of {len(cards)} presidents have a deep dive so far."} Colored bars show party, using the site's ideology adjustment: before 1897, Democrats (and Democratic-Republicans) are red and Republicans (and Federalists and Whigs) blue. Gray means no party or a break with it.</p>
+    <div class="ptbtns">{"" if n_live == len(cards) else '<button type="button" class="pbtn" id="pf" aria-pressed="false">Deep dives only</button>'}<button type="button" class="pbtn" id="ps">Oldest first</button></div></div>
   <div class="pgrid" id="pg">
 """)
     t.append("\n".join("    " + c for c in reversed(cards)))
     t.append("""\n  </div>
 <script>(function(){var g=document.getElementById("pg"),f=document.getElementById("pf"),s=document.getElementById("ps");
-f.onclick=function(){var on=f.getAttribute("aria-pressed")!=="true";f.setAttribute("aria-pressed",on);g.classList.toggle("only",on);};
+if(f)f.onclick=function(){var on=f.getAttribute("aria-pressed")!=="true";f.setAttribute("aria-pressed",on);g.classList.toggle("only",on);};
 s.onclick=function(){s.textContent=s.textContent==="Oldest first"?"Newest first":"Oldest first";Array.prototype.slice.call(g.children).reverse().forEach(function(c){g.appendChild(c);});};})();</script>
 """)
     t.append(FOOT)
