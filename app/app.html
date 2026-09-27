@@ -222,6 +222,11 @@ button{cursor:pointer}
 .map-foot{font-size:12px;color:var(--muted);margin-top:6px}
 .map-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .ideo[aria-pressed="false"]{background:var(--surface-2);color:var(--ink)}
+.fedwage{display:flex;align-items:center;flex-wrap:wrap;gap:4px 14px;border:1px solid var(--line);background:var(--surface-2);border-left:4px solid var(--accent);border-radius:10px;padding:10px 14px;margin-bottom:10px}
+.fedwage .fw-k{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.fedwage .fw-v{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.fedwage .fw-v small{font-size:13px;color:var(--ink-2);font-weight:500}
+.fedwage .fw-s{font-size:12.5px;color:var(--ink-2)}
 .realign-note{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:1px dashed var(--muted);background:var(--surface-2);border-radius:10px;padding:8px 12px;margin-bottom:8px;font-size:12.5px;color:var(--ink-2)}
 .realign-note:hover{border-style:solid;color:var(--ink)}
 .swap-ic{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:600;color:#fff;background:linear-gradient(90deg,var(--rep) 50%,var(--dem) 50%)}
@@ -428,6 +433,7 @@ footer a{color:var(--ink-2)}
           </div>
         </div>
         <button class="realign-note" id="realignNote" hidden><span class="swap-ic" aria-hidden="true">⇄</span><span id="realignText"></span></button>
+        <div class="fedwage" id="fedWage" hidden aria-live="polite"></div>
         <svg id="map" viewBox="0 0 975 610" role="img" aria-label="Map of the United States"></svg>
         <div class="legend" id="mapLegend"></div>
         <div class="map-foot" id="mapFoot"></div>
@@ -1170,13 +1176,20 @@ function updateMap(){
   const legend = document.getElementById("mapLegend"), foot = document.getElementById("mapFoot"), title = document.getElementById("mapTitle");
   const n = statesAt(iso).length || 13;
   drawWageLabels(iso);
+  const fw = document.getElementById("fedWage"); fw.hidden = S.mapMode !== "wage";
   if (S.mapMode === "wage"){
     const y = yearOf(S.t), f = minWageAt(iso);
+    const since = D.fedMinWage.filter(w => w.date <= iso).pop();
+    const cy = econ.get(y) && econ.get(y).cpi, real = f && cy ? f * CPI_BASE / cy : null;
+    fw.innerHTML = f
+      ? `<span class="fw-k">Federal minimum wage</span><span class="fw-v">$${(S.view === "real" && real ? real : f).toFixed(2)}<small>/hr${S.view === "real" ? " in 2025 dollars" : ""}</small></span>
+         <span class="fw-s">In effect since ${fmtDate(since.date)}${S.view !== "real" && real && y < 2025 ? ` · worth about <b>$${real.toFixed(2)}</b> in 2025 dollars` : ""}${S.view === "real" ? ` · $${f.toFixed(2)} at the time` : ""}</span>`
+      : `<span class="fw-k">Federal minimum wage</span><span class="fw-v">None<small> yet</small></span><span class="fw-s">The first federal minimum, 25¢ an hour, took effect October 24, 1938.</span>`;
     title.textContent = `Minimum wage by state · ${y}`;
     const used = new Set(); stPaths.each(f2 => { const ab = D.fips[f2.id]; if (ab && !isGhost(ab)) used.add(mwStep(ab, iso)); });
     legend.innerHTML = (used.has(-1) ? `<span><i class="lg-sw" style="background:var(--neutral-state)"></i>No minimum wage</span>` : "")
       + (f ? MW_STEPS.map((s, i) => `<span><i class="lg-sw" style="background:${mwColor(i)}"></i>${s.lab}</span>`).join("") : used.has(4) ? `<span><i class="lg-sw" style="background:${mwColor(4)}"></i>State minimum wage law</span>` : "");
-    foot.innerHTML = (f ? `Federal minimum in ${y}: <b>$${f.toFixed(2)}/hr</b>. Each state shows the minimum in effect there, the higher of its own rate and the federal one. Darker states set their own, higher minimum.`
+    foot.innerHTML = (f ? `Each state shows the minimum in effect there, the higher of its own rate and the federal one. Lighter states set their own, higher minimum.`
         : `There was no federal minimum wage until 1938. Several states had minimum wages for women and children in the 1910s–1930s, which are not shown yet.`)
       + (S.view === "real" ? " Amounts are in 2025 dollars." : "")
       + (y >= 2025 ? " 2025 is shown at January 2024 rates, the latest loaded." : "")
