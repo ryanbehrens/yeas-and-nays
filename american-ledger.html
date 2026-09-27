@@ -1391,7 +1391,7 @@ function drawTrack(){
     .attr("fill", css("--muted")).attr("fill-opacity", .22).attr("stroke", css("--muted")).attr("stroke-opacity", .5).attr("stroke-dasharray", "3 3").style("pointer-events", "none");
   const bands = D.presidents.map(p => ({a: dateToT(p.start), b: p.end ? dateToT(p.end) : 2026, p}));
   track.selectAll("rect.band").data(bands).join("rect").attr("class","band").attr("x", d => tx(d.a)).attr("width", d => Math.max(0.5, tx(d.b) - tx(d.a) - 1)).attr("y", 30).attr("height", 10).attr("rx", 2)
-    .attr("fill", d => partyFill(d.p.party)).attr("fill-opacity", .55).append("title").text(d => `${d.p.name} (${d.p.party})`);
+    .attr("fill", d => partyFill(d.p.party)).attr("fill-opacity", d => partyVar(d.p.party) === "--mix" && partyFill(d.p.party) !== css("--mix") ? .9 : .55).append("title").text(d => `${d.p.name} (${d.p.party})`);
   track.selectAll("rect.pre").data([1]).join("rect").attr("class","pre").attr("x", tx(1776)).attr("width", tx(1789.33) - tx(1776) - 1).attr("y", 30).attr("height", 10).attr("rx", 2).attr("fill", css("--line"));
   const vis = items.filter(itemVisible);
   track.selectAll("rect.tick").data(vis, d => d.id).join("rect").attr("class","tick").attr("x", d => tx(d.tt) - 1).attr("width", 2).attr("y", d => d.type === "event" ? 18 : 12).attr("height", d => d.type === "event" ? 8 : 14).attr("rx", 1).attr("fill", d => itemColor(d));
