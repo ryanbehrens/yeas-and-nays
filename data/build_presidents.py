@@ -85,6 +85,16 @@ PORTRAIT_SLUG = {"George Washington":"washington","John Adams":"jadams","Thomas 
   "Gerald Ford":"ford","Jimmy Carter":"carter","Ronald Reagan":"reagan","George H. W. Bush":"ghwbush",
   "Bill Clinton":"clinton","George W. Bush":"gwbush","Barack Obama":"obama","Donald Trump":"trump","Joe Biden":"biden"}
 
+def side(party):
+    """Which side a party counts as, using the same grouping as the Ledger: Federalists and Whigs with
+    the Republicans, Democratic-Republicans and Jacksonians with the Democrats. Returns a CSS color var."""
+    l = party.lower()
+    if l.startswith(("unaffiliated", "whig (expelled")): return "--mix"
+    if "democratic-republican" in l: return "--dem"
+    if l.startswith(("republican", "federalist", "whig")): return "--rep"
+    if "democrat" in l: return "--dem"
+    return "--mix"
+
 def slug_for(name):
     for k, v in PRESIDENTS.items():
         if v["name"] == name: return k
@@ -122,6 +132,7 @@ def page(slug, p):
     added = sum(b - a for a, b, *_ in parts)
     def fy_bounds(s, en):
         sd = dt.date.fromisoformat(s); sy = sd.year if sd.month >= 7 else sd.year - 1
+        if sd.year <= 1842: sy = sd.year  # budget year = calendar year until 1842; Treasury figures are dated January 1
         ed = dt.date.fromisoformat(en); ey = ed.year - 1 if ed.month < 7 else ed.year
         return sy, min(ey, LAST)
     ratio_txt = []; infl_txt = []; cost = []
@@ -138,9 +149,9 @@ def page(slug, p):
     groups = [g for gl in p.get("clem_group", {}).values() for g in gl]
     group_n = sum(n for _, n in groups)
     legal = {x["k"]: x for x in p["legal"]}
-    party_var = "--rep" if p["party"].startswith("Republican") else "--dem"
+    party_var = side(p["party"])
     flipped = p["terms"][0][0] < "1897"
-    if flipped: party_var = "--dem" if party_var == "--rep" else "--rep"  # site-wide ideology adjustment
+    if flipped and party_var != "--mix": party_var = "--dem" if party_var == "--rep" else "--rep"  # site-wide ideology adjustment
     flipnote = ('<p class="flipnote">Party colors follow the site\'s ideology adjustment: before 1897, Democrats were generally the more conservative party, so they are shown in red and Republicans in blue.</p>' if flipped else "")
     term_txt = " and ".join(f'{s[:4]}–{(en or "")[:4] if en else "present"}' for s, en in p["terms"])
 
@@ -163,8 +174,9 @@ def page(slug, p):
     a_num, a_unit = money_parts(abs(added)); a_num = ("+" if added >= 0 else "−") + a_num.lstrip("+")
     debt_lab = "Debt added" if added >= 0 else "Debt paid down"
     r = ratio_txt
-    ratio_val = f'{r[-1][3]:.0f}%'
-    ratio_sub = " · ".join(f'FY{sy}: {r0:.0f}% → FY{ey}: {r1:.0f}%' for sy, ey, r0, r1 in r)
+    rf = lambda v: f"{v:.1f}%" if v < 10 else f"{v:.0f}%"
+    ratio_val = rf(r[-1][3])
+    ratio_sub = " · ".join(f'FY{sy}: {rf(r0)} → FY{ey}: {rf(r1)}' for sy, ey, r0, r1 in r)
     if U is None:
         u_sub, u_val, u_cap = "No national estimates before 1890", "—", "Economist Stanley Lebergott's yearly estimates, the earliest national series, begin in 1890"
     else:
@@ -197,6 +209,7 @@ def page(slug, p):
     dnote = p["debt"].get("note", "")
     first = p["terms"][0][0]
     fy_txt = ("Budget years run October to September, so a new president's first budget year starts the fall after they take office." if first >= "1977"
+              else "Until 1842 the federal budget year matched the calendar year and debt figures are dated January 1; from 1843 to 1976 budget years ran July to June." if first < "1843"
               else "Budget years ran July to June until 1976 (now October to September), so each year's figures cover parts of two calendar years.")
     t.append(f"""  <section id="economy" class="block">
     <h2>The economy, first day to last</h2>
@@ -268,7 +281,7 @@ def page(slug, p):
     t.append(f"""  <section id="quotes" class="block">
     <h2>In their own words</h2>
     <p class="lede">Widely quoted remarks, with the context they were said in.</p>
-    <div class="quotes">{quotes}</div>
+    <div class="quotes">{quotes or '<p class="note">No widely quoted remarks with a reliable source are included yet.</p>'}</div>
   </section>
   <section class="block" style="padding-bottom:0">
     <div class="method"><b>How this page is made.</b> Every president gets the same sections and the same checklist. A controversy is listed if it led to an investigation by Congress, an inspector general, a special or independent counsel or a court, or was a sustained national story covered across the political spectrum. Labels follow the strongest official finding, not media coverage. Debt figures come from the U.S. Treasury; deficits and GDP from the White House budget office and the Commerce Department; unemployment from the Bureau of Labor Statistics (before 1948, yearly estimates by Stanley Lebergott via NBER and the Census Bureau's Historical Statistics); prices from MeasuringWorth; executive orders from the Federal Register and National Archives; clemency from the Justice Department.</div>
@@ -291,7 +304,7 @@ def index():
     for name, party, s, en in ALL_PRES:
         num += 1
         slug = slug_for(name)
-        var = "--rep" if party.startswith("Republican") else "--dem" if party.startswith("Democratic") and not party.startswith("Democratic-Republican") else "--mix"
+        var = side(party)
         if int(s[:4]) < 1897 and var != "--mix": var = "--dem" if var == "--rep" else "--rep"  # site-wide ideology adjustment
         yrs = f'{s[:4]}–{en[:4] if en else "present"}'
         if (slug and slug in done_slug) or name in done_names:
@@ -305,7 +318,7 @@ def index():
         else:
             cards.append(f'<div class="pcard soon" aria-disabled="true"><div class="pic">{portrait(PORTRAIT_SLUG.get(name, "none"), name, placeholder=False, up="")}<span class="num">#{num}</span><span class="bar" style="background:var({var})"></span></div><div class="info"><b>{e(name)}</b><span>{e(yrs)} · {e(party.split(" /")[0].split(" (")[0])}</span><span>Coming soon</span></div></div>')
     n_live = sum('class="pcard live"' in c for c in cards)
-    t.append(f"""  <div class="ptools"><p>{n_live} of {len(cards)} presidents have a deep dive so far. Colored bars show party, using the site's ideology adjustment: before 1897, Democrats are red and Republicans blue.</p>
+    t.append(f"""  <div class="ptools"><p>{n_live} of {len(cards)} presidents have a deep dive so far. Colored bars show party, using the site's ideology adjustment: before 1897, Democrats (and Democratic-Republicans) are red and Republicans (and Federalists and Whigs) blue. Gray means no party or a break with it.</p>
     <div class="ptbtns"><button type="button" class="pbtn" id="pf" aria-pressed="false">Deep dives only</button><button type="button" class="pbtn" id="ps">Oldest first</button></div></div>
   <div class="pgrid" id="pg">
 """)

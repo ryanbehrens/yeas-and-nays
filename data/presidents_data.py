@@ -1405,6 +1405,7 @@ PRESIDENTS = {
     dict(title="The Belknap bribery", when="1870–1876", label="charged", d="The secretary of war and his wives received about $20,000 from a man who held a lucrative Army trading post.", outcome="Impeached unanimously by the House; acquitted by the Senate.", src=W+"William_W._Belknap"),
     dict(title="Black Friday", when="September 1869", label="proven", d="Financiers Jay Gould and Jim Fisk tried to corner the gold market, using Grant's brother-in-law to get inside information. When Grant ordered the Treasury to sell gold, the price collapsed and many investors were ruined.", outcome="A congressional investigation in 1870 cleared Grant of wrongdoing.", src=W+"Black_Friday_(1869)"),
     dict(title="Crédit Mobilier", when="Revealed 1872", label="proven", d="A railroad construction company had given its stock to members of Congress, including Grant's vice president, Schuyler Colfax, while they oversaw its government funding.", outcome="The House censured two congressmen; Colfax was dropped from the 1872 ticket.", src=W+"Cr%C3%A9dit_Mobilier_scandal"),
+    dict(title="Slaveholding", when="1859", label="proven", d="Grant owned one enslaved man, William Jones, whom he acquired from his father-in-law. His wife's family's enslaved servants also worked for the household before the war.", outcome="Grant freed Jones in 1859 rather than sell him, though he was deeply in debt at the time.", src=W+"Ulysses_S._Grant"),
     dict(title="General Order No. 11", when="December 1862", label="proven", d="Before his presidency, as a Union general, Grant ordered all Jews expelled from his military district.", outcome="Lincoln revoked it within weeks. Grant later called it wrong, and as president appointed more Jewish officials than any predecessor.", src=W+"General_Order_No._11_(1862)"),
   ],
   quotes=[
@@ -1445,6 +1446,7 @@ PRESIDENTS = {
   controversies=[
     dict(title="The impeachment", when="1868", label="charged", d="Congress's Radical Republicans impeached Johnson for removing Stanton without Senate approval and for speeches attacking Congress. Many historians see the charges as a proxy for the fight over Reconstruction.", outcome="Acquitted by one vote; he served out his term.", src=W+"Impeachment_of_Andrew_Johnson"),
     dict(title="Undoing Reconstruction", when="1865–1868", label="proven", d="Johnson let Southern states rejoin under governments that passed Black Codes restricting freed people's work and movement, returned confiscated land to planters, and vetoed civil rights and Freedmen's Bureau bills.", outcome="Congress overrode his vetoes, passed the 14th Amendment and took over Reconstruction in 1867.", src=W+"Reconstruction_era"),
+    dict(title="Slaveholding", when="1842–1863", label="proven", d="Johnson owned about ten enslaved people in Tennessee.", outcome="He freed them on August 8, 1863, a date later celebrated as Emancipation Day in Tennessee.", src=W+"Andrew_Johnson"),
     dict(title="The 'Swing Around the Circle'", when="1866", label="proven", d="On a speaking tour before the midterms, Johnson traded insults with hecklers and accused Radical Republicans of treason.", outcome="Republicans won veto-proof majorities; the speeches became the basis for an article of impeachment.", src=W+"Andrew_Johnson"),
   ],
   quotes=[
@@ -1567,5 +1569,132 @@ PRESIDENTS = {
   quotes=[
     dict(q="I hold that the laws of 1850, commonly called the 'compromise measures,' are strictly constitutional and to be unhesitatingly carried into effect.", when="March 4, 1853", ctx="Inaugural address, pledging to enforce the Fugitive Slave Act.", src=W+"Franklin_Pierce"),
   ],
+),
+
+# ------------------------------------------------------------------------------------------ FILLMORE
+"fillmore": dict(
+  impeached_short="No",
+  name="Millard Fillmore", number="13th", party="Whig", home="New York",
+  terms=[("1850-07-09", "1853-03-04")], vp="None",
+  left="Not nominated in 1852",
+  summary="Became president when Zachary Taylor died. Unlike Taylor, he backed Henry Clay's Compromise of 1850: California joined as a free state and the slave trade was banned in Washington, D.C., but a harsh new Fugitive Slave Act required Northerners to help return people who had escaped slavery. He sent Commodore Perry's fleet to open Japan to trade. In 1856 he ran again as the candidate of the anti-immigrant Know-Nothing party.",
+  debt=dict(start=63_452_774, start_label="June 30, 1850 (end of fiscal 1850)", end=66_199_342, end_label="June 30, 1852 (end of fiscal 1852)", note="Daily debt figures don't exist before 1993, so Fillmore's numbers use the fiscal years closest to his term, the same rule as every other page."),
+  unemployment=None,
+  eo_by_year={}, eo_total=12, eo_range=None, eo_source=('American Presidency Project: executive orders', 'https://www.presidency.ucsb.edu/statistics/data/executive-orders'), eo_note="Count from the American Presidency Project.",
+  eo_notable=[],
+  clem_by_year={}, clem_total=None, clem_source=('U.S. Dept. of Justice, clemency statistics', 'https://www.justice.gov/pardon/clemency-statistics'), clem_note="The Justice Department's published counts begin in 1900.",
+  pardons=[
+    dict(name="Daniel Drayton and Edward Sayres", kind="Pardon", date="1852-08", crime="Helping 77 enslaved people try to escape from Washington, D.C., on the schooner Pearl (1848)", sentence="Fines they could not pay, keeping them in jail more than four years", why="Senator Charles Sumner and other antislavery leaders pressed for their release.", src=W+"Pearl_incident"),
+  ],
+  legal=[
+    dict(k="Impeached", v="No", status="no", d="No articles of impeachment were voted on."),
+    dict(k="Criminally charged", v="No", status="no", d="Never charged."),
+    dict(k="Aides or cabinet convicted", v="No", status="no", d="No member of his cabinet or White House staff was convicted."),
+    dict(k="Special counsels", v="No", status="no", d="None were appointed."),
+    dict(k="Misuse of DOJ, FBI or IRS", v="No finding", status="no", d="No official investigation found he used federal law enforcement against opponents."),
+  ],
+  people=[],
+  controversies=[
+    dict(title="The Fugitive Slave Act", when="1850", label="disputed", d="Fillmore signed a law requiring citizens to help capture people who had escaped slavery, denying them a jury trial, and paying federal commissioners $10 for returning a person to slavery but $5 for freeing them.", outcome="It held the Union together for a decade by some accounts, but turned many Northerners against slavery; Congress repealed it in 1864.", src=W+"Fugitive_Slave_Act_of_1850"),
+    dict(title="Treason charges after Christiana", when="1851", label="charged", d="After a Maryland slaveholder was killed trying to recapture four men in Christiana, Pennsylvania, his administration had 38 people charged with treason.", outcome="The first defendant, a white miller named Castner Hanway, was acquitted, and the other cases were dropped.", src=W+"Christiana_Riot"),
+    dict(title="The Know-Nothing campaign", when="1856", label="disputed", d="After leaving office he ran for president as the nominee of the American Party, a movement against immigrants and Catholics.", outcome="He won 22% of the vote and one state, Maryland. Historians debate how much he shared the party's nativism.", src=W+"Know_Nothing"),
+  ],
+  quotes=[
+    dict(q="God knows that I detest slavery, but it is an existing evil, for which we are not responsible, and we must endure it, and give it such protection as is guaranteed by the Constitution.", when="October 23, 1850", ctx="Letter to Daniel Webster, weeks after signing the Fugitive Slave Act.", src=W+"Millard_Fillmore"),
+  ],
+),
+
+# ------------------------------------------------------------------------------------------ TAYLOR
+"taylor": dict(
+  impeached_short="No",
+  name="Zachary Taylor", number="12th", party="Whig", home="Louisiana",
+  terms=[("1849-03-05", "1850-07-09")], vp="Millard Fillmore",
+  left="Died in office July 9, 1850",
+  summary="A career Army officer and hero of the Mexican–American War who had never voted before his election. Although he enslaved more than 100 people, he opposed spreading slavery into the lands won from Mexico, urged California and New Mexico to apply directly for statehood, and threatened to hang anyone who led a secession. He opposed Henry Clay's compromise and died suddenly after 16 months in office.",
+  debt=dict(start=47_044_862, start_label="June 30, 1848 (end of fiscal 1848)", end=63_452_774, end_label="June 30, 1850 (end of fiscal 1850)", note="Daily debt figures don't exist before 1993, so Taylor's numbers use the fiscal years closest to his term, the same rule as every other page." + " Much of the rise paid for the Mexican–American War and the payments to Mexico under the peace treaty."),
+  unemployment=None,
+  eo_by_year={}, eo_total=5, eo_range=None, eo_source=('American Presidency Project: executive orders', 'https://www.presidency.ucsb.edu/statistics/data/executive-orders'), eo_note="Count from the American Presidency Project.",
+  eo_notable=[],
+  clem_by_year={}, clem_total=None, clem_source=('U.S. Dept. of Justice, clemency statistics', 'https://www.justice.gov/pardon/clemency-statistics'), clem_note="The Justice Department's published counts begin in 1900.",
+  pardons=[],
+  legal=[
+    dict(k="Impeached", v="No", status="no", d="No articles of impeachment were voted on."),
+    dict(k="Criminally charged", v="No", status="no", d="Never charged."),
+    dict(k="Aides or cabinet convicted", v="No", status="no", d="No member of his cabinet was convicted. A House committee investigated War Secretary George Crawford in 1850 (see controversies)."),
+    dict(k="Special counsels", v="No", status="no", d="None were appointed."),
+    dict(k="Misuse of DOJ, FBI or IRS", v="No finding", status="no", d="No official investigation found he used federal law enforcement against opponents."),
+  ],
+  people=[
+    dict(name="George Crawford", role="Secretary of War", outcome="Not charged", d="Collected about half the interest, roughly $95,000, on a claim he had represented as a lawyer, paid out by the Treasury while he sat in the cabinet. Taylor died before he could reorganize the cabinet."),
+  ],
+  controversies=[
+    dict(title="The Galphin affair", when="1850", label="proven", d="The Treasury paid a colonial-era claim plus about $190,000 in interest to the Galphin family. War Secretary George Crawford had been their lawyer and received about half the interest.", outcome="A House committee investigated; the scandal was unresolved when Taylor died.", src=W+"Zachary_Taylor"),
+    dict(title="Slaveholding", when="1840s–1850", label="proven", d="Taylor enslaved more than 100 people on plantations in Louisiana and Mississippi, including while he was president.", outcome="He still opposed expanding slavery into the new western territories.", src=W+"Zachary_Taylor"),
+    dict(title="Was he poisoned?", when="1850; tested 1991", label="alleged", d="Taylor died after days of stomach illness, and a theory spread that proslavery opponents had poisoned him with arsenic.", outcome="His remains were exhumed in 1991; tests found no evidence of arsenic poisoning.", src=W+"Zachary_Taylor"),
+  ],
+  quotes=[
+    dict(q="I have always done my duty. I am ready to die. My only regret is for the friends I leave behind me.", when="July 9, 1850", ctx="His reported last words.", src=W+"Zachary_Taylor"),
+  ],
+),
+
+# ------------------------------------------------------------------------------------------ POLK
+"polk": dict(
+  impeached_short="No",
+  name="James K. Polk", number="11th", party="Democratic", home="Tennessee",
+  terms=[("1845-03-04", "1849-03-04")], vp="George M. Dallas",
+  left="Kept his pledge to serve one term; died three months after leaving office",
+  summary="A dark-horse candidate who set four goals and met them all: he cut tariffs, restored the independent Treasury, settled the Oregon border with Britain, and acquired California. The Mexican–American War, which began after he sent troops into disputed land, added about half a million square miles, including California, Nevada, Utah and most of Arizona and New Mexico. The new land reopened the fight over slavery.",
+  debt=dict(start=23_461_653, start_label="June 30, 1844 (end of fiscal 1844)", end=47_044_862, end_label="June 30, 1848 (end of fiscal 1848)", note="Daily debt figures don't exist before 1993, so Polk's numbers use the fiscal years closest to his term, the same rule as every other page." + " Most of the rise paid for the Mexican–American War."),
+  unemployment=None,
+  eo_by_year={}, eo_total=18, eo_range=None, eo_source=('American Presidency Project: executive orders', 'https://www.presidency.ucsb.edu/statistics/data/executive-orders'), eo_note="Count from the American Presidency Project.",
+  eo_notable=[],
+  clem_by_year={}, clem_total=None, clem_source=('U.S. Dept. of Justice, clemency statistics', 'https://www.justice.gov/pardon/clemency-statistics'), clem_note="The Justice Department's published counts begin in 1900.",
+  pardons=[],
+  legal=[
+    dict(k="Impeached", v="No — rebuked by the House", status="no", d="No articles of impeachment were voted on. In January 1848 the House voted 85–81 to add language saying the war had been 'unnecessarily and unconstitutionally begun by the President'.", src=W+"Mexican%E2%80%93American_War"),
+    dict(k="Criminally charged", v="No", status="no", d="Never charged."),
+    dict(k="Aides or cabinet convicted", v="No", status="no", d="No member of his cabinet or White House staff was convicted."),
+    dict(k="Special counsels", v="No", status="no", d="None were appointed."),
+    dict(k="Misuse of DOJ, FBI or IRS", v="No finding", status="no", d="No official investigation found he used federal law enforcement against opponents."),
+  ],
+  people=[],
+  controversies=[
+    dict(title="Starting the Mexican–American War", when="1846", label="disputed", d="Polk sent troops into land claimed by both Texas and Mexico; after a clash there he told Congress that Mexico had 'shed American blood upon the American soil'. Critics, including a young congressman named Abraham Lincoln, demanded he name the 'spot' where it happened.", outcome="Congress declared war; the House later said the war was unconstitutionally begun. Mexico gave up about half its territory in 1848.", src=W+"Mexican%E2%80%93American_War"),
+    dict(title="Slaveholding, and secret purchases", when="1845–1849", label="proven", d="Polk owned a cotton plantation in Mississippi worked by enslaved people and, while president, bought more enslaved people, including children, through an agent, keeping the purchases private.", outcome="Documented from his papers by historians. His will provided for freeing them only after his wife's death; the Civil War freed them first.", src=W+"James_K._Polk"),
+  ],
+  quotes=[
+    dict(q="Mexico has passed the boundary of the United States, has invaded our territory and shed American blood upon the American soil.", when="May 11, 1846", ctx="War message to Congress.", src=W+"Mexican%E2%80%93American_War"),
+  ],
+),
+
+# ------------------------------------------------------------------------------------------ TYLER
+"tyler": dict(
+  impeached_short="No",
+  name="John Tyler", number="10th", party="Whig (expelled 1841)", home="Virginia",
+  terms=[("1841-04-04", "1845-03-04")], vp="None",
+  left="Withdrew from the 1844 race",
+  summary="The first vice president to become president when a president died, and he insisted on full powers rather than acting as a caretaker. A states'-rights former Democrat on the Whig ticket, he vetoed the Whigs' bills to recreate a national bank; his whole cabinet except Daniel Webster resigned and the party expelled him. He settled the Maine border with Britain and pushed through the annexation of Texas days before leaving office. In 1861 he sided with the Confederacy.",
+  debt=dict(start=5_250_876, start_label="January 1, 1841", end=23_461_653, end_label="June 30, 1844 (end of fiscal 1844)",
+            note="Daily debt figures don't exist before 1993. Until 1842 the Treasury's figures are dated January 1; after that, the end of the budget year. The debt rose in the depression that followed the Panic of 1837."),
+  unemployment=None,
+  eo_by_year={}, eo_total=17, eo_range=None, eo_source=('American Presidency Project: executive orders', 'https://www.presidency.ucsb.edu/statistics/data/executive-orders'), eo_note="Count from the American Presidency Project.",
+  eo_notable=[],
+  clem_by_year={}, clem_total=None, clem_source=('U.S. Dept. of Justice, clemency statistics', 'https://www.justice.gov/pardon/clemency-statistics'), clem_note="The Justice Department's published counts begin in 1900.",
+  pardons=[],
+  legal=[
+    dict(k="Impeached", v="No — resolution defeated", status="no", d="In January 1843 the House voted 127–83 against a resolution to investigate impeaching him over his vetoes, the first such vote against a president.", src=W+"John_Tyler"),
+    dict(k="Criminally charged", v="No", status="no", d="Never charged."),
+    dict(k="Aides or cabinet convicted", v="No", status="no", d="No member of his cabinet or White House staff was convicted."),
+    dict(k="Special counsels", v="No", status="no", d="None were appointed."),
+    dict(k="Misuse of DOJ, FBI or IRS", v="No finding", status="no", d="No official investigation found he used federal law enforcement against opponents."),
+  ],
+  people=[],
+  controversies=[
+    dict(title="Vetoing the bank and losing his party", when="1841", label="disputed", d="Tyler vetoed two Whig bills to create a new national bank, saying they were unconstitutional. Five of six cabinet members resigned, and Whigs in Congress expelled him from the party.", outcome="He governed without a party; a House committee condemned his use of the veto in 1842.", src=W+"John_Tyler"),
+    dict(title="Annexing Texas to expand slavery", when="1844–1845", label="disputed", d="When the Senate rejected his annexation treaty, Tyler had Congress annex Texas by simple majority vote. His secretary of state, John C. Calhoun, openly defended annexation as a way to protect slavery.", outcome="Texas joined as a slave state in December 1845; Mexico cut relations, a step toward war.", src=W+"Texas_annexation"),
+    dict(title="Slaveholding", when="1840s–1862", label="proven", d="Tyler enslaved dozens of people at his Virginia plantation, Sherwood Forest, before, during and after his presidency.", outcome="He never freed them.", src=W+"John_Tyler"),
+    dict(title="Joining the Confederacy", when="1861–1862", label="proven", d="After a failed peace conference, Tyler backed Virginia's secession and was elected to the Confederate Congress.", outcome="He died in 1862 before taking his seat; Washington did not officially mourn him.", src=W+"John_Tyler"),
+  ],
+  quotes=[],
 ),
 }
