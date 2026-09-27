@@ -499,7 +499,7 @@ const TILES = {debt:"National debt", deficit:"Deficit / surplus", interest:"Inte
 const PANELS = {blocksCard:"Debt blocks", chartCard:"Chart", mapCard:"Map", feedCard:"How we got here"};
 const S = {
   t: 1776.5, view: "nominal", zoom: "follow", mapMode: "vote", playing: false, speed: 1,
-  series: {debt: true, deficit: true, interest: true, cpi: true, mort: true, t10: true}, range: [1900, 2025],
+  series: {debt: true, deficit: true, interest: true, cpi: true, mort: true, t10: false}, range: [1900, 2025],
   types: new Set(Object.keys(TYPES)), buckets: new Set(Object.keys(BUCKETS)), passed: new Set(["lib","con","both"]), cats: new Set(Object.keys(CATS)),
   tiles: new Set(Object.keys(TILES)), panels: new Set(Object.keys(PANELS)), feedLimit: 6, selState: null, adjusted: false, style: "bars"
 };
@@ -939,6 +939,7 @@ function drawChart(){
   let lastBottom = yOff;
   shown.forEach(p => {
     const P = panels[p.id]; P.g.attr("transform", `translate(${M.l},${yOff})`);
+    if (p.id === "rates") P.title.text(S.series.mort && S.series.t10 ? (drawChart.narrow ? "Mortgage and 10-year rates" : p.title) : S.series.mort ? "30-year mortgage rate" : "10-year Treasury yield");
     const vals = yrs.map(y => ({y, v: seriesVal(p.id, y)})).filter(o => o.v != null);
     let lo = 0, hi = 0;
     vals.forEach(o => { hi = Math.max(hi, o.v); lo = Math.min(lo, o.v); });
@@ -1080,7 +1081,7 @@ document.getElementById("chartWrap").addEventListener("wheel", ev => {
 
 /* series chips */
 const seriesChips = document.getElementById("seriesChips");
-seriesChips.innerHTML = SERIES.map(p => `<button class="fchip" id="sc-${p.k}" data-s="${p.k}" aria-pressed="true"><span class="dot" style="background:var(${p.v})"></span>${p.l}</button>`).join("");
+seriesChips.innerHTML = SERIES.map(p => `<button class="fchip" id="sc-${p.k}" data-s="${p.k}" aria-pressed="${!!S.series[p.k]}"><span class="dot" style="background:var(${p.v})"></span>${p.l}</button>`).join("");
 seriesChips.addEventListener("click", e => { const b = e.target.closest("[data-s]"); if (!b) return; const k = b.dataset.s;
   if (S.series[k] && Object.values(S.series).filter(Boolean).length === 1) return;
   S.series[k] = !S.series[k]; b.setAttribute("aria-pressed", S.series[k]); yEase = {}; chartAnim = true; render(true); });
