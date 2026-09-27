@@ -8,6 +8,7 @@ Supreme Court rulings that moved the numbers.
 
 ## Pages
 - `index.html` — **The Ledger**, the home page (timeline, debt, map, laws).
+- `hill.html` — The Hill: all 119 Congresses (seat charts, majorities, Speakers and Senate leaders, unified or divided government, chamber size, polarization, landmark laws). Built by `python3 data/build_hill.py` from `data/raw/congress/` (divisions.json; polarization.json from Voteview when present) and `data/congress_meta.py`.
 - `bench.html` — The Bench: all 116 Supreme Court justices (appointed by, party, lean) and 77 landmark rulings. Built by `python3 data/build_bench.py` from `data/court.py` and `data/raw/court/` (see SOURCES.txt there).
 - `presidents.html` — every president; `presidents/<name>.html` — deep dives for all 45 presidents.
 
@@ -32,6 +33,7 @@ python3 data/build_bench.py        # regenerates bench.html and data/court_items
 python3 data/build_sitemap.py      # regenerates sitemap.xml and robots.txt (site address lives in data/seo.py)
 python3 data/build.py   # regenerates app/data.js from the data files
 sh app/build.sh         # combines app.html + data.js into index.html
+python3 data/build_hill.py         # regenerates hill.html (run after data/build.py)
 ```
 
 ## Deploying

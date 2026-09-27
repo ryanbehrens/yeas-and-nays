@@ -6,7 +6,7 @@ import seo
 from presidents_data import PRESIDENTS
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 today = dt.date.today().isoformat()
-pages = [("/", "1.0"), ("/presidents", "0.9"), ("/bench", "0.9")] + [(f"/presidents/{k}", "0.7") for k in PRESIDENTS]
+pages = [("/", "1.0"), ("/presidents", "0.9"), ("/hill", "0.9"), ("/bench", "0.9")] + [(f"/presidents/{k}", "0.7") for k in PRESIDENTS]
 xml = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
 xml += [f"  <url><loc>{seo.url(p)}</loc><lastmod>{today}</lastmod><priority>{pr}</priority></url>" for p, pr in pages]
 xml.append("</urlset>")

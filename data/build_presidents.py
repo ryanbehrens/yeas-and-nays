@@ -98,6 +98,7 @@ def head(title, desc, up, current="presidents", path="/", image="/assets/og/site
     <nav class="sections" aria-label="Sections">
       <a href="{up}index.html">The Ledger</a>
       <a href="{up}presidents.html"{' aria-current="page"' if current == "presidents" else ""}>Presidents</a>
+      <a href="{up}hill.html"{' aria-current="page"' if current == "hill" else ""}>The Hill</a>
       <a href="{up}bench.html"{' aria-current="page"' if current == "bench" else ""}>The Bench</a>
       <span title="Coming soon: discussion and posts">The Floor <i>Soon</i></span>
     </nav>

@@ -12,7 +12,7 @@ import seo
 from presidents_data import PRESIDENTS
 pres = sorted(PRESIDENTS.items(), key=lambda kv: kv[1]["terms"][0][0])
 explore = ('<nav class="explore" aria-label="Explore the site"><div class="about-h">Explore</div>'
-           '<p><a href="presidents.html">Every president</a> · <a href="bench.html">The Bench: the Supreme Court</a></p><p class="plist">'
+           '<p><a href="presidents.html">Every president</a> · <a href="hill.html">The Hill: Congress</a> · <a href="bench.html">The Bench: the Supreme Court</a></p><p class="plist">'
            + " ".join(f'<a href="presidents/{k}.html">{v["name"]}</a>' for k, v in pres) + '</p></nav>')
 body = body.replace('<!--EXPLORE-->', explore)
 open("../american-ledger.html", "w").write(body)
