@@ -3,7 +3,7 @@ Run from the project root after data/build.py:  python3 data/build_hill.py
 """
 import os, json, sys, html
 sys.path.insert(0, os.path.dirname(__file__))
-from congress_meta import SPEAKERS, SENATE_LEADERS
+from congress_meta import SPEAKERS, SENATE_LEADERS, PENDING_LEADERS
 from political import PRESIDENTS as ALL_PRES
 from build_presidents import head, FOOT, PORTRAIT_SLUG
 import seo
@@ -38,7 +38,9 @@ def presidents_during(start, end):
 
 congresses = []
 for c in DIV:
-    n = c["n"]; sc = SITE_CONG[n]; ctl = c.get("control", {})
+    n = c["n"]; ctl = c.get("control", {})
+    # A Congress elected but not yet seated isn't in the Ledger's data; label it from its own division data
+    sc = SITE_CONG.get(n) or dict(house={"D": "Democratic", "R": "Republican"}[ctl["house"]], senate={"D": "Democratic", "R": "Republican"}[ctl["senate"]])
     hf = ctl.get("house") or family(sc["house"])
     sf = ctl.get("senate") or ("shared" if sc["senate"].startswith("Shifted") else family(sc["senate"]))
     FAMLABEL = {"D": "Democratic", "R": "Republican"}
@@ -55,7 +57,9 @@ for c in DIV:
     congresses.append(dict(n=n, start=c["start"], end=c["end"], house=c["house"], senate=c["senate"], senate_vacant=c.get("senate_vacant", 0),
         house_ctl=hf, senate_ctl=sf, house_label=hl, senate_label=sl, note=ctl.get("note", ""),
         speakers=[dict(name=a, party=b) for a, b in SPEAKERS.get(n, [])], leaders=[dict(name=a, party=b) for a, b in SENATE_LEADERS.get(n, [])],
-        presidents=prs, gov=kind, gov_fam=pf if kind == "unified" else None))
+        presidents=prs, gov=kind, gov_fam=pf if kind == "unified" else None, elect=c.get("elect"), pending=PENDING_LEADERS.get(n)))
+SEATED = [c for c in congresses if not c["elect"]]
+ELECT = next((c for c in congresses if c["elect"]), None)
 
 # Landmark laws (the Ledger's list), with who held each chamber
 laws = []
@@ -75,14 +79,15 @@ t = [head("Congress: every House and Senate since 1789 | Yeas and Nays", HDESC, 
 t.append(f"""  <nav class="crumbs">The Hill</nav>
   <section class="hero" style="grid-template-columns:1fr;padding-bottom:6px">
     <div><div class="eyebrow">Congress</div><h1>The Hill</h1>
-    <p class="sum">All {len(congresses)} Congresses, from 1789 to today: who held the seats, who ran each chamber, when one party controlled everything, how far apart the parties vote, and the landmark laws they passed.</p></div>
+    <p class="sum">All {len(SEATED)} Congresses from 1789 to today{f", plus the {ORD(ELECT['n'])}, elected in November {int(ELECT['start'][:4]) - 1}" if ELECT else ""}: who held the seats, who ran each chamber, when one party controlled everything, how far apart the parties vote, and the landmark laws they passed.</p></div>
   </section>
   <nav class="jump" aria-label="Jump to section"><a href="#congress">A Congress</a><a href="#balance">Seats over time</a><a href="#size">Size</a><a href="#control">Who ran Washington</a><a href="#polar">Polarization</a><a href="#laws">Landmark laws</a><a href="#every">Every Congress</a><a href="#method">How this works</a></nav>
 
   <section id="congress" class="block" style="border-top:0">
-    <h2 id="cTitle">The 119th Congress</h2>
+    <div class="elect-banner" id="electBanner" hidden></div>
+    <h2 id="cTitle">The {ORD(SEATED[-1]["n"])} Congress</h2>
     <p class="lede" id="cSub"></p>
-    <div class="yearpick"><input type="range" id="cRange" min="1" max="{len(congresses)}" value="{len(congresses)}" aria-label="Congress"><output id="cOut"></output><button type="button" class="pbtn" id="cNow">Today</button></div>
+    <div class="yearpick"><input type="range" id="cRange" min="1" max="{len(congresses)}" value="{len(congresses)}" aria-label="Congress"><output id="cOut"></output><button type="button" class="pbtn" id="cNow">Today</button>{'<button type="button" class="pbtn" id="cElect">Just elected</button>' if ELECT else ""}</div>
     <div class="chambers"><div class="card"><h3>House of Representatives</h3><div class="hemi" id="hemiH"></div><div class="legend" id="legH"></div></div>
       <div class="card"><h3>Senate</h3><div class="hemi" id="hemiS"></div><div class="legend" id="legS"></div></div></div>
     <div class="cfacts" id="cFacts"></div>
@@ -134,6 +139,7 @@ t.append(f"""  <nav class="crumbs">The Hill</nav>
       <p><b>Who ran each chamber.</b> Usually the party with the most seats. Where that differs, as in 1917 and 1931 in the House or 50–50 Senates, the Congress notes who actually organized the chamber. Independents who caucus with a party are listed as independents.</p>
       <p><b>Unified or divided.</b> Based on the controlling party of each chamber when the Congress began and the president a month in, so a president inaugurated that January counts. Washington and John Tyler had no party. Before 1830 the early parties are compared as they were: Federalists, Democratic-Republicans and the Adams faction.</p>
       <p><b>Polarization.</b> DW-NOMINATE scores from Voteview (Jeffrey B. Lewis, Keith Poole, Howard Rosenthal and others, UCLA), the standard measure political scientists use, built from every recorded roll-call vote. The chart shows each party's median member on the main left–right dimension.</p>
+      <p><b>The newly elected Congress.</b> Before it is sworn in, the newest Congress shows the seats won in the last election as called by news organizations (including the Associated Press), with races not yet called shown as open seats and listed with their status. Numbers will change as the last races are called; leaders are shown once chosen. The current Congress keeps serving, in its lame-duck session, until then.</p>
       <p><b>Speakers and Senate leaders</b> come from the House and Senate historians. The Senate had no formal majority leader until the 1910s.</p>
     </div>
   </section>
@@ -141,4 +147,4 @@ t.append(f"""  <nav class="crumbs">The Hill</nav>
 t.append(FOOT)
 t.append(f'<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>\n<script>window.HILL={json.dumps(PAGE, separators=(",", ":"))};</script>\n<script src="assets/hill.js"></script>\n</body>\n</html>\n')
 open(os.path.join(ROOT, "hill.html"), "w").write("".join(t))
-print(f"built hill.html: {len(congresses)} Congresses, {len(laws)} laws, polarization {'yes' if POL else 'pending'}")
+print(f"built hill.html: {len(SEATED)} seated Congresses{' + ' + ORD(ELECT['n']) + ' elect' if ELECT else ''}, {len(laws)} laws, polarization {'yes' if POL else 'pending'}")

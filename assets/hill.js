@@ -5,9 +5,9 @@
   const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
   const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
   const C = H.congresses, byN = Object.fromEntries(C.map(c => [c.n, c]));
-  const COLOR = {D:"var(--dem)", R:"var(--rep)", F:"#c9a227", DR:"#2f9e8f", NR:"#d4803a", W:"#e0a33a", O:"var(--mix)"};
+  const COLOR = {D:"var(--dem)", R:"var(--rep)", F:"#c9a227", DR:"#2f9e8f", NR:"#d4803a", W:"#e0a33a", O:"var(--mix)", U:"var(--line)"};
   const FAMNAME = {D:"Democrats", R:"Republicans", F:"Federalists", DR:"Democratic-Republicans", NR:"Adams / anti-Jackson", W:"Whigs", O:"Other parties"};
-  const ORDER = ["DR","D","O","W","NR","F","R"];
+  const ORDER = ["DR","D","O","U","W","NR","F","R"];
   const col = k => { const c = COLOR[k] || COLOR.O; return c.startsWith("var(") ? css(c.slice(4, -1)) : c; };
   const ord = n => n + (n % 100 >= 11 && n % 100 <= 13 ? "th" : ({1:"st",2:"nd",3:"rd"})[n % 10] || "th");
   const yrs = c => `${c.start.slice(0,4)}–${c.end.slice(0,4)}`;
@@ -19,6 +19,9 @@
   const total = ps => ps.reduce((s, p) => s + p.n, 0);
   const presLink = p => H.pslug[p.name] ? `<a href="presidents/${H.pslug[p.name]}.html">${esc(p.name)}</a>` : esc(p.name);
   const ctlName = (fam, label) => fam === "shared" ? "Shared (50–50)" : label;
+  const SEATED = C.filter(c => !c.elect), NOW = SEATED[SEATED.length - 1], ELECT = C.find(c => c.elect);
+  // A members-elect Congress: seats not yet called are drawn as open (gray) seats
+  const withUncalled = (c, key) => { const u = c.elect && (c.elect[key + "_uncalled"] || []).length; return u ? c[key].concat([{p: "Not yet called", g: "U", n: u}]) : c[key]; };
 
   /* ---------- hemicycle seat chart ---------- */
   function hemi(el, parties){
@@ -32,10 +35,10 @@
     let i = 0; ps.forEach(p => { for (let k = 0; k < p.n; k++) if (pts[i]) pts[i++].p = p; });
     const svg = d3.select(el).html("").append("svg").attr("viewBox", `0 0 ${W} ${R + 16}`).attr("role", "img").attr("aria-label", ps.map(p => `${p.p} ${p.n}`).join(", "));
     svg.selectAll("circle").data(pts).join("circle").attr("cx", d => W / 2 - d.r * Math.cos(d.a)).attr("cy", d => R + 6 - d.r * Math.sin(d.a)).attr("r", dotR)
-      .attr("fill", d => col(d.p ? d.p.g : "O")).on("mousemove", (ev, d) => d.p && showTip(ev, `<b>${esc(d.p.p)}</b>: ${d.p.n} seats`)).on("mouseleave", hideTip);
+      .attr("fill", d => col(d.p ? d.p.g : "O")).attr("stroke", d => d.p && d.p.g === "U" ? css("--muted") : null).attr("stroke-dasharray", d => d.p && d.p.g === "U" ? "1.5 1.5" : null).on("mousemove", (ev, d) => d.p && showTip(ev, `<b>${esc(d.p.p)}</b>: ${d.p.n} seat${d.p.n === 1 ? "" : "s"}`)).on("mouseleave", hideTip);
     svg.append("text").attr("x", W / 2).attr("y", R + 2).attr("text-anchor", "middle").attr("class", "hemi-n").text(N);
   }
-  const legend = ps => sorted(ps).filter(p => p.n > 0).map(p => `<span><i class="sw" style="background:${COLOR[p.g] || COLOR.O}"></i>${esc(p.p)} ${p.n}</span>`).join("");
+  const legend = ps => sorted(ps).filter(p => p.n > 0).map(p => `<span><i class="sw" style="background:${COLOR[p.g] || COLOR.O}${p.g === "U" ? ";outline:1px dashed var(--muted)" : ""}"></i>${esc(p.p)} ${p.n}</span>`).join("");
 
   /* ---------- one Congress ---------- */
   function lawItem(l){
@@ -48,21 +51,46 @@
   }
   function showCongress(n){
     const c = byN[n]; $("#cRange").value = n; $("#cOut").textContent = ord(n);
-    $("#cTitle").textContent = `The ${ord(n)} Congress`;
-    $("#cSub").textContent = `${fmt(c.start)} to ${n === C[C.length - 1].n ? "today" : fmt(c.end)}`;
-    hemi($("#hemiH"), c.house); hemi($("#hemiS"), c.senate);
-    $("#legH").innerHTML = legend(c.house); $("#legS").innerHTML = legend(c.senate) + (c.senate_vacant ? `<span>Vacant ${c.senate_vacant}</span>` : "");
-    const gov = c.gov === "unified" ? `<b style="color:${COLOR[c.gov_fam]}">Unified</b>: ${FAMNAME[c.gov_fam]} held the White House, House and Senate` : c.gov === "divided" ? "<b>Divided</b>: power was split between the parties" : "The president had no party";
-    $("#cFacts").innerHTML = `<div><span>House majority</span><b>${esc(ctlName(c.house_ctl, c.house_label))}</b></div><div><span>Senate majority</span><b>${esc(ctlName(c.senate_ctl, c.senate_label))}</b></div>
-      <div><span>Speaker of the House</span><b>${c.speakers.map(s => esc(s.name)).join(", then ") || "—"}</b></div>
-      <div><span>Senate majority leader</span><b>${c.leaders.map(s => esc(s.name)).join(", then ") || "No formal post yet"}</b></div>
+    const E = c.elect;
+    $("#cTitle").textContent = E ? `The ${ord(n)} Congress (members-elect)` : `The ${ord(n)} Congress`;
+    $("#cSub").textContent = E ? `Elected ${fmt(String(+c.start.slice(0,4) - 1) + "-11-03")}; takes office ${fmt(c.start)}. Results as of ${fmt(E.as_of)}; races not yet called are shown as open seats.`
+      : n === NOW.n ? `${fmt(c.start)} to today${ELECT ? `, in its lame-duck session until the ${ord(ELECT.n)} Congress is sworn in on ${fmt(c.end)}` : ""}` : `${fmt(c.start)} to ${fmt(c.end)}`;
+    const hP = withUncalled(c, "house"), sP = withUncalled(c, "senate");
+    hemi($("#hemiH"), hP); hemi($("#hemiS"), sP);
+    $("#legH").innerHTML = legend(hP); $("#legS").innerHTML = legend(sP) + (c.senate_vacant ? `<span>Vacant ${c.senate_vacant}</span>` : "");
+    $("#cElect") && $("#cElect").setAttribute("aria-pressed", String(!!E)); $("#cNow").setAttribute("aria-pressed", String(n === NOW.n));
+    const P = c.pending;
+    const gov = E && c.gov === "divided" ? "<b>Divided</b>: from January 2027 Democrats will hold the House and Senate and a Republican the White House" : c.gov === "unified" ? `<b style="color:${COLOR[c.gov_fam]}">Unified</b>: ${FAMNAME[c.gov_fam]} held the White House, House and Senate` : c.gov === "divided" ? "<b>Divided</b>: power was split between the parties" : "The president had no party";
+    $("#cFacts").innerHTML = `<div><span>House majority${E ? " (won)" : ""}</span><b>${esc(ctlName(c.house_ctl, c.house_label))}</b></div><div><span>Senate majority${E ? " (won)" : ""}</span><b>${esc(ctlName(c.senate_ctl, c.senate_label))}</b></div>
+      <div><span>Speaker of the House</span><b>${P ? esc(P.speaker) : c.speakers.map(s => esc(s.name)).join(", then ") || "—"}</b></div>
+      <div><span>Senate majority leader</span><b>${P ? esc(P.senate) : c.leaders.map(s => esc(s.name)).join(", then ") || "No formal post yet"}</b></div>
       <div><span>President</span><b>${c.presidents.map(presLink).join(", then ")}</b></div><div><span>Government</span><b>${gov}</b></div>`
-      + (c.note ? `<p class="note" style="grid-column:1/-1;margin:0">${esc(c.note)}</p>` : "");
+      + (c.note ? `<p class="note" style="grid-column:1/-1;margin:0">${esc(c.note)}</p>` : "")
+      + (P && P.others ? `<p class="note" style="grid-column:1/-1;margin:0">${esc(P.others)}</p>` : "")
+      + (E ? electDetail(c) : "");
     const ls = H.laws.filter(l => l.congress === n);
     $("#cLaws").innerHTML = ls.length ? `<h3 class="sub3">Landmark laws from this Congress</h3><div class="list">${ls.map(lawItem).join("")}</div>` : "";
   }
   $("#cRange").addEventListener("input", e => showCongress(+e.target.value));
-  $("#cNow").addEventListener("click", () => showCongress(C[C.length - 1].n));
+  $("#cNow").addEventListener("click", () => showCongress(NOW.n));
+  $("#cElect") && $("#cElect").addEventListener("click", () => showCongress(ELECT.n));
+
+  /* ---------- members-elect: uncalled races and sources ---------- */
+  function electDetail(c){
+    const E = c.elect, rows = [["House", E.house_uncalled || []], ["Senate", E.senate_uncalled || []]];
+    const list = rows.map(([ch, rs]) => `<p style="margin:0"><b>${ch}: ${rs.length ? `${rs.length} race${rs.length === 1 ? "" : "s"} not yet called` : "every race called"}</b></p>`
+      + (rs.length ? `<ul class="uncalled">${rs.map(r => `<li><b>${esc(r.race)}</b>: ${esc(r.status)}</li>`).join("")}</ul>` : "")).join("");
+    const src = (E.sources || []).map(([t, u]) => `<a href="${esc(u)}" rel="noopener" target="_blank">${esc(t)}</a>`).join(" · ");
+    return `<div class="elect-detail" style="grid-column:1/-1"><h3 class="sub3" style="margin-top:0">Still being counted (as of ${fmt(E.as_of)})</h3>${list}
+      <p class="note" style="margin:6px 0 0">Seat counts are races called by news organizations (including the Associated Press) as reported on this date; they are not certified results and will change as the last races are decided. Sources: ${src}</p></div>`;
+  }
+  if (ELECT){
+    const b = $("#electBanner"), tot = ps => ps.reduce((s, p) => s + p.n, 0), fam = (ps, g) => ps.filter(p => p.g === g).reduce((s, p) => s + p.n, 0);
+    const hu = (ELECT.elect.house_uncalled || []).length, su = (ELECT.elect.senate_uncalled || []).length;
+    const sD = fam(ELECT.senate, "D") + fam(ELECT.senate, "O"), sR = fam(ELECT.senate, "R");
+    b.innerHTML = `<b>${+ELECT.start.slice(0,4) - 1} midterms:</b> Democrats won the House (${fam(ELECT.house, "D")}–${fam(ELECT.house, "R")}${hu ? `, ${hu} not yet called` : ""}) and the Senate (${sD}–${sR}${su ? `, ${su} not yet called` : ""}, counting independents who caucus with them). The ${ord(ELECT.n)} Congress takes office ${fmt(ELECT.start)}; until then the ${ord(NOW.n)} keeps serving. <button type="button" class="pbtn" id="bElect">See the ${ord(ELECT.n)}</button>`;
+    b.hidden = false; $("#bElect").addEventListener("click", () => showCongress(ELECT.n));
+  }
 
   /* ---------- seats over time ---------- */
   function balance(el, key){
@@ -86,8 +114,8 @@
   function size(){
     const el = $("#chSize"), W = Math.max(300, el.clientWidth || 600), Hh = 170, M = {l: 34, r: 8, t: 10, b: 20};
     const svg = d3.select(el).html("").append("svg").attr("viewBox", `0 0 ${W} ${Hh}`).attr("role", "img").attr("aria-label", "Members of the House and Senate, each Congress");
-    const pts = C.map(c => ({y: +c.start.slice(0,4), h: total(c.house), s: total(c.senate) + (c.senate_vacant || 0), c}));
-    const x = d3.scaleLinear().domain([1789, 2025]).range([M.l, W - M.r]), y = d3.scaleLinear().domain([0, 460]).range([Hh - M.b, M.t]);
+    const pts = C.map(c => ({y: +c.start.slice(0,4), h: total(withUncalled(c, "house")), s: total(withUncalled(c, "senate")) + (c.senate_vacant || 0), c}));
+    const x = d3.scaleLinear().domain([1789, +C[C.length - 1].start.slice(0,4)]).range([M.l, W - M.r]), y = d3.scaleLinear().domain([0, 460]).range([Hh - M.b, M.t]);
     [0, 100, 200, 300, 435].forEach(t => { svg.append("line").attr("x1", M.l).attr("x2", W - M.r).attr("y1", y(t)).attr("y2", y(t)).attr("stroke", css("--line")).attr("stroke-dasharray", t === 435 ? "4 3" : null);
       svg.append("text").attr("x", M.l - 5).attr("y", y(t) + 3.5).attr("text-anchor", "end").text(t); });
     [["h", "--accent"], ["s", "--int"]].forEach(([k, v]) => svg.append("path").attr("d", d3.line().x(d => x(d.y)).y(d => y(d[k])).curve(d3.curveStepAfter)(pts)).attr("fill", "none").attr("stroke", css(v)).attr("stroke-width", 2));
@@ -167,12 +195,12 @@
     const EV = C.slice().reverse(), cut = renderEvery.all ? EV.length : 20;
     $("#eList").innerHTML = EV.slice(0, cut).map(c => { const ls = H.laws.filter(l => l.congress === c.n);
       const top = ps => sorted(ps).filter(p => p.n).map(p => `<span class="seg" style="flex:${p.n};background:${COLOR[p.g] || COLOR.O}" title="${esc(p.p)} ${p.n}"></span>`).join("");
-      return `<details class="item cong" id="c-${c.n}"><summary><span class="t">${ord(c.n)} Congress <span class="yrs">${yrs(c)}</span></span>
+      return `<details class="item cong" id="c-${c.n}"><summary><span class="t">${ord(c.n)} Congress <span class="yrs">${yrs(c)}${c.elect ? " · members-elect" : ""}</span></span>
         <span class="pill ${c.gov}" ${c.gov === "unified" ? `style="color:${COLOR[c.gov_fam]};border-color:${COLOR[c.gov_fam]}"` : ""}>${c.gov === "unified" ? "Unified" : c.gov === "divided" ? "Divided" : "No-party president"}</span>
         <span class="m"><span class="mini"><b>House</b><span class="bar">${top(c.house)}</span></span><span class="mini"><b>Senate</b><span class="bar">${top(c.senate)}</span></span></span></summary>
-        <div class="body"><p style="margin:0"><b>House:</b> ${sorted(c.house).filter(p => p.n).map(p => `${esc(p.p)} ${p.n}`).join(", ")}</p>
+        <div class="body"><p style="margin:0"><b>House:</b> ${sorted(withUncalled(c, "house")).filter(p => p.n).map(p => `${esc(p.p)} ${p.n}`).join(", ")}</p>
           <p style="margin:0"><b>Senate:</b> ${sorted(c.senate).filter(p => p.n).map(p => `${esc(p.p)} ${p.n}`).join(", ")}${c.senate_vacant ? `, vacant ${c.senate_vacant}` : ""}</p>
-          <p style="margin:0"><b>Speaker:</b> ${c.speakers.map(s => esc(s.name)).join(", then ") || "—"}${c.leaders.length ? ` · <b>Senate majority leader:</b> ${c.leaders.map(s => esc(s.name)).join(", then ")}` : ""}</p>
+          <p style="margin:0"><b>Speaker:</b> ${c.pending ? esc(c.pending.speaker) : c.speakers.map(s => esc(s.name)).join(", then ") || "—"}${c.leaders.length ? ` · <b>Senate majority leader:</b> ${c.leaders.map(s => esc(s.name)).join(", then ")}` : ""}</p>
           <p style="margin:0"><b>President:</b> ${c.presidents.map(presLink).join(", then ")}</p>${c.note ? `<p class="meta">${esc(c.note)}</p>` : ""}
           ${ls.length ? `<p style="margin:0"><b>Landmark laws:</b> ${ls.map(l => esc(l.title)).join("; ")}</p>` : ""}
           <a href="#congress" data-show="${c.n}">See the seat charts →</a></div></details>`; }).join("")
@@ -181,7 +209,7 @@
   $("#eList").addEventListener("click", e => { if (e.target.id === "eMore"){ renderEvery.all = true; renderEvery(); return; } const a = e.target.closest("[data-show]"); if (!a) return; e.preventDefault(); showCongress(+a.dataset.show); $("#congress").scrollIntoView({behavior: "smooth"}); });
 
   function drawAll(){ balance($("#chBalH"), "house"); balance($("#chBalS"), "senate"); size(); polar(); }
-  showCongress(C[C.length - 1].n); gov(); renderLF(); renderLaws(); renderEvery(); drawAll();
+  showCongress(NOW.n); gov(); renderLF(); renderLaws(); renderEvery(); drawAll();
   let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(drawAll, 150); });
   if (location.hash.startsWith("#c-")){ const n = +location.hash.slice(3); if (byN[n]){ showCongress(n); renderEvery.all = true; renderEvery(); const d = document.getElementById("c-" + n); if (d){ d.open = true; } } }
 })();

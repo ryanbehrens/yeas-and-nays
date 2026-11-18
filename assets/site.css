@@ -293,3 +293,11 @@ blockquote footer a{color:var(--ink-2)}
 #chPol .st{font-size:9px;fill:var(--muted)}
 @media (max-width:700px){.chambers{grid-template-columns:1fr}.govband{height:26px}}
 .list .pbtn.more{display:block;margin:14px auto 0}
+/* The Hill: newly elected Congress */
+.elect-banner{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--dem);border-radius:10px;padding:10px 14px;margin:0 0 14px;font-size:14px;line-height:1.5;color:var(--ink-2)}
+.elect-banner b{color:var(--ink)}
+.elect-banner .pbtn{margin-left:6px}
+.cfacts .elect-detail{display:block;border-top:1px solid var(--line);padding-top:12px}
+.uncalled{margin:4px 0 10px;padding-left:18px;font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.uncalled b{font-weight:600}
+.cfacts .elect-detail .note a{color:var(--ink-2)}

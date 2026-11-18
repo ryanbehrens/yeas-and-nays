@@ -61,3 +61,13 @@ SENATE_LEADERS = {
  112: [("Harry Reid", "Democratic")], 113: [("Harry Reid", "Democratic")], 114: [("Mitch McConnell", "Republican")], 115: [("Mitch McConnell", "Republican")],
  116: [("Mitch McConnell", "Republican")], 117: [("Chuck Schumer", "Democratic")], 118: [("Chuck Schumer", "Democratic")], 119: [("John Thune", "Republican")],
 }
+
+# Leadership not yet settled for a Congress that has been elected but not sworn in (shown instead of SPEAKERS / SENATE_LEADERS).
+# As of Nov. 18, 2026. Sources: Yahoo News (Nov. 18, 2026), CBS News (Nov. 4-7, 2026).
+PENDING_LEADERS = {
+ 120: dict(
+  speaker="Hakeem Jeffries (D-N.Y.), nominated by House Democrats on Nov. 18, 2026; the full House elects the Speaker on Jan. 3, 2027",
+  senate="Not yet chosen. Chuck Schumer is seeking the post; reports differ on whether Chris Van Hollen will challenge him",
+  others="Republicans: Speaker Mike Johnson is not running for minority leader; John Thune is expected to remain Senate Republican leader. Conference votes not yet held.",
+ ),
+}

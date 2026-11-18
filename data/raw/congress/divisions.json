@@ -1916,7 +1916,7 @@
   "senate_vacant": 0,
   "control": {
    "senate": "R",
-   "note": "The Senate was tied 37\u201337; Republicans organized it with the votes of Readjuster William Mahone and Vice President Arthur."
+   "note": "The Senate was tied 37–37; Republicans organized it with the votes of Readjuster William Mahone and Vice President Arthur."
   }
  },
  {
@@ -4418,7 +4418,7 @@
   "senate_vacant": 0,
   "control": {
    "senate": "shared",
-   "note": "The Senate was split 50\u201350: Democrats controlled it for 17 days in January 2001 (with Vice President Gore), then Republicans (with Vice President Cheney), then Democrats again from June 2001 after Senator Jim Jeffords left the Republican Party."
+   "note": "The Senate was split 50–50: Democrats controlled it for 17 days in January 2001 (with Vice President Gore), then Republicans (with Vice President Cheney), then Democrats again from June 2001 after Senator Jim Jeffords left the Republican Party."
   }
  },
  {
@@ -4544,7 +4544,7 @@
   "senate_vacant": 0,
   "control": {
    "senate": "D",
-   "note": "Democrats held the majority, 51\u201349, counting two independents who caucused with them."
+   "note": "Democrats held the majority, 51–49, counting two independents who caucused with them."
   }
  },
  {
@@ -4804,7 +4804,7 @@
   "senate_vacant": 0,
   "control": {
    "senate": "D",
-   "note": "The Senate was split 50\u201350; Democrats controlled it with Vice President Kamala Harris's tie-breaking vote, counting two independents who caucused with them."
+   "note": "The Senate was split 50–50; Democrats controlled it with Vice President Kamala Harris's tie-breaking vote, counting two independents who caucused with them."
   }
  },
  {
@@ -4843,7 +4843,7 @@
   "senate_vacant": 0,
   "control": {
    "senate": "D",
-   "note": "Democrats held the majority, 51\u201349, counting three independents who caucused with them."
+   "note": "Democrats held the majority, 51–49, counting three independents who caucused with them."
   }
  },
  {
@@ -4881,5 +4881,97 @@
   ],
   "senate_vacant": 0,
   "control": {}
+ },
+ {
+  "n": 120,
+  "start": "2027-01-03",
+  "end": "2029-01-03",
+  "house": [
+   {
+    "p": "Democratic",
+    "g": "D",
+    "n": 257
+   },
+   {
+    "p": "Republican",
+    "g": "R",
+    "n": 171
+   }
+  ],
+  "senate": [
+   {
+    "p": "Republican",
+    "g": "R",
+    "n": 44
+   },
+   {
+    "p": "Democratic",
+    "g": "D",
+    "n": 54
+   },
+   {
+    "p": "Independent",
+    "g": "O",
+    "n": 2
+   }
+  ],
+  "senate_vacant": 0,
+  "control": {
+   "house": "D",
+   "senate": "D",
+   "note": "Elected November 3, 2026; sworn in January 3, 2027. Democrats flipped the House and nine Republican-held Senate seats (Alaska, Iowa, Kansas, Maine, Mississippi, North Carolina, Ohio, South Carolina, Texas). The Senate's 56-seat Democratic majority counts independents Bernie Sanders and Angus King, who caucus with Democrats and were not up in 2026."
+  },
+  "elect": {
+   "as_of": "2026-11-18",
+   "house_uncalled": [
+    {
+     "race": "Alaska at-large",
+     "status": "Republican leads; count continuing"
+    },
+    {
+     "race": "Louisiana 5th",
+     "status": "Runoff December 12"
+    },
+    {
+     "race": "Louisiana 6th",
+     "status": "Runoff December 12"
+    },
+    {
+     "race": "Minnesota 1st",
+     "status": "Jake Johnson (D) leads Rep. Brad Finstad (R) by about 320 votes; recount likely"
+    },
+    {
+     "race": "North Carolina 5th",
+     "status": "Chuck Hubbard (D) leads Rep. Virginia Foxx (R) by about 330 votes; Foxx requested a recount; state certifies November 24"
+    },
+    {
+     "race": "North Carolina 10th",
+     "status": "Rep. Pat Harrigan (R) leads Ashley Bell (D) by about 2,500 votes; Bell requested a recount; state certifies November 24"
+    },
+    {
+     "race": "Tennessee 4th",
+     "status": "Victoria Broderick (D) leads Rep. Scott DesJarlais (R) by about 300 votes; DesJarlais conceded, not yet called by AP"
+    }
+   ],
+   "senate_uncalled": [],
+   "sources": [
+    [
+     "Yahoo News, final 2026 midterm results (updated Nov. 18, 2026)",
+     "https://www.yahoo.com/news/politics/article/final-2026-midterm-election-results-democrats-clinch-56-seat-senate-majority-with-peltolas-alaska-win-what-they-can--and-cant--do-next-184618858.html"
+    ],
+    [
+     "U.S. News, 2026 midterm races still undecided",
+     "https://www.usnews.com/news/national-news/articles/2026-midterm-results-which-races-are-still-undecided"
+    ],
+    [
+     "CBS News, 2026 Senate results",
+     "https://www.cbsnews.com/live-updates/senate-election-results-2026/"
+    ],
+    [
+     "270toWin, uncalled races one week after the election (Nov. 10, 2026)",
+     "https://www.270towin.com/news/2026/11/10/uncalled-races-one-week-after-midterm-election_1848.html"
+    ]
+   ]
+  }
  }
 ]
