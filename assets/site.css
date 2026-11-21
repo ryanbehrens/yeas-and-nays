@@ -324,6 +324,7 @@ blockquote footer a{color:var(--ink-2)}
 .stgrid .ct{color:var(--ink-2);font-family:var(--mono);font-size:11.5px;white-space:nowrap}
 .stgrid .nm{grid-column:2/-1;color:var(--ink-2)}
 @media (max-width:700px){.mapcard .ml{font-size:16px}}
-.mapcard .cty path{fill:none;stroke:rgba(13,19,17,.45);stroke-width:.45;stroke-linejoin:round;pointer-events:none}
-.mapcard .ctyfill path{stroke:none;pointer-events:none}
 .mapcard .stout path{fill:none;stroke:var(--bg);stroke-width:1.2;pointer-events:none}
+.mapcard .dist path{stroke:var(--bg);stroke-width:.35;stroke-linejoin:round;cursor:pointer}
+.mapcard .dist path:hover{stroke:var(--ink);stroke-width:1.2}
+.tooltip .tsub{display:block;color:var(--ink-2);margin-top:4px}

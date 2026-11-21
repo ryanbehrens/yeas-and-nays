@@ -36,6 +36,7 @@ python3 data/build_sitemap.py      # regenerates sitemap.xml and robots.txt (sit
 python3 data/build.py   # regenerates app/data.js from the data files
 sh app/build.sh         # combines app.html + data.js into index.html
 python3 data/build_hill_map.py     # regenerates assets/hill-map.js (The Hill's state maps) from data/raw/congress/members.csv + data/congress_2026.py
+python3 data/build_districts.py <simplified-geojson-dir> <mapshaper>   # regenerates assets/districts/NNN.json (House district maps); see data/raw/congress/SOURCES.txt for the boundary download
 python3 data/build_hill.py         # regenerates hill.html (run after data/build.py)
 ```
 

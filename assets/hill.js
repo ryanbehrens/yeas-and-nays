@@ -106,11 +106,10 @@
   // Small eastern states get their label off the coast, with a leader line
   const CALL = {VT: [0, 0], NH: [0, 1], MA: [0, 2], RI: [0, 3], CT: [0, 4], NJ: [0, 5], DE: [0, 6], MD: [0, 7]};
   const STNAME = {}; // filled from the borders data
-  let CTY = null; // county borders (interior lines only), loaded the first time the House map needs them
-  const loadCounties = () => CTY || (CTY = Promise.resolve().then(() => fetch("assets/counties-albers-10m.json")).then(r => r.json())
-    .then(us => { const gp = d3.geoPath();
-      return {mesh: gp(topojson.mesh(us, us.objects.counties, (a, b) => a !== b && (a.id / 1000 | 0) === (b.id / 1000 | 0))),
-        feats: topojson.feature(us, us.objects.counties).features.map(f => ({id: f.id, name: f.properties.name, d: gp(f)}))}; }));
+  const DIST = {}; // House districts for each Congress (assets/districts/NNN.json), loaded when first shown
+  const loadDistricts = n => DIST[n] || (DIST[n] = Promise.resolve().then(() => fetch(`assets/districts/${String(n).padStart(3, "0")}.json`))
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(tp => { const gp = d3.geoPath(proj()); return topojson.feature(tp, tp.objects.d).features.map(f => ({...f.properties, path: gp(f)})).filter(f => f.path); }));
   const mcol = k => k === "U" ? css("--ink-2") : k === "V" ? css("--surface-2") : col(k); // uncalled seats: light gray, so they read against the dark page
   function stripes(defs, parts){ // parts: [[family, count]] -> fill
     const rank = k => k === "U" ? 2.5 : k === "V" ? 99 : ORDER.indexOf(k); // same left-to-right order as the seat charts
@@ -141,24 +140,36 @@
       if (!v || !v.length) return `<b>${esc(g.name)}</b><br>${S ? "No senators seated" : "No representatives seated"} when the Congress began`;
       if (S) return `<b>${esc(g.name)}</b><br>` + v.map(m => `<span style="color:${col(m[2])}">■</span> ${esc(m[0])} (${esc(m[1])})${m[3] ? ` · ${esc(m[3])}` : ""}`).join("<br>");
       const T = v.reduce((s, p) => s + p[2], 0);
-      return `<b>${esc(g.name)}</b>: ${T} seat${T === 1 ? "" : "s"}<br>` + v.map(p => `<span style="color:${col(p[1])}">■</span> ${esc(p[0])}: ${p[2]}`).join("<br>"); };
+      return `<b>${esc(g.name)}</b>: ${T} seat${T === 1 ? "" : "s"}<br>` + v.map(p => `<span style="color:${mcol(p[1])}">■</span> ${esc(p[0])}: ${p[2]}`).join("<br>")
+        + (M.newmaps && M.newmaps.includes(g.ab) ? `<br><span class="tsub">New districts for 2026; their boundaries aren't published in this data set yet.</span>` : ""); };
     svg.append("g").selectAll("path").data(G).join("path").attr("d", g => g.d)
-      .attr("class", g => g.state ? "stp" : "terr").attr("fill", g => g.state ? fillFor(g.ab) : null)
+      .attr("class", g => g.state ? "stp" : "terr").attr("fill", g => !g.state ? null : S ? fillFor(g.ab) : "url(#p-none)")
       .on("mousemove", (ev, g) => showTip(ev, tipFor(g))).on("mouseleave", hideTip)
       .on("click", (ev, g) => showTip(ev, tipFor(g)));
-    // County lines (today's counties, U.S. Census via us-atlas), drawn from 1959 on, when today's 50 states were in place
-    const COUNTY_FROM = "1959-01-03", showCty = !S && c.start >= COUNTY_FROM;
-    if (showCty){ const fg = svg.append("g").attr("class", "ctyfill"), cg = svg.append("g").attr("class", "cty"), og = svg.append("g").attr("class", "stout");
-      loadCounties().then(K => { if (!cg.node().isConnected) return;
-        if (M.C){ // color each county by the party of the House member(s) whose districts cover it, striped by share of its land
-          fg.selectAll("path").data(K.feats.filter(f => M.C[f.id])).join("path").attr("d", f => f.d)
-            .attr("fill", f => { const v = M.C[f.id]; return typeof v === "string" ? mcol(v) : stripes(defs, v.map(([k, s]) => [k, Math.max(1, Math.round(s * 10))])); }); }
-        cg.append("path").attr("d", K.mesh);
-        og.selectAll("path").data(G.filter(g => g.state)).join("path").attr("d", g => g.d); }).catch(() => {}); }
+    if (!S){ // every House district, colored by the party of its member
+      const dg = svg.append("g").attr("class", "dist"), og = svg.append("g").attr("class", "stout");
+      const delegation = ab => { const v = data[ab]; if (!v) return ""; const T = v.reduce((s, p) => s + p[2], 0);
+        return `<span class="tsub">${esc(STNAME[ab] || ab)}: ${T} seat${T === 1 ? "" : "s"} · ${v.map(p => `${esc(p[0])} ${p[2]}`).join(", ")}</span>`; };
+      const dfill = f => { const ms = f.m || []; if (!ms.length || f.x) return "url(#p-none)";
+        const k = Object.entries(ms.reduce((o, m) => (o[m[2]] = (o[m[2]] || 0) + 1, o), {})).sort((a, b) => b[1] - a[1]);
+        return k.length > 1 && k[0][1] === k[1][1] ? col("O") : mcol(k[0][0]); };
+      const dname = f => f.d === 0 ? (f.m && f.m.length > 1 ? "elected statewide" : "at-large") : `${ord(f.d)} district`;
+      const dtip = f => f.x ? `<b>${esc(STNAME[f.s] || f.s)}</b><br>District lines for this Congress aren't in the boundary data.<br>` + delegation(f.s)
+        : `<b>${esc(STNAME[f.s] || f.s)} · ${dname(f)}</b><br>` + ((f.m || []).length
+        ? f.m.map(m => `<span style="color:${mcol(m[2])}">■</span> ${m[0] ? esc(m[0]) + " (" + esc(m[1]) + ")" : esc(m[1])}`).join("<br>") : "No member seated when the Congress began") + "<br>" + delegation(f.s);
+      loadDistricts(n).then(F => { if (!dg.node().isConnected) return;
+        dg.selectAll("path").data(F).join("path").attr("d", f => f.path).attr("fill", dfill)
+          .on("mousemove", (ev, f) => showTip(ev, dtip(f))).on("mouseleave", hideTip).on("click", (ev, f) => showTip(ev, dtip(f)));
+        og.selectAll("path").data(G.filter(g => g.state)).join("path").attr("d", g => g.d);
+        const drawn = new Set(F.map(f => f.s));
+        svg.selectAll("path.stp").filter(g => !drawn.has(g.ab)).classed("nodist", true); // e.g. new 2026 maps: hover for the state's breakdown
+        $("#mapCap").textContent = capH + "."; }).catch(() => { $("#mapCap").textContent = "District boundaries for this Congress couldn't load; hover a state for its delegation."; });
+    }
     if (!S){ // seat counts on each state
-      const lg = svg.append("g"), states = G.filter(g => g.state && data[g.ab]);
+      const big = {}; G.filter(g => g.state && data[g.ab]).forEach(g => { if (!big[g.ab] || g.area > big[g.ab].area) big[g.ab] = g; }); // one label per state
+      const lg = svg.append("g"), states = Object.values(big);
       states.forEach(g => { const T = data[g.ab].reduce((s, p) => s + p[2], 0), k = CALL[g.ab];
-        if (k && c.start >= "1790"){ const y = 150 + k[1] * 24, x = 905;
+        if (k){ const y = 150 + k[1] * 24, x = 905;
           lg.append("line").attr("class", "lead").attr("x1", g.c[0]).attr("y1", g.c[1]).attr("x2", x - 4).attr("y2", y);
           lg.append("text").attr("class", "ml mlx").attr("x", x).attr("y", y).text(`${g.ab} ${T}`); }
         else if (g.area > 300) lg.append("text").attr("class", "ml").attr("x", g.c[0]).attr("y", g.c[1]).text(T); });
@@ -167,11 +178,13 @@
     const tot = {}; Object.values(data).forEach(v => S ? v.forEach(m => { const k = m[1]; tot[k] = tot[k] || {f: m[2], n: 0}; tot[k].n++; }) : v.forEach(p => { tot[p[0]] = tot[p[0]] || {f: p[1], n: 0}; tot[p[0]].n += p[2]; }));
     const order = Object.entries(tot).sort((a, b) => ORDER.indexOf(a[1].f) - ORDER.indexOf(b[1].f));
     const split = S ? Object.values(data).filter(v => v.length === 2 && v[0][2] !== v[1][2]).length : Object.values(data).filter(v => v.length > 1).length;
-    $("#mapH").textContent = S ? "Senate by state" : "House by state";
-    $("#mapCap").textContent = (S ? "Each state's two senators" : "Each state's House delegation, with its number of seats") + (c.elect ? ` as elected in ${+c.start.slice(0,4) - 1} (results as of ${fmt(HILLMAP.as_of_120)})` : " when the Congress began")
+    $("#mapH").textContent = S ? "Senate by state" : "House by district";
+    const capH = `Each House district, colored by the party of its member ${c.elect ? `elected in ${+c.start.slice(0,4) - 1} (results as of ${fmt(HILLMAP.as_of_120)})` : "seated when the Congress began"}. Numbers are each state's seats; hover or tap a district for its member and the state's breakdown`;
+    $("#mapCap").textContent = !S ? "Loading districts…" : ("Each state's two senators") + (c.elect ? ` as elected in ${+c.start.slice(0,4) - 1} (results as of ${fmt(HILLMAP.as_of_120)})` : " when the Congress began")
       + `. ${split} state${split === 1 ? "" : "s"} ${S ? "split between parties" : "with members from more than one party"}, shown striped.`;
-    $("#mapLeg").innerHTML = order.map(([p, o]) => `<span><i class="sw" style="background:${col(o.f)}"></i>${esc(p)} ${o.n}</span>`).join("")
-      + `<span><i class="sw" style="background:repeating-linear-gradient(45deg,${col("D")} 0 3px,${col("R")} 3px 6px)"></i>Split (striped)</span>`
+    $("#mapLeg").innerHTML = order.map(([p, o]) => `<span><i class="sw" style="background:${mcol(o.f)}"></i>${esc(p)} ${o.n}</span>`).join("")
+      + (S ? `<span><i class="sw" style="background:repeating-linear-gradient(45deg,${col("D")} 0 3px,${col("R")} 3px 6px)"></i>Split (striped)</span>`
+           : `<span><i class="sw" style="background:repeating-linear-gradient(45deg,var(--surface-2) 0 2px,var(--line) 2px 4px)"></i>No district map / no member</span>`)
       + (G.some(g => !g.state && !/District of Columbia/.test(g.name)) ? `<span><i class="sw" style="background:var(--ghost);outline:1px solid var(--line)"></i>Territory, not yet a state</span>` : "");
     const rows = Object.keys(data).filter(ab => STNAME[ab] || CALL[ab] !== undefined).sort((a, b) => (STNAME[a] || a).localeCompare(STNAME[b] || b));
     $("#mapTable").innerHTML = `<div class="stgrid">` + rows.map(ab => { const v = data[ab];
@@ -181,9 +194,8 @@
     $("#mapNote").innerHTML = c.elect
       ? `Not certified; states still counting are striped gray for the races not yet called. Sources: ${HILLMAP.sources_120.map(([t, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a>`).join(" · ")}`
       : `Members seated when the Congress began (Voteview); borders as of ${fmt(c.start)}.`;
-    if (!S) $("#mapNote").innerHTML += M.C ? ` Counties are colored by the party of the House member whose district covers them; a county split between districts of different parties is striped by how much of its land each covers (district–county overlaps from the U.S. Census Bureau's 119th Congress relationship file). Counts on each state are its seats.${M.newmaps ? ` ${M.newmaps.join(", ")} drew new districts for 2026 that the Census Bureau hasn't matched to counties yet, so they're colored by state.` : ""}`
-      : c.start >= "1959-01-03" ? " Thin lines are county borders (today's counties, U.S. Census Bureau); seats are counted by state, since district lines for this Congress aren't matched to counties here."
-      : " County lines are shown from 1959 on, when today's 50 states were in place; earlier county borders were different.";
+    if (!S) $("#mapNote").innerHTML += ` District boundaries: Lewis, DeVine, Pitcher and Martis, <i>Digital Boundary Definitions of United States Congressional Districts, 1789–2012</i> (UCLA), kept current through the 119th Congress. Early states that elected members statewide show as one shape; where districts sent several members, the color is the majority party (gray for a tie).`
+      + (M.newmaps ? ` ${M.newmaps.join(", ")} used new districts in 2026 that aren't published in that data set yet, so they show hatched; hover them for their results.` : "");
   }
   $("#cNow").addEventListener("click", () => showCongress(NOW.n));
   $("#cElect") && $("#cElect").addEventListener("click", () => showCongress(ELECT.n));
