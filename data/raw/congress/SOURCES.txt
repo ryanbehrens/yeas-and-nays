@@ -1,0 +1,6 @@
+members.csv
+  Every member of the House and Senate, 1st-119th Congresses, trimmed from Voteview's member file (HSall_members.csv, downloaded 2026-11-20):
+  Lewis, Jeffrey B., Keith Poole, Howard Rosenthal, Adam Boche, Aaron Rudkin, and Luke Sonnet. Voteview: Congressional Roll-Call Votes Database.
+  https://voteview.com/data   Columns kept: congress, chamber, state, district, party code, occupancy, ICPSR id, name, number of votes.
+divisions.json
+  Party divisions at the start of each Congress (Office of the House Historian, Senate Historical Office); the 120th is members-elect (see its "elect" block).

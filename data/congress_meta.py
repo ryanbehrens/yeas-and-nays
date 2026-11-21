@@ -63,7 +63,7 @@ SENATE_LEADERS = {
 }
 
 # Leadership not yet settled for a Congress that has been elected but not sworn in (shown instead of SPEAKERS / SENATE_LEADERS).
-# As of Nov. 18, 2026. Sources: Yahoo News (Nov. 18, 2026), CBS News (Nov. 4-7, 2026).
+# As of Nov. 20, 2026. Sources: Yahoo News (Nov. 18, 2026), CBS News (Nov. 4-7, 2026).
 PENDING_LEADERS = {
  120: dict(
   speaker="Hakeem Jeffries (D-N.Y.), nominated by House Democrats on Nov. 18, 2026; the full House elects the Speaker on Jan. 3, 2027",

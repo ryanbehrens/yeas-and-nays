@@ -50,7 +50,8 @@
       ${c ? `<p style="margin:0"><b>Congress:</b> House ${esc(c.house_label)}, Senate ${esc(c.senate_label)}${l.how && l.how !== "Signed" ? " · " + esc(l.how) : ""}</p>` : ""}</div></details>`;
   }
   function showCongress(n){
-    const c = byN[n]; $("#cRange").value = n; $("#cOut").textContent = ord(n);
+    const c = byN[n]; $("#cRange").value = n; $("#cOut").textContent = ord(n); V.n = n;
+    if (V.view === "map" && window.HILLMAP) drawMap(n);
     const E = c.elect;
     $("#cTitle").textContent = E ? `The ${ord(n)} Congress (members-elect)` : `The ${ord(n)} Congress`;
     $("#cSub").textContent = E ? `Elected ${fmt(String(+c.start.slice(0,4) - 1) + "-11-03")}; takes office ${fmt(c.start)}. Results as of ${fmt(E.as_of)}; races not yet called are shown as open seats.`
@@ -72,6 +73,101 @@
     $("#cLaws").innerHTML = ls.length ? `<h3 class="sub3">Landmark laws from this Congress</h3><div class="list">${ls.map(lawItem).join("")}</div>` : "";
   }
   $("#cRange").addEventListener("input", e => showCongress(+e.target.value));
+
+  /* ---------- seat charts / map toggle ---------- */
+  const V = {view: "seats", ch: "S", n: null};
+  try { const s = JSON.parse(localStorage.getItem("hillView") || "{}"); if (s.view === "map") V.view = "map"; if (s.ch === "H") V.ch = "H"; } catch (e) {}
+  const saveV = () => { try { localStorage.setItem("hillView", JSON.stringify({view: V.view, ch: V.ch})); } catch (e) {} };
+  let mapLoad = null;
+  const loadScript = src => new Promise((ok, no) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = () => no(new Error(src)); document.head.appendChild(s); });
+  const loadMap = () => mapLoad || (mapLoad = Promise.all([
+    window.topojson ? 0 : loadScript("https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"),
+    window.BORDERS ? 0 : loadScript("assets/borders.js"), window.HILLMAP ? 0 : loadScript("assets/hill-map.js")]));
+  function setView(){
+    document.querySelectorAll(".viewbar [data-v]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === V.view)));
+    document.querySelectorAll("#chSeg [data-c]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.c === V.ch)));
+    const map = V.view === "map"; $("#chSeg").hidden = !map; $("#mapCard").hidden = !map; $("#seatCharts").hidden = map;
+    if (map){ $("#mapCap").textContent = "Loading the map…"; loadMap().then(() => drawMap(V.n)).catch(() => { $("#mapCap").textContent = "The map couldn't load. Check your connection and try again."; mapLoad = null; }); }
+  }
+  document.querySelector(".viewbar").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return;
+    if (b.dataset.v) V.view = b.dataset.v; if (b.dataset.c) V.ch = b.dataset.c; saveV(); setView(); });
+
+  /* ---------- the map ---------- */
+  const proj = () => d3.geoAlbersUsa().scale(1300).translate([487.5, 305]);
+  let GEO = null;
+  const isoN = s => s.slice(0,4) + "-" + s.slice(4,6) + "-" + s.slice(6,8);
+  function geo(){
+    if (GEO) return GEO; const path = d3.geoPath(proj());
+    GEO = topojson.feature(BORDERS, BORDERS.objects.states).features.map(f => { const p = f.properties;
+      return {ab: p.id === "dc" ? "DC" : p.id.slice(0,2).toUpperCase(), name: p.n, state: p.ty === "State", sd: isoN(p.s), ed: p.e === "20001231" ? "9999-12-31" : isoN(p.e),
+        d: path(f) || "", c: path(f) ? path.centroid(f) : [0, 0], area: path(f) ? path.area(f) : 0}; }).filter(g => g.d);
+    return GEO;
+  }
+  // Small eastern states get their label off the coast, with a leader line
+  const CALL = {VT: [0, 0], NH: [0, 1], MA: [0, 2], RI: [0, 3], CT: [0, 4], NJ: [0, 5], DE: [0, 6], MD: [0, 7]};
+  const STNAME = {}; // filled from the borders data
+  const mcol = k => k === "U" ? css("--ink-2") : k === "V" ? css("--surface-2") : col(k); // uncalled seats: light gray, so they read against the dark page
+  function stripes(defs, parts){ // parts: [[family, count]] -> fill
+    const rank = k => k === "U" ? 2.5 : k === "V" ? 99 : ORDER.indexOf(k); // same left-to-right order as the seat charts
+    const live = parts.filter(p => p[1] > 0).sort((a, b) => rank(a[0]) - rank(b[0])); if (!live.length) return "url(#p-none)";
+    if (live.length === 1) return mcol(live[0][0]);
+    const id = "p-" + live.map(p => p[0] + p[1]).join("-").replace(/[^\w-]/g, "");
+    if (!defs.select("#" + id).size()){
+      const T = live.reduce((s, p) => s + p[1], 0), W = live.length === 2 && live[0][1] === live[1][1] ? 12 : 16;
+      const pat = defs.append("pattern").attr("id", id).attr("width", W).attr("height", 10).attr("patternUnits", "userSpaceOnUse").attr("patternTransform", "rotate(45)");
+      let x = 0; live.forEach(p => { const w = W * p[1] / T; pat.append("rect").attr("x", x).attr("y", 0).attr("width", w + .2).attr("height", 10).attr("fill", mcol(p[0])); x += w; });
+    }
+    return `url(#${id})`;
+  }
+  function drawMap(n){
+    if (!window.HILLMAP || !window.BORDERS || !window.topojson) return;
+    const c = byN[n], M = HILLMAP.congresses[n] || {S: {}, H: {}}, S = V.ch === "S", data = S ? M.S : M.H;
+    const date = c.start, G = geo().filter(g => g.sd <= date && date <= g.ed);
+    G.forEach(g => { if (g.state) STNAME[g.ab] = g.name; });
+    const svg = d3.select("#cMap").html(""), defs = svg.append("defs");
+    defs.append("pattern").attr("id", "p-none").attr("width", 6).attr("height", 6).attr("patternUnits", "userSpaceOnUse").attr("patternTransform", "rotate(45)")
+      .html(`<rect width="6" height="6" fill="${css("--surface-2")}"/><line x1="0" y1="0" x2="0" y2="6" stroke="${css("--line")}" stroke-width="2"/>`);
+    const fam = ab => { const v = data[ab]; if (!v) return [];
+      return S ? Object.entries(v.reduce((o, m) => (o[m[2]] = (o[m[2]] || 0) + 1, o), {})).concat(v.length === 1 ? [["none", 1]] : []) : v.map(p => [p[1], p[2]]); };
+    const fillFor = ab => { const f = fam(ab); if (S && f.some(x => x[0] === "none")) return stripes(defs, f.filter(x => x[0] !== "none").concat([["V", 1]])); return stripes(defs, f); };
+    const tipFor = (g) => { const v = data[g.ab];
+      if (g.ab === "DC" && /District of Columbia/.test(g.name)) return `<b>${esc(g.name)}</b><br>Not a state: ${S ? "no senators" : "a delegate who can't vote on the floor"}`;
+      if (!g.state) return `<b>${esc(g.name)}</b><br>Not yet a state; ${S ? "no senators" : "a delegate without a vote, if any"}`;
+      if (!v || !v.length) return `<b>${esc(g.name)}</b><br>${S ? "No senators seated" : "No representatives seated"} when the Congress began`;
+      if (S) return `<b>${esc(g.name)}</b><br>` + v.map(m => `<span style="color:${col(m[2])}">■</span> ${esc(m[0])} (${esc(m[1])})${m[3] ? ` · ${esc(m[3])}` : ""}`).join("<br>");
+      const T = v.reduce((s, p) => s + p[2], 0);
+      return `<b>${esc(g.name)}</b>: ${T} seat${T === 1 ? "" : "s"}<br>` + v.map(p => `<span style="color:${col(p[1])}">■</span> ${esc(p[0])}: ${p[2]}`).join("<br>"); };
+    svg.append("g").selectAll("path").data(G).join("path").attr("d", g => g.d)
+      .attr("class", g => g.state ? "stp" : "terr").attr("fill", g => g.state ? fillFor(g.ab) : null)
+      .on("mousemove", (ev, g) => showTip(ev, tipFor(g))).on("mouseleave", hideTip)
+      .on("click", (ev, g) => showTip(ev, tipFor(g)));
+    if (!S){ // seat counts on each state
+      const lg = svg.append("g"), states = G.filter(g => g.state && data[g.ab]);
+      states.forEach(g => { const T = data[g.ab].reduce((s, p) => s + p[2], 0), k = CALL[g.ab];
+        if (k && c.start >= "1790"){ const y = 150 + k[1] * 24, x = 905;
+          lg.append("line").attr("class", "lead").attr("x1", g.c[0]).attr("y1", g.c[1]).attr("x2", x - 4).attr("y2", y);
+          lg.append("text").attr("class", "ml mlx").attr("x", x).attr("y", y).text(`${g.ab} ${T}`); }
+        else if (g.area > 300) lg.append("text").attr("class", "ml").attr("x", g.c[0]).attr("y", g.c[1]).text(T); });
+    }
+    // caption, legend, every-state list, notes
+    const tot = {}; Object.values(data).forEach(v => S ? v.forEach(m => { const k = m[1]; tot[k] = tot[k] || {f: m[2], n: 0}; tot[k].n++; }) : v.forEach(p => { tot[p[0]] = tot[p[0]] || {f: p[1], n: 0}; tot[p[0]].n += p[2]; }));
+    const order = Object.entries(tot).sort((a, b) => ORDER.indexOf(a[1].f) - ORDER.indexOf(b[1].f));
+    const split = S ? Object.values(data).filter(v => v.length === 2 && v[0][2] !== v[1][2]).length : Object.values(data).filter(v => v.length > 1).length;
+    $("#mapH").textContent = S ? "Senate by state" : "House by state";
+    $("#mapCap").textContent = (S ? "Each state's two senators" : "Each state's House delegation, with its number of seats") + (c.elect ? ` as elected in ${+c.start.slice(0,4) - 1} (results as of ${fmt(HILLMAP.as_of_120)})` : " when the Congress began")
+      + `. ${split} state${split === 1 ? "" : "s"} ${S ? "split between parties" : "with members from more than one party"}, shown striped.`;
+    $("#mapLeg").innerHTML = order.map(([p, o]) => `<span><i class="sw" style="background:${col(o.f)}"></i>${esc(p)} ${o.n}</span>`).join("")
+      + `<span><i class="sw" style="background:repeating-linear-gradient(45deg,${col("D")} 0 3px,${col("R")} 3px 6px)"></i>Split (striped)</span>`
+      + (G.some(g => !g.state && !/District of Columbia/.test(g.name)) ? `<span><i class="sw" style="background:var(--ghost);outline:1px solid var(--line)"></i>Territory, not yet a state</span>` : "");
+    const rows = Object.keys(data).filter(ab => STNAME[ab] || CALL[ab] !== undefined).sort((a, b) => (STNAME[a] || a).localeCompare(STNAME[b] || b));
+    $("#mapTable").innerHTML = `<div class="stgrid">` + rows.map(ab => { const v = data[ab];
+      if (S) return `<div><span class="ab">${ab}</span><span class="bar">${v.map(m => `<i style="flex:1;background:${col(m[2])}"></i>`).join("")}</span><span class="ct">${v.map(m => m[2] === "O" ? "I" : m[2]).join(" · ")}</span><span class="nm">${v.map(m => esc(m[0]) + (m[3] && /won/.test(m[3]) ? " (new term)" : "")).join(", ")}</span></div>`;
+      const T = v.reduce((s, p) => s + p[2], 0);
+      return `<div><span class="ab">${ab}</span><span class="bar">${v.map(p => `<i style="flex:${p[2]};background:${col(p[1])}"></i>`).join("")}</span><span class="ct">${T}: ${v.map(p => `${p[1] === "U" ? "?" : p[1] === "O" ? "Oth" : p[1]} ${p[2]}`).join(", ")}</span></div>`; }).join("") + `</div>`;
+    $("#mapNote").innerHTML = c.elect
+      ? `Not certified; states still counting are striped gray for the races not yet called.${S ? "" : " This state-by-state tally adds up to Democrats 258, Republicans 171, one seat different from the AP national count in the seat chart, likely a race one tally has called and the other hasn't."} Sources: ${HILLMAP.sources_120.map(([t, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a>`).join(" · ")}`
+      : `Members seated when the Congress began (Voteview); borders as of ${fmt(c.start)}.`;
+  }
   $("#cNow").addEventListener("click", () => showCongress(NOW.n));
   $("#cElect") && $("#cElect").addEventListener("click", () => showCongress(ELECT.n));
 
@@ -209,7 +305,7 @@
   $("#eList").addEventListener("click", e => { if (e.target.id === "eMore"){ renderEvery.all = true; renderEvery(); return; } const a = e.target.closest("[data-show]"); if (!a) return; e.preventDefault(); showCongress(+a.dataset.show); $("#congress").scrollIntoView({behavior: "smooth"}); });
 
   function drawAll(){ balance($("#chBalH"), "house"); balance($("#chBalS"), "senate"); size(); polar(); }
-  showCongress(NOW.n); gov(); renderLF(); renderLaws(); renderEvery(); drawAll();
+  showCongress(NOW.n); setView(); gov(); renderLF(); renderLaws(); renderEvery(); drawAll();
   let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(drawAll, 150); });
   if (location.hash.startsWith("#c-")){ const n = +location.hash.slice(3); if (byN[n]){ showCongress(n); renderEvery.all = true; renderEvery(); const d = document.getElementById("c-" + n); if (d){ d.open = true; } } }
 })();

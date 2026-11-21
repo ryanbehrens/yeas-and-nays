@@ -8,7 +8,7 @@ Supreme Court rulings that moved the numbers.
 
 ## Pages
 - `index.html` — **The Ledger**, the home page (timeline, debt, map, laws).
-- `hill.html` — The Hill: all 119 Congresses plus the newly elected 120th (seat charts, majorities, Speakers and Senate leaders, unified or divided government, chamber size, polarization, landmark laws). Built by `python3 data/build_hill.py` from `data/raw/congress/` (divisions.json; polarization.json from Voteview when present) and `data/congress_meta.py`.
+- `hill.html` — The Hill: all 119 Congresses plus the newly elected 120th (seat charts, majorities, Speakers and Senate leaders, unified or divided government, chamber size, polarization, landmark laws). Built by `python3 data/build_hill.py` from `data/raw/congress/` (divisions.json; polarization.json from Voteview when present) and `data/congress_meta.py`. Its Senate/House map by state comes from `assets/hill-map.js` (see `data/build_hill_map.py`).
   - **After an election:** add the new Congress to `divisions.json` with an `"elect"` block (`as_of`, `house_uncalled`, `senate_uncalled`, `sources`) and its leadership status to `PENDING_LEADERS` in `congress_meta.py`. The page shows it as members-elect (uncalled races as open seats) and keeps the sitting Congress as "Today". Once it is sworn in, drop the `"elect"` block, add its line to `HOUSE`/`SENATE` in `data/political.py`, extend `range(1, 120)` in `data/build.py`, and move the leaders into `SPEAKERS`/`SENATE_LEADERS`.
 - `bench.html` — The Bench: all 116 Supreme Court justices (appointed by, party, lean) and 77 landmark rulings. Built by `python3 data/build_bench.py` from `data/court.py` and `data/raw/court/` (see SOURCES.txt there).
 - `presidents.html` — every president; `presidents/<name>.html` — deep dives for all 45 presidents.
@@ -35,6 +35,7 @@ python3 data/build_bench.py        # regenerates bench.html and data/court_items
 python3 data/build_sitemap.py      # regenerates sitemap.xml and robots.txt (site address lives in data/seo.py)
 python3 data/build.py   # regenerates app/data.js from the data files
 sh app/build.sh         # combines app.html + data.js into index.html
+python3 data/build_hill_map.py     # regenerates assets/hill-map.js (The Hill's state maps) from data/raw/congress/members.csv + data/congress_2026.py
 python3 data/build_hill.py         # regenerates hill.html (run after data/build.py)
 ```
 

@@ -301,3 +301,26 @@ blockquote footer a{color:var(--ink-2)}
 .uncalled{margin:4px 0 10px;padding-left:18px;font-size:13.5px;color:var(--ink-2);line-height:1.5}
 .uncalled b{font-weight:600}
 .cfacts .elect-detail .note a{color:var(--ink-2)}
+/* The Hill: seat charts / map toggle */
+.viewbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 12px}
+.vseg{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
+.vseg button{border:0;background:transparent;padding:6px 14px;border-radius:999px;font:inherit;font-size:13px;color:var(--ink-2);cursor:pointer;white-space:nowrap}
+.vseg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow);font-weight:600}
+.mapcard .mapwrap{position:relative}
+.mapcard svg{width:100%;height:auto;display:block}
+.mapcard .stp{stroke:var(--bg);stroke-width:1;cursor:pointer}
+.mapcard .stp:hover{stroke:var(--ink);stroke-width:1.6}
+.mapcard .terr{fill:var(--ghost);stroke:var(--line);stroke-width:.6}
+.mapcard .ml{font-family:var(--mono);font-size:13px;font-weight:600;fill:#fff;paint-order:stroke;stroke:rgba(0,0,0,.55);stroke-width:3px;pointer-events:none;text-anchor:middle;dominant-baseline:central}
+.mapcard .mlx{fill:var(--ink);stroke:none;text-anchor:start}
+.mapcard .lead{stroke:var(--muted);stroke-width:.8}
+.statelist{margin-top:10px}
+.statelist summary{cursor:pointer;font-size:13px;color:var(--ink-2)}
+.stgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:4px 18px;margin-top:8px;font-size:12.5px}
+.stgrid div{display:grid;grid-template-columns:2.6em 1fr auto;gap:8px;align-items:center;padding:3px 0;border-bottom:1px solid var(--line)}
+.stgrid .ab{font-family:var(--mono);color:var(--ink-2)}
+.stgrid .bar{display:flex;height:9px;border-radius:2px;overflow:hidden;background:var(--ghost)}
+.stgrid .bar i{display:block;height:100%}
+.stgrid .ct{color:var(--ink-2);font-family:var(--mono);font-size:11.5px;white-space:nowrap}
+.stgrid .nm{grid-column:2/-1;color:var(--ink-2)}
+@media (max-width:700px){.mapcard .ml{font-size:16px}}

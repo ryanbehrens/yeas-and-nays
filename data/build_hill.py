@@ -88,7 +88,11 @@ t.append(f"""  <nav class="crumbs">The Hill</nav>
     <h2 id="cTitle">The {ORD(SEATED[-1]["n"])} Congress</h2>
     <p class="lede" id="cSub"></p>
     <div class="yearpick"><input type="range" id="cRange" min="1" max="{len(congresses)}" value="{len(congresses)}" aria-label="Congress"><output id="cOut"></output><button type="button" class="pbtn" id="cNow">Today</button>{'<button type="button" class="pbtn" id="cElect">Just elected</button>' if ELECT else ""}</div>
-    <div class="chambers"><div class="card"><h3>House of Representatives</h3><div class="hemi" id="hemiH"></div><div class="legend" id="legH"></div></div>
+    <div class="viewbar"><div class="vseg" role="group" aria-label="Show Congress as"><button type="button" data-v="seats" aria-pressed="true">Seat charts</button><button type="button" data-v="map" aria-pressed="false">Map</button></div>
+      <div class="vseg" id="chSeg" role="group" aria-label="Chamber" hidden><button type="button" data-c="S" aria-pressed="true">Senate</button><button type="button" data-c="H" aria-pressed="false">House</button></div></div>
+    <div class="card mapcard" id="mapCard" hidden><h3 id="mapH">Senate</h3><p class="cap" id="mapCap"></p><div class="mapwrap"><svg id="cMap" viewBox="0 0 975 610" role="img" aria-label="Map of the states"></svg></div>
+      <div class="legend" id="mapLeg"></div><details class="statelist"><summary>Every state</summary><div id="mapTable"></div></details><p class="note" id="mapNote"></p></div>
+    <div class="chambers" id="seatCharts"><div class="card"><h3>House of Representatives</h3><div class="hemi" id="hemiH"></div><div class="legend" id="legH"></div></div>
       <div class="card"><h3>Senate</h3><div class="hemi" id="hemiS"></div><div class="legend" id="legS"></div></div></div>
     <div class="cfacts" id="cFacts"></div>
     <div id="cLaws"></div>
@@ -140,6 +144,7 @@ t.append(f"""  <nav class="crumbs">The Hill</nav>
       <p><b>Unified or divided.</b> Based on the controlling party of each chamber when the Congress began and the president a month in, so a president inaugurated that January counts. Washington and John Tyler had no party. Before 1830 the early parties are compared as they were: Federalists, Democratic-Republicans and the Adams faction.</p>
       <p><b>Polarization.</b> DW-NOMINATE scores from Voteview (Jeffrey B. Lewis, Keith Poole, Howard Rosenthal and others, UCLA), the standard measure political scientists use, built from every recorded roll-call vote. The chart shows each party's median member on the main left–right dimension.</p>
       <p><b>The newly elected Congress.</b> Before it is sworn in, the newest Congress shows the seats won in the last election as called by news organizations (including the Associated Press), with races not yet called shown as open seats and listed with their status. Numbers will change as the last races are called; leaders are shown once chosen. The current Congress keeps serving, in its lame-duck session, until then.</p>
+      <p><b>The map.</b> Each state's senators and House members seated when the Congress began, from Voteview's member file (Jeffrey B. Lewis, Keith Poole, Howard Rosenthal and others, UCLA), drawn on the state borders of that date (Newberry Library, <i>Atlas of Historical County Boundaries</i>). A state with senators from two parties is striped in both colors; a House delegation is striped in proportion to its seats. Members who took office later in the Congress are left out, and in the earliest Congresses the totals can differ by a few seats from the historians' counts above. The House map is drawn by state rather than by county or district, because counties don't line up with congressional districts and district maps for every Congress aren't available in a form this page can use. For the newly elected Congress, results by state come from Wikipedia's tallies of the AP's race calls (see the sources under the map).</p>
       <p><b>Speakers and Senate leaders</b> come from the House and Senate historians. The Senate had no formal majority leader until the 1910s.</p>
     </div>
   </section>

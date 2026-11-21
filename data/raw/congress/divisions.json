@@ -4895,7 +4895,7 @@
    {
     "p": "Republican",
     "g": "R",
-    "n": 171
+    "n": 172
    }
   ],
   "senate": [
@@ -4922,12 +4922,8 @@
    "note": "Elected November 3, 2026; sworn in January 3, 2027. Democrats flipped the House and nine Republican-held Senate seats (Alaska, Iowa, Kansas, Maine, Mississippi, North Carolina, Ohio, South Carolina, Texas). The Senate's 56-seat Democratic majority counts independents Bernie Sanders and Angus King, who caucus with Democrats and were not up in 2026."
   },
   "elect": {
-   "as_of": "2026-11-18",
+   "as_of": "2026-11-20",
    "house_uncalled": [
-    {
-     "race": "Alaska at-large",
-     "status": "Republican leads; count continuing"
-    },
     {
      "race": "Louisiana 5th",
      "status": "Runoff December 12"
@@ -4955,6 +4951,10 @@
    ],
    "senate_uncalled": [],
    "sources": [
+    [
+     "PBS NewsHour / AP, Begich wins Alaska's House seat (Nov. 18, 2026)",
+     "https://www.pbs.org/newshour/politics/republican-rep-nick-begich-wins-reelection-for-alaska-house-seat"
+    ],
     [
      "Yahoo News, final 2026 midterm results (updated Nov. 18, 2026)",
      "https://www.yahoo.com/news/politics/article/final-2026-midterm-election-results-democrats-clinch-56-seat-senate-majority-with-peltolas-alaska-win-what-they-can--and-cant--do-next-184618858.html"
