@@ -3,7 +3,7 @@ by state and election, House votes vs. seats and the efficiency gap (1976 on, wh
 Run from the project root after data/build_districts.py:  python3 data/build_lines_data.py
 
 Votes: MIT Election Data and Science Lab, "U.S. House 1976-2024" (Harvard Dataverse, doi:10.7910/DVN/IG0UN2, CC0).
-Save its 1976-2024-house.tab (original format) as data/raw/elections/house_1976_2024.tab.
+Saved as plain CSV in data/raw/elections/house_1976_2024.csv (see data/raw/congress/SOURCES.txt).
 """
 import os, sys, csv, json, glob, statistics, collections
 sys.path.insert(0, os.path.dirname(__file__))
@@ -11,7 +11,7 @@ from political import NAMES, STATEHOOD
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 DDIR = os.path.join(ROOT, "assets", "districts")
-VOTES = os.path.join(os.path.dirname(__file__), "raw", "elections", "house_1976_2024.tab")
+VOTES = os.path.join(os.path.dirname(__file__), "raw", "elections", "house_1976_2024.csv")
 med = lambda xs: round(statistics.median(xs), 3) if xs else None
 
 # ---------- compactness and seats, every Congress ----------
@@ -39,23 +39,32 @@ for st, h in C26.HOUSE_120.items():
 votes = {}
 if os.path.exists(VOTES):
     rows = list(csv.DictReader(open(VOTES, encoding="utf-8", errors="replace"), delimiter="\t" if open(VOTES).readline().count("\t") > 3 else ","))
-    PARTY = lambda p: "D" if p.startswith(("DEMOCRAT", "DEMOCRATIC")) else "R" if p.startswith("REPUBLICAN") else "O"
+    DEM = {"DEMOCRAT", "DEMOCRATIC", "DEMOCRATIC-FARM-LABOR", "DEMOCRATIC-FARMER-LABOR", "DEMOCRATIC-NONPARTISAN LEAGUE", "DEMOCRATIC-NPL"}
+    PARTY = lambda p: "D" if p in DEM else "R" if p.startswith("REPUBLICAN") else "O"
+    NOTVOTE = ("BLANK", "VOID", "UNDERVOTE", "UNDER VOTE", "OVERVOTE", "OVER VOTE", "SCATTERING", "EXHAUSTED")
     races = collections.defaultdict(lambda: collections.defaultdict(lambda: collections.Counter()))
+    runoff = collections.defaultdict(lambda: collections.defaultdict(lambda: collections.Counter()))
     for r in rows:
-        if r.get("stage", "GEN") != "GEN" or r.get("special", "FALSE").upper() == "TRUE" or r.get("runoff", "FALSE").upper() == "TRUE": continue
+        if r.get("stage", "GEN") != "GEN" or r.get("special", "FALSE").upper() == "TRUE": continue
+        if r["state_po"] not in NAMES or r["state_po"] == "DC": continue   # DC's delegate has no floor vote
         if r.get("mode", "TOTAL") not in ("TOTAL", ""): continue
+        if (r.get("party") or "NA") in ("NA", "") and r["candidate"].upper().startswith(NOTVOTE): continue   # blank, void and undervotes
         try: v = int(float(r["candidatevotes"] or 0))
         except ValueError: continue
         key = (int(r["year"]), r["state_po"], int(float(r["district"] or 0)))
         # fusion tickets (New York): add each candidate's lines together, keeping the major-party label
-        races[key][r["candidate"]][PARTY((r.get("party") or "").upper())] += v
+        (runoff if r.get("runoff", "FALSE").upper() == "TRUE" else races)[key][r["candidate"]][PARTY((r.get("party") or "").upper())] += v
     agg = collections.defaultdict(lambda: dict(D=0, R=0, O=0, sD=0, sR=0, sO=0, wD=0, wR=0, two=0, unc=0, n=0))
     for (yr, st, d), cands in races.items():
         a = agg[(yr, st)]; a["n"] += 1
         tot = {c: sum(pc.values()) for c, pc in cands.items()}
         lab = {c: max(pc, key=lambda k: (k != "O", pc[k])) for c, pc in cands.items()}
         for c, v in tot.items(): a[lab[c]] += v
-        win = max(tot, key=tot.get); a["s" + lab[win]] += 1
+        win = max(tot, key=tot.get); wl = lab[win]
+        if (yr, st, d) in runoff:   # decided in a runoff (Louisiana, Georgia): the seat goes to the runoff winner
+            ro = runoff[(yr, st, d)]; rt = {c: sum(pc.values()) for c, pc in ro.items()}; rw = max(rt, key=rt.get)
+            wl = max(ro[rw], key=lambda k: (k != "O", ro[rw][k]))
+        a["s" + wl] += 1
         dv = sum(v for c, v in tot.items() if lab[c] == "D"); rv = sum(v for c, v in tot.items() if lab[c] == "R")
         if not dv or not rv: a["unc"] += 1; continue      # uncontested by one major party: left out of the efficiency gap
         T = dv + rv; need = T / 2
