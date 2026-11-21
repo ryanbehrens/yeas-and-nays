@@ -328,3 +328,33 @@ blockquote footer a{color:var(--ink-2)}
 .mapcard .dist path{stroke:var(--bg);stroke-width:.35;stroke-linejoin:round;cursor:pointer}
 .mapcard .dist path:hover{stroke:var(--ink);stroke-width:1.2}
 .tooltip .tsub{display:block;color:var(--ink-2);margin-top:4px}
+/* The Lines */
+.gm .vseg{margin-bottom:10px}
+.gmwrap{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(140px,1fr);gap:16px;align-items:center}
+.gmwrap svg{width:100%;height:auto;display:block}
+.gmline{stroke:var(--ink);stroke-width:3;stroke-linecap:round}
+.gmres{display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:center}
+.gmres div{background:var(--surface-2);border-radius:10px;padding:10px 6px}
+.gmres b{display:block;font-family:var(--mono);font-size:34px;line-height:1.1}
+.gmres span{font-size:12px;color:var(--ink-2)}
+.gmres p{grid-column:1/-1;margin:2px 0 0;font-size:12.5px;color:var(--muted)}
+.lpick{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:6px 0 12px}
+.lpick label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lpick select{font:inherit;font-size:14px;background:var(--surface-2);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+.lpick .yearpick{flex:1;min-width:240px;margin:0}
+.lgrid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:14px;align-items:start}
+.lgrid svg{width:100%;height:auto;display:block}
+.lside{display:grid;gap:14px}
+.lside .cfacts{margin:0;grid-template-columns:repeat(2,minmax(0,1fr))}
+.ldist{stroke:var(--bg);stroke-width:.8;stroke-linejoin:round;cursor:pointer}
+.ldist:hover{stroke:var(--ink);stroke-width:2}
+.lst{stroke:var(--line);stroke-width:1}
+.chart .ax{font-size:10.5px;fill:var(--muted)}
+.ltime{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.ltime li{display:grid;grid-template-columns:7.2em 1fr;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.ltime .hy{font-family:var(--mono);font-size:13px;color:var(--accent);padding-top:2px}
+.ltime b{font-size:15px}
+.ltime p{margin:4px 0 0;color:var(--ink-2);line-height:1.55}
+.wrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) auto;gap:12px;align-items:center;text-decoration:none;color:inherit;padding:9px 12px}
+.wrow .m{color:var(--ink-2);font-size:13px}
+@media (max-width:760px){.lgrid,.gmwrap{grid-template-columns:1fr}.ltime li{grid-template-columns:1fr;gap:2px}.wrow{grid-template-columns:1fr auto}.wrow .m{display:none}}

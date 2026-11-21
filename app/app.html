@@ -355,6 +355,7 @@ footer a{color:var(--ink-2)}
       <a href="#" aria-current="page">The Ledger</a>
       <a href="presidents.html">Presidents</a>
       <a href="hill.html">The Hill</a>
+      <a href="lines.html">The Lines</a>
       <a href="bench.html">The Bench</a>
       <span title="Coming soon: discussion and posts">The Floor <i>Soon</i></span>
     </nav>
@@ -450,7 +451,7 @@ footer a{color:var(--ink-2)}
 
   <footer>
     <div class="about-h">About the data</div>
-    <details><summary>Sources</summary><p>Debt: U.S. Treasury, Historical Debt Outstanding (fiscal years, 1790–2025). Deficit/surplus 1901–2025 and net interest 1940–2025: White House Office of Management and Budget historical tables via FRED. Deficits before 1901 are estimated from the yearly change in debt and marked "est." GDP: MeasuringWorth (1790–1929) and BEA fiscal-year GDP via FRED (1930–2025). Inflation and the CPI line: MeasuringWorth consumer price index (1774–2025), on the Bureau of Labor Statistics scale where 1982–84 = 100; the official BLS index begins in 1913, and earlier years are historical estimates. 30-year mortgage rate: Freddie Mac Primary Mortgage Market Survey, yearly averages (the survey began in April 1971). 10-year Treasury yield: Federal Reserve (FRED series GS10), yearly averages from 1953; for 1871–1952 the line shows the long-term U.S. government bond yield compiled by Robert Shiller, the standard stand-in before the 10-year note existed. Federal minimum wage: U.S. Department of Labor. State minimum wages: U.S. Department of Labor, as of July 1, 2026. Congress party control: Office of the House Historian and U.S. Senate Historical Office. Presidential votes by state: 270toWin (1900–2012); 1789–1896 and 2016–2024 compiled from official electoral records.</p></details>
+    <details><summary>Sources</summary><p>Debt: U.S. Treasury, Historical Debt Outstanding (fiscal years, 1790–2025). Deficit/surplus 1901–2025 and net interest 1940–2025: White House Office of Management and Budget historical tables via FRED. Deficits before 1901 are estimated from the yearly change in debt and marked "est." GDP: MeasuringWorth (1790–1929) and BEA fiscal-year GDP via FRED (1930–2025). Inflation and the CPI line: MeasuringWorth consumer price index (1774–2025), on the Bureau of Labor Statistics scale where 1982–84 = 100; the official BLS index begins in 1913, and earlier years are historical estimates. 30-year mortgage rate: Freddie Mac Primary Mortgage Market Survey, yearly averages (the survey began in April 1971). 10-year Treasury yield: Federal Reserve (FRED series GS10), yearly averages from 1953; for 1871–1952 the line shows the long-term U.S. government bond yield compiled by Robert Shiller, the standard stand-in before the 10-year note existed. Federal minimum wage: U.S. Department of Labor. State minimum wages: U.S. Department of Labor, as of July 1, 2026. Congress party control: Office of the House Historian and U.S. Senate Historical Office. Presidential votes by state: 270toWin (1900–2012); 1789–1896 and 2016–2024 compiled from official electoral records. State government debt (fiscal 1992–2023): U.S. Census Bureau, Annual Survey of State and Local Government Finances and Annual Survey of State Government Finances. State gas and home electricity prices and population (1970–2024): U.S. Energy Information Administration, State Energy Data System.</p></details>
     <details><summary>How the buckets work</summary><p>Laws and rulings are sorted by what they did, not by which party passed them. <b style="color:var(--dem)">Liberal-leaning</b> means it expanded federal spending, the government's role in the economy, progressive taxation or looser money. <b style="color:var(--rep)">Conservative-leaning</b> means it cut taxes or spending, limited the government's economic role or tightened money. <b style="color:var(--mix)">Mixed</b> covers tariffs, wartime finance and deals that did both. For court rulings about rights, liberal-leaning means wider civil rights and liberties or more protection for people accused of crimes, and conservative-leaning the reverse, including gun rights; rulings about how government is structured count as mixed. Party and vote splits are shown separately, so a tax cut signed by a Democrat still reads as a tax cut. This is an early classification; a vote-based check using every recorded roll call (Voteview) is planned.</p></details>
     <details><summary>Who passed it</summary><p>Each law is credited to the party that held both the House and the Senate when it passed. When control was split, it goes to the signing president's party. Laws with bipartisan votes, veto overrides and constitutional amendments count as passed by both parties. Earlier parties count with the party that followed them: Democratic-Republicans and Jacksonians with the Democrats; Federalists, National Republicans and Whigs with the Republicans. This is about party, not ideology: for what a law did, see "What it did."</p></details>
     <details><summary>Party colors</summary><p>Democrats are blue and Republicans red in every era; earlier parties such as the Federalists, Democratic-Republicans and Whigs have their own colors. The parties' positions changed over time, most of all during the realignment era of 1896–1932, marked by the gray band on the timeline. Tap the band to read how.</p></details>
@@ -1352,6 +1353,54 @@ function mwSpark(ab){
     </svg>
     <div class="legend" style="margin-top:2px"><span><i class="lg-sw" style="background:var(--debt);height:3px"></i>${D.stateNames[ab]} (in effect)</span><span><i class="lg-sw" style="background:var(--muted);height:2px"></i>Federal</span></div></div>`;
 }
+/* state series: government debt (Census), gas and home electricity prices, population (EIA SEDS) */
+const SS = D.stateSeries || {debt:{}, gas:{}, elec:{}, pop:{}};
+const ssAt = (k, ab, y) => { const s = SS[k] && SS[k][ab]; return s && s[y] != null ? s[y] : null; };
+const ssYears = (k, ab) => Object.keys((SS[k] && SS[k][ab]) || {}).map(Number).sort((a, b) => a - b);
+const usDebt = y => { let t = 0, n = 0; Object.keys(SS.debt).forEach(ab => { const v = ssAt("debt", ab, y); if (v != null){ t += v; n++; } }); return n >= 48 ? t : null; };
+const debtPP = (ab, y) => { const v = ab === "US" ? usDebt(y) : ssAt("debt", ab, y), p = ssAt("pop", ab, y); return v != null && p ? v * 1000 / p : null; };
+function seriesSpark(title, ab, get, y0, y1, fmtY, note){
+  const W2 = 380, H2 = 110, m = {l:40, r:8, t:8, b:18}, yrs = d3.range(y0, y1 + 1);
+  const pts = yrs.map(y => ({y, s: get(ab, y), u: get("US", y)}));
+  if (!pts.some(p => p.s != null)) return "";
+  const x = d3.scaleLinear([y0, y1], [m.l, W2 - m.r]);
+  const yS = d3.scaleLinear().domain([0, d3.max(pts, p => Math.max(p.s || 0, p.u || 0))]).range([H2 - m.b, m.t]).nice(3);
+  const ln = k => d3.line().defined(p => p[k] != null).x(p => x(p.y)).y(p => yS(p[k]))(pts);
+  const cx = x(Math.min(y1, Math.max(y0, yearOf(S.t))));
+  return `<div><div class="sect">${title}</div>
+    <svg viewBox="0 0 ${W2} ${H2}" style="width:100%;height:auto;display:block" role="img" aria-label="${title} in ${D.stateNames[ab]} compared with the U.S.">
+      ${yS.ticks(3).map(tk => `<line x1="${m.l}" x2="${W2 - m.r}" y1="${yS(tk)}" y2="${yS(tk)}" stroke="var(--line)"/><text x="${m.l - 5}" y="${yS(tk) + 3.5}" text-anchor="end" font-size="10" fill="var(--muted)">${fmtY(tk)}</text>`).join("")}
+      ${x.ticks(4).filter(v => Number.isInteger(v)).map(v => `<text x="${x(v)}" y="${H2 - 4}" text-anchor="middle" font-size="10" fill="var(--muted)">${v}</text>`).join("")}
+      <path d="${ln("u")}" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <path d="${ln("s")}" fill="none" stroke="var(--debt)" stroke-width="2"/>
+      <line x1="${cx}" x2="${cx}" y1="${m.t}" y2="${H2 - m.b}" stroke="var(--ink)" stroke-width="1"/>
+    </svg>
+    <div class="legend" style="margin-top:2px"><span><i class="lg-sw" style="background:var(--debt);height:3px"></i>${D.stateNames[ab]}</span><span><i class="lg-sw" style="background:var(--muted);height:2px"></i>U.S. average</span></div>
+    ${note ? `<div class="hint" style="margin-top:4px">${note}</div>` : ""}</div>`;
+}
+const bigMoney = v => v >= 1e9 ? `$${(v / 1e9).toFixed(v >= 1e10 ? 0 : 1)} billion` : `$${Math.round(v / 1e6).toLocaleString()} million`;
+function stateSeriesHTML(ab){
+  if (ab === "DC") return "";
+  const y = yearOf(S.t);
+  const pick = k => { const ys = ssYears(k, ab); if (!ys.length) return null; const v = Math.min(ys[ys.length - 1], Math.max(ys[0], y)); return ys.includes(v) ? v : ys.filter(z => z <= v).pop() || ys[0]; };
+  const tag = (k, yy) => yy === y ? "" : y < ssYears(k, ab)[0] ? " (earliest)" : " (latest)";
+  const dy = pick("debt"), gy = pick("gas"), ey = pick("elec");
+  const dv = dy != null ? ssAt("debt", ab, dy) : null, dpp = dy != null ? debtPP(ab, dy) : null, upp = dy != null ? debtPP("US", dy) : null;
+  const gv = gy != null ? ssAt("gas", ab, gy) : null, gu = gy != null ? ssAt("gas", "US", gy) : null;
+  const ev = ey != null ? ssAt("elec", ab, ey) : null, eu = ey != null ? ssAt("elec", "US", ey) : null;
+  const rankOf = (yy, f) => { const vals = Object.keys(D.stateNames).filter(s => s !== "DC").map(s => [s, f(s, yy)]).filter(r => r[1] != null).sort((a, b) => b[1] - a[1]); const i = vals.findIndex(r => r[0] === ab); return i >= 0 ? `${ord(i + 1)} highest of ${vals.length} states` : ""; };
+  return `<dl class="kv">
+      ${dv != null ? `<dt>State debt, ${dy}${tag("debt", dy)}</dt><dd>${bigMoney(dv * 1000)}${dpp != null ? ` · $${Math.round(dpp).toLocaleString()} per person` : ""}${upp != null && dpp != null ? `<br><span class="hint">U.S. average $${Math.round(upp).toLocaleString()} per person; ${rankOf(dy, debtPP)}</span>` : ""}</dd>` : ""}
+      ${gv != null ? `<dt>Gas, ${gy}${tag("gas", gy)}</dt><dd>$${gv.toFixed(2)} a gallon${gu != null ? ` · U.S. $${gu.toFixed(2)}` : ""}</dd>` : ""}
+      ${ev != null ? `<dt>Home electricity, ${ey}${tag("elec", ey)}</dt><dd>${ev.toFixed(1)}¢ per kWh${eu != null ? ` · U.S. ${eu.toFixed(1)}¢` : ""}</dd>` : ""}
+    </dl>
+    ${seriesSpark("State government debt per person, 1992–2023", ab, debtPP, 1992, 2023, v => "$" + (v >= 1000 ? (v / 1000) + "k" : v),
+      "What the state government itself owes (bonds and other debt), not its cities, counties or school districts. Source: Census Bureau state finance surveys. A sudden one-year jump or drop can be a change in how Census counts state agencies.")}
+    ${seriesSpark("Gas price per gallon, 1970–2024", ab, (s, yy) => ssAt("gas", s, yy), 1970, 2024, v => "$" + (v > 0 && v < 1 ? v.toFixed(2) : v),
+      "Average price of a gallon of gasoline, all grades, taxes included, not adjusted for inflation. Source: EIA State Energy Data System.")}
+    ${seriesSpark("Home electricity price, 1970–2024", ab, (s, yy) => ssAt("elec", s, yy), 1970, 2024, v => v + "¢",
+      "Average residential price per kilowatt-hour, not adjusted for inflation. Source: EIA State Energy Data System.")}`;
+}
 function openState(ab){
   S.selState = ab; updateMap();
   const iso = tToISO(S.t);
@@ -1375,7 +1424,7 @@ function openState(ab){
     </dl>
     ${mwSpark(ab)}
     <div><div class="sect">Every presidential vote, 1789–2024</div><div class="hist">${hist}</div><div class="hint" style="margin-top:6px">Democratic ${dem} times · Republican ${rep} times. Faded squares are still in the future on the timeline.</div></div>
-    <div class="bucket-note">State debt is planned for the next phase.</div>`);
+    ${stateSeriesHTML(ab)}`);
 }
 
 /* ---------- laws list ---------- */

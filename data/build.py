@@ -168,6 +168,8 @@ data = dict(
     statehood=STATEHOOD, original13=ORIGINAL13, stateNames=NAMES, fips=FIPS,
     fedMinWage=[dict(date=d, rate=r) for d, r in FED_MINWAGE],
     stateMinWage=STATE_MINWAGE_2026, stateMinWageNotes=STATE_MINWAGE_NOTES,
+    # state government debt, gas and electricity prices, population (see data/raw/states/SOURCES.txt)
+    stateSeries=json.load(open(os.path.join(RAW, "states", "state_series.json"))),
     items=sorted(items(LAWS, "law") + items(merged_rulings(), "ruling") + items(EVENTS, "event"), key=lambda x: x["date"]),
 )
 os.makedirs(os.path.join(os.path.dirname(__file__), "..", "app"), exist_ok=True)

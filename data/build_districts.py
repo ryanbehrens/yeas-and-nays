@@ -53,7 +53,31 @@ for n in sorted(FEATS):
     for st, d, g in FEATS[n]:
         if d == 0: ATLARGE[st] = g
 
+# Polsby-Popper compactness: 4*pi*area / perimeter^2 (1 = a circle; long, twisting districts score near 0).
+# Measured on each district's shape on the globe (a local flat projection at the district's center), from the simplified boundaries.
+import math
+R_EARTH = 6371.0088
+def _rings(g):
+    if g["type"] == "Polygon": return [g["coordinates"]]
+    if g["type"] == "MultiPolygon": return g["coordinates"]
+    return []
+def polsby_popper(g):
+    polys = _rings(g); pts = [p for poly in polys for ring in poly for p in ring]
+    if not pts: return None
+    lat0 = math.radians(sum(p[1] for p in pts) / len(pts)); k = math.cos(lat0)
+    xy = lambda p: (math.radians(p[0]) * k * R_EARTH, math.radians(p[1]) * R_EARTH)
+    area = per = 0.0
+    for poly in polys:
+        for i, ring in enumerate(poly):
+            q = [xy(p) for p in ring]
+            a = sum(q[j][0] * q[j + 1][1] - q[j + 1][0] * q[j][1] for j in range(len(q) - 1)) / 2
+            area += abs(a) * (1 if i == 0 else -1)
+            per += sum(math.dist(q[j], q[j + 1]) for j in range(len(q) - 1))
+    return round(4 * math.pi * area / per ** 2, 3) if per and area > 0 else None
+
 def write(n, feats):
+    for props, g in feats:
+        if props.get("d") and not props.get("x"): props["pp"] = polsby_popper(g)   # drawn districts only, not statewide seats
     tmp = tempfile.NamedTemporaryFile("w", suffix=".json", delete=False)
     json.dump({"type": "FeatureCollection", "features": [{"type": "Feature", "properties": props, "geometry": g} for props, g in feats]}, tmp); tmp.close()
     out = os.path.join(OUTDIR, f"{n:03d}.json")

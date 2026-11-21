@@ -194,6 +194,7 @@
     $("#mapNote").innerHTML = c.elect
       ? `Not certified; states still counting are striped gray for the races not yet called. Sources: ${HILLMAP.sources_120.map(([t, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a>`).join(" · ")}`
       : `Members seated when the Congress began (Voteview); borders as of ${fmt(c.start)}.`;
+    if (!S) $("#mapNote").innerHTML += ` <a href="lines.html#state=NC&congress=${Math.min(n, 119)}">Explore any state's districts, and how they've been drawn, on The Lines →</a>`;
     if (!S) $("#mapNote").innerHTML += ` District boundaries: Lewis, DeVine, Pitcher and Martis, <i>Digital Boundary Definitions of United States Congressional Districts, 1789–2012</i> (UCLA), kept current through the 119th Congress. Early states that elected members statewide show as one shape; where districts sent several members, the color is the majority party (gray for a tie).`
       + (M.newmaps ? ` ${M.newmaps.join(", ")} used new districts in 2026 that aren't published in that data set yet, so they show hatched; hover them for their results.` : "");
   }
