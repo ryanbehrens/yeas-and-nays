@@ -4,3 +4,9 @@ members.csv
   https://voteview.com/data   Columns kept: congress, chamber, state, district, party code, occupancy, ICPSR id, name, number of votes.
 divisions.json
   Party divisions at the start of each Congress (Office of the House Historian, Senate Historical Office); the 120th is members-elect (see its "elect" block).
+assets/counties-albers-10m.json
+  County borders (2017 Census cartographic boundaries), us-atlas 3.0.1 by Mike Bostock (ISC license), https://github.com/topojson/us-atlas
+  Pre-projected to the same Albers USA layout as the state borders; The Hill draws them on the House map from 1959 on.
+cd119_county20.csv
+  U.S. Census Bureau, 119th Congressional District (2020 counties) relationship file, trimmed to district, county, and land area of each overlap:
+  https://www2.census.gov/geo/docs/maps-data/data/rel2020/cd-sld/tab20_cd11920_county20_natl.txt  (downloaded 2026-11-20)

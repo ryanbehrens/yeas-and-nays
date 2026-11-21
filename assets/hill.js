@@ -106,6 +106,11 @@
   // Small eastern states get their label off the coast, with a leader line
   const CALL = {VT: [0, 0], NH: [0, 1], MA: [0, 2], RI: [0, 3], CT: [0, 4], NJ: [0, 5], DE: [0, 6], MD: [0, 7]};
   const STNAME = {}; // filled from the borders data
+  let CTY = null; // county borders (interior lines only), loaded the first time the House map needs them
+  const loadCounties = () => CTY || (CTY = Promise.resolve().then(() => fetch("assets/counties-albers-10m.json")).then(r => r.json())
+    .then(us => { const gp = d3.geoPath();
+      return {mesh: gp(topojson.mesh(us, us.objects.counties, (a, b) => a !== b && (a.id / 1000 | 0) === (b.id / 1000 | 0))),
+        feats: topojson.feature(us, us.objects.counties).features.map(f => ({id: f.id, name: f.properties.name, d: gp(f)}))}; }));
   const mcol = k => k === "U" ? css("--ink-2") : k === "V" ? css("--surface-2") : col(k); // uncalled seats: light gray, so they read against the dark page
   function stripes(defs, parts){ // parts: [[family, count]] -> fill
     const rank = k => k === "U" ? 2.5 : k === "V" ? 99 : ORDER.indexOf(k); // same left-to-right order as the seat charts
@@ -141,6 +146,15 @@
       .attr("class", g => g.state ? "stp" : "terr").attr("fill", g => g.state ? fillFor(g.ab) : null)
       .on("mousemove", (ev, g) => showTip(ev, tipFor(g))).on("mouseleave", hideTip)
       .on("click", (ev, g) => showTip(ev, tipFor(g)));
+    // County lines (today's counties, U.S. Census via us-atlas), drawn from 1959 on, when today's 50 states were in place
+    const COUNTY_FROM = "1959-01-03", showCty = !S && c.start >= COUNTY_FROM;
+    if (showCty){ const fg = svg.append("g").attr("class", "ctyfill"), cg = svg.append("g").attr("class", "cty"), og = svg.append("g").attr("class", "stout");
+      loadCounties().then(K => { if (!cg.node().isConnected) return;
+        if (M.C){ // color each county by the party of the House member(s) whose districts cover it, striped by share of its land
+          fg.selectAll("path").data(K.feats.filter(f => M.C[f.id])).join("path").attr("d", f => f.d)
+            .attr("fill", f => { const v = M.C[f.id]; return typeof v === "string" ? mcol(v) : stripes(defs, v.map(([k, s]) => [k, Math.max(1, Math.round(s * 10))])); }); }
+        cg.append("path").attr("d", K.mesh);
+        og.selectAll("path").data(G.filter(g => g.state)).join("path").attr("d", g => g.d); }).catch(() => {}); }
     if (!S){ // seat counts on each state
       const lg = svg.append("g"), states = G.filter(g => g.state && data[g.ab]);
       states.forEach(g => { const T = data[g.ab].reduce((s, p) => s + p[2], 0), k = CALL[g.ab];
@@ -165,8 +179,11 @@
       const T = v.reduce((s, p) => s + p[2], 0);
       return `<div><span class="ab">${ab}</span><span class="bar">${v.map(p => `<i style="flex:${p[2]};background:${col(p[1])}"></i>`).join("")}</span><span class="ct">${T}: ${v.map(p => `${p[1] === "U" ? "?" : p[1] === "O" ? "Oth" : p[1]} ${p[2]}`).join(", ")}</span></div>`; }).join("") + `</div>`;
     $("#mapNote").innerHTML = c.elect
-      ? `Not certified; states still counting are striped gray for the races not yet called.${S ? "" : " This state-by-state tally adds up to Democrats 258, Republicans 171, one seat different from the AP national count in the seat chart, likely a race one tally has called and the other hasn't."} Sources: ${HILLMAP.sources_120.map(([t, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a>`).join(" · ")}`
+      ? `Not certified; states still counting are striped gray for the races not yet called. Sources: ${HILLMAP.sources_120.map(([t, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a>`).join(" · ")}`
       : `Members seated when the Congress began (Voteview); borders as of ${fmt(c.start)}.`;
+    if (!S) $("#mapNote").innerHTML += M.C ? ` Counties are colored by the party of the House member whose district covers them; a county split between districts of different parties is striped by how much of its land each covers (district–county overlaps from the U.S. Census Bureau's 119th Congress relationship file). Counts on each state are its seats.${M.newmaps ? ` ${M.newmaps.join(", ")} drew new districts for 2026 that the Census Bureau hasn't matched to counties yet, so they're colored by state.` : ""}`
+      : c.start >= "1959-01-03" ? " Thin lines are county borders (today's counties, U.S. Census Bureau); seats are counted by state, since district lines for this Congress aren't matched to counties here."
+      : " County lines are shown from 1959 on, when today's 50 states were in place; earlier county borders were different.";
   }
   $("#cNow").addEventListener("click", () => showCongress(NOW.n));
   $("#cElect") && $("#cElect").addEventListener("click", () => showCongress(ELECT.n));

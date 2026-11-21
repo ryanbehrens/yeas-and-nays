@@ -78,6 +78,45 @@ for st, ss in C26.SENATE_120.items():
 for st, h in C26.HOUSE_120.items():
     c["H"][st] = [x for x in [["Democratic", "D", h["D"]], ["Republican", "R", h["R"]], ["Not yet called", "U", h["U"]]] if x[2]]
 
+# ---------- counties (119th and 120th): each county's land, by the party of the House member(s) whose districts cover it ----------
+from political import FIPS
+REL = list(csv.DictReader(open(os.path.join(RAW, "cd119_county20.csv"))))
+def seat_party_119():
+    out = {}
+    for (n, ch, st), ms in by.items():
+        if n != 119 or ch != "H" or st in NONSTATE: continue
+        seats = collections.defaultdict(list)
+        for m in ms: seats[int(m["district"])].append(m)
+        for d, sm in seats.items(): out[(st, d)] = party(int(sorted(sm, key=icpsr)[0]["party"]))[1]
+    return out
+P119 = seat_party_119()
+def county_shares(party_of):
+    land = collections.defaultdict(lambda: collections.Counter()); total = {}; names = {}
+    for r in REL:
+        st = FIPS.get(r["cd"][:2]); cd = r["cd"][2:]
+        if not st or cd in ("ZZ", "98"): continue
+        f = party_of(st, 0 if cd == "00" else int(cd))
+        if f is None: continue
+        land[r["county"]][f] += int(r["land_part"]); total[r["county"]] = int(r["county_land"]) or 1; names[r["county"]] = r["county_name"]
+    out = {}
+    for fips, cnt in land.items():
+        T = sum(cnt.values()) or 1
+        parts = [[f, round(v / T, 2)] for f, v in cnt.most_common() if v / T >= 0.02]
+        out[fips] = parts[0][0] if len(parts) == 1 else parts
+    return out
+def p119(st, d):
+    if (st, d) in P119: return P119[(st, d)]
+    ks = [k for k in P119 if k[0] == st]
+    return P119[ks[0]] if d == 0 and len(ks) == 1 else None   # at-large: Voteview numbers the lone seat 1 (or 0)
+OUT[119]["C"] = county_shares(p119)
+def p120(st, d):
+    if st in C26.NEW_MAPS_2026: return None
+    return C26.HOUSE_120_DISTRICTS.get(f"{st}-{'AL' if d == 0 else d}")
+OUT[120]["C"] = county_shares(p120)
+OUT[120]["newmaps"] = C26.NEW_MAPS_2026
+print("counties colored: 119th", len(OUT[119]["C"]), "120th", len(OUT[120]["C"]),
+      "split 119th", sum(isinstance(v, list) for v in OUT[119]["C"].values()))
+
 data = dict(congresses={str(k): v for k, v in sorted(OUT.items())}, as_of_120=C26.AS_OF, sources_120=C26.SOURCES)
 open(os.path.join(ROOT, "assets", "hill-map.js"), "w").write("window.HILLMAP=" + json.dumps(data, separators=(",", ":"), ensure_ascii=False) + ";\n")
 # sanity check against the start-of-Congress divisions The Hill shows
