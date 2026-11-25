@@ -26,10 +26,23 @@ def tags(title, desc, path, image="/assets/og/site.jpg", kind="website", jsonld=
         f'<meta name="twitter:description" content="{e(desc)}">',
         f'<meta name="twitter:image" content="{e(img)}">',
         '<meta name="robots" content="index, follow, max-image-preview:large">',
+        extras(path),
     ]
     for block in (jsonld or []):
         out.append('<script type="application/ld+json">' + json.dumps(block, ensure_ascii=False).replace("</", "<\\/") + "</script>")
     return "\n".join(out)
+
+def extras(path):
+    """Install-to-home-screen and support tags (manifest, icon, and the shared
+    app-extras script). Paths are relative so pages also work opened from disk."""
+    p = "../" * path.strip("/").count("/")
+    return "\n".join([
+        f'<link rel="manifest" href="{p}manifest.webmanifest">',
+        f'<link rel="apple-touch-icon" href="{p}assets/icons/apple-touch-icon.png">',
+        '<meta name="apple-mobile-web-app-title" content="Yeas &amp; Nays">',
+        f'<script src="{p}assets/app-extras.js?v=1" defer></script>',
+        f'<script src="{p}assets/site-extras.js?v=1" defer></script>',
+    ])
 
 def website_ld(desc):
     return {"@context": "https://schema.org", "@type": "WebSite", "name": NAME, "url": SITE + "/", "description": desc, "inLanguage": "en-US"}
