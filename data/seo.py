@@ -38,7 +38,7 @@ def extras(path):
     p = "../" * path.strip("/").count("/")
     return "\n".join([
         f'<link rel="manifest" href="{p}manifest.webmanifest">',
-        f'<link rel="apple-touch-icon" href="{p}assets/icons/apple-touch-icon.png">',
+        f'<link rel="apple-touch-icon" href="{p}assets/icons/apple-touch-icon.png?v=2">',
         '<meta name="apple-mobile-web-app-title" content="Yeas &amp; Nays">',
         f'<script src="{p}assets/app-extras.js?v=1" defer></script>',
         f'<script src="{p}assets/site-extras.js?v=1" defer></script>',
